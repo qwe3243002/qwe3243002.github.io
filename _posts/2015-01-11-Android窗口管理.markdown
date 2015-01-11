@@ -4,9 +4,11 @@ title:  "Android窗口管理"
 date:   2015-01-11 19:40:30
 categories: jekyll update
 ---
-窗口管理系统是基于C/S模式
+窗口管理系统是基于C/S模式<br/>
 客户端——》请求创建窗口和使用窗口
+
 服务端——》负责窗口的维护，如窗口显示等。
+
 Android应用/公用界面(客户端)<——>WindowManager<——>WindowManagerService（服务端）
 
 窗口分为两种
