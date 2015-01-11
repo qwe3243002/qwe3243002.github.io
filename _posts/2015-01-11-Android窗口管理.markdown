@@ -12,11 +12,11 @@ categories: jekyll update
 Android应用/公用界面(客户端)<——>WindowManager<——>WindowManagerService（服务端）
 
 窗口分为两种
-1.应用窗口:
+1. 应用窗口:
 	1. 在每一个Activity中都有一个主窗口，对话框也有一个窗口，Menu也有一个窗口，对于在一个Activity中这些窗口是通过该Activity关联起来的。
 	2. 与应用窗口相关联的类即是Window和PhoneWindow，其中PhoneWindow继承于Window，并针对手机屏幕做了些优化工作。
 	3. PhoneWindow中核心Field是mDecorView，mDecorView是顶层的View，而窗口的添加动作就是调用getDecorView()获得该变量，并调用WindowManager.addView()将该View添加到WindowManager中。
-2.公共界面窗口
+2. 公共界面窗口
 	1. 公共界面窗口是系统级别的窗口，不从属于任何应用以及Activity。
 	2. 公共界面窗口有运行对话框，关机对话框，状态栏下拉栏，锁屏界面等。
 	3. 这种窗口是直接调用WindowManager.addView()来把View添加到WindowManager中。
