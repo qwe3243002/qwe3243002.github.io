@@ -1,0 +1,108 @@
+---
+layout: post
+title:  "Android窗口管理"
+date:   2015-01-11 19:40:30
+categories: jekyll update
+---
+窗口管理系统是基于C/S模式
+客户端——》请求创建窗口和使用窗口
+服务端——》负责窗口的维护，如窗口显示等。
+Android应用/公用界面(客户端)<——>WindowManager<——>WindowManagerService（服务端）
+
+窗口分为两种
+1.应用窗口:
+	1. 在每一个Activity中都有一个主窗口，对话框也有一个窗口，Menu也有一个窗口，对于在一个Activity中这些窗口是通过该Activity关联起来的。
+	2. 与应用窗口相关联的类即是Window和PhoneWindow，其中PhoneWindow继承于Window，并针对手机屏幕做了些优化工作。
+	3. PhoneWindow中核心Field是mDecorView，mDecorView是顶层的View，而窗口的添加动作就是调用getDecorView()获得该变量，并调用WindowManager.addView()将该View添加到WindowManager中。
+2.公共界面窗口
+	1. 公共界面窗口是系统级别的窗口，不从属于任何应用以及Activity。
+	2. 公共界面窗口有运行对话框，关机对话框，状态栏下拉栏，锁屏界面等。
+	3. 这种窗口是直接调用WindowManager.addView()来把View添加到WindowManager中。
+
+应用初始化过程中如何显示Activity界面
+	1. 创建Activity对象
+	2. 调用该Activity的attach()方法，用于调用PolicyManaager.makeNewWindow()创建PhoneWindow对象。
+	3. 在onCreate()中调用setContentView()设置该Activity的显示界面，在setContentView中，系统框架会自动生成一个布局文件mDecorView，并且该布局文件中包含如标题栏，ActionBar等元素，最重要的就是包含了该应用的ContentView。
+	4. 最后通过WindowManager.addView()将DecorView添加到WindowManger中显示出来。
+
+WindowManagerService介绍
+	1. windowMangerService是运行在system_server这个独立的进程中。
+	2. 当应用程序需要创建窗口时，通过进程通信的方式来请求WindowManagerService创建窗口，并由WindowManagerService向应用程序传递和窗口的交互信息。
+	3. 所有窗口都由WindowManagerService管理。
+
+WindowManagerService的主要功能
+	1. 窗口的添加和删除
+	2. 窗口的显示和隐藏
+	3. Z-order的顺序管理
+	4. 焦点窗口和焦点应用的管理
+	5. 输入法窗口管理和墙纸窗口管理
+	6. 转场动画
+	7. 系统消息的收集和分发
+
+服务端的实现代码位置——>framework/base/services/java/com/android/server/wm/，其中核心类有：
+	1. WindowManagerService.java
+	2. WindowState.java
+		应用调用WindowManager.addView()时，最终会在WindowManagerService中添加一个WindowState与之一一对应。
+	3. WindowToken.java
+		应用请求添加WindowManagerService添加窗口时，会提供一个Token，用于表示该窗口的归属，所有Token相同的WindowState会被关联到同一个WindowToken中。
+	4. AppWindowToken.java
+		1. 继承自WindowToken，其中的Token实际上就是指向一个Activity。
+		2. 当ActivityManagerService通知应用启动时，会生成一个token用于标识该Activity，并将该token传递到客户端中，而客户端在申请添加窗口时，会将该token作为标识传递到WindowManagerService。
+		3. 同一个Activity中的主窗体，对话框窗体，菜单窗体都关联到同一个AppWindowToken中。
+	5. Session.java
+		表示客户端与服务端的交互会话。
+		处于同一进程的不同应用通过同一个Session来交互。
+		处于不同进程的不同应用通过不同Session交互。
+	6. InputManager.java和InputMonitor.java
+		负责上层的消息分发功能
+
+
+Activity从启动到添加窗口的整个流程：
+	1. ActivityManagerService生成一个token作为该Activity的唯一标识
+	2. 调用WindowManagerService向其中添加一个AppWindowToken，此AppWindowToken封装了Activity的token
+	3. AMS启动应用客户端进程并把token传递到该进程中，并在客户端中完成Activity的初始化。
+	4. 在Activity的attach()方法中完成PhoneWindow的创建，并将token传递到PhoneWindow中。
+	5. 在WindowManger.addView()中，会将token和该View关联。
+	6. 在想WindowManagerService申请创建窗口是，把token传递到WMS中。
+	7. WMS创建窗口时会通过mTokenMap查询该token对应的AppWindowToken，如果为空则抛出异常，否则会创建一个WindowState对象以及其他工作。
+
+WMS中服务端和客户端的交互接口和数据结构
+	应用创建窗口时与之直接交互的对象时WindowManager，而WindowManager只是一个接口而已，真正交互的是实现该接口的WindowManagerImpl对象。
+
+	WindowManager.addView()执行过程
+		1. 检查所添加的窗口是否已经添加(不允许重复添加)
+		2. 如果所添加的窗口是子窗口，找到其父窗口并保存在内部变量中
+		3. 创建新的ViewRoot，并保存对应的View（DecorView）和LayoutParams
+		4. 调用ViewRoot的setView()方法，完成添加工作
+
+	ViewRoot本质上是一个Handler，并实现了ViewParent接口，其主要功能有：
+		1. 负责分发消息事件，如key，Motion事件
+		2. 负责和WMS交互，分发WMS的交互命令
+		3. 作为DecorView的parent，负责DecorView的measure,layout,draw等操作
+
+	在addView()完成后就由ViewRoot全权负责与WMS的交互，他们之间的交互主要以一下两种数据结构进行:
+		1. IWindowSession:负责ViewRoot到WMS的单向请求
+		2. IWindow:用于WMS回调ViewRoot
+		这两个数据结构都是aidl接口，所以可以用于进程间的通信。
+		一个进程中只有一个IWindowSession对象，但可以有多个IWindow对象。
+
+	ViewRoot的构造方法中会调用getWindowSession()初始化sWindowSession和mWindow。
+	在调用setView()方法时，ViewRoot会调用sWindowSession.add()方法，把IWindow添加到WMS中，这是WMS就是生成一个WindowState与之一一对应，并把IWindow对象保存到WindowState内部作为回调的接口。
+
+WindowState和Surface
+	1. 从WindowManger.addView()方法到WMS完成WindowState的初始化工作，客服端与服务端已经建立了良好的通信关系，这时客服端就能够对服务端发出命令，服务端也就能客户端进行透明操作了。
+	2. 想要WindowState显示在屏幕上，那必须先申请一个显示缓存，关于显示缓存的管理和维护是在底层图形模块实现的，在java层由封装对象Surface操作。windowState会先申请Surface对象，并将此Surface的相关数据拷贝到ViewRoot中，这样ViewRoot中也有一个Surface对象，但实际上这两个对象都指向同一块显示缓存。
+	3. ViewRoot就可以通过lockCanvas()来获取画布进行绘制，并通过unlockAndPostCanvas来讲绘制内容刷新到显示缓存中，最后由服务端绘制到窗口上。
+	4. 窗口的显示过程：
+		1. Client请求显示窗口，并传递布局参数
+		2. WMS根据布局参数申请Surface对象，并传递给Client
+		3. Client对Surface进行绘制，并在完成后通知WMS
+		4. WMS将Surface显示在屏幕上，并进行层级等相应调整
+
+窗口管理系统完整架构图
+	http://img.my.csdn.net/uploads/201208/17/1345218629_9884.png
+
+
+
+
+	
