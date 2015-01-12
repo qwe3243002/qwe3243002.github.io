@@ -17,11 +17,17 @@ categories: jekyll update
 
 ## 属性动画是如何工作的 ##
 首先看一个小例子。我们假设操作一个对象的x属性，即表示让他在水平方向上移动。动画持续时间是40ms，并且移动距离为40px。也就是说在默认为10ms的刷新时间中，每隔10ms该对象移动10px。在40ms持续时间过去后动画停止，并且该对象水平位移40px。在这个例子中，该对象是匀速行驶，即水平速度为常量。
+
 ![](http://developer.android.com/images/animation/animation-linear.png)
+
 在看一个例子，我们只改变该对象水平运动为非匀速行驶，是该对象在前半段时间内加速行驶，后半段时间内减速行驶，这样结果如下：
+
 ![](http://developer.android.com/images/animation/animation-nonlinear.png)
+
 最后，我们详细分析一下属性动画的计算过程。
+
 ![](http://developer.android.com/images/animation/valueanimator.png)
+
 ValueAnimator对象主要跟踪动画校准，比如该动画执行了多少时间，当前属性的值等。
 ValueAnimator封装了TimeInterpolator属性，用于指定使用哪种时间插值函数。TypeEvalutor指定在动画执行过程中如何计算属性值。比如在第二个例子中TimeInterploator指定为AccelerateDecelerateInterpolator，而TypeEvalutor指定为IntEvalutor。
 
