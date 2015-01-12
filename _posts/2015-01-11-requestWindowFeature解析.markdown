@@ -1,4 +1,4 @@
-[截图]({{site.url}}/assets/20150111204342.png)
+[截图]({{site.url}}assets/20150111204342.png)
 
 Android官方文档中关于requestWindowFeature(int featureId)的介绍。（未完待续）
 requestWindowFeature()必须在addContent之前调用，不然会报这个错误。
