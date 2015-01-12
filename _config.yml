@@ -2,8 +2,8 @@
 title: jambla's Blog
 email: qwe3243002@126.com
 description: > # FFF团员
-baseurl: "http://qwe3243002.github.io" # the subpath of your site, e.g. /blog/
-url: "http://jambla.com" # the base hostname & protocol for your site
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://qwe3243002.github.io" # the base hostname & protocol for your site
 twitter_username: null
 github_username:  qwe3243002
 
