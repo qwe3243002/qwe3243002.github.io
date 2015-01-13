@@ -201,6 +201,7 @@ One ObjectAnimator
     PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("x", 50f);
     PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", 100f);
     ObjectAnimator.ofPropertyValuesHolder(myView, pvhX, pvyY).start();
+
 ViewPropertyAnimator
 
     myView.animate().x(50f).y(100f);
