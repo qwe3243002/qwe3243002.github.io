@@ -95,6 +95,7 @@ ValueAnimator类通过指定类型来创建ValueAnimator对象及内部计算方
     ValueAnimator animator = ValueAnimator.ofFloat(0f,1f);
     animator.setDuration(2000);
     animator.start();
+
 在start()调用过后ValueAnimator便开始计算消耗时间百分比，你也可以自定义类型来创建ValueAnimator对象。
 
     ValueAnimator animation = ValueAnimator.ofObject(new MyTypeEvaluator(), startPropertyValue, endPropertyValue);
@@ -112,9 +113,9 @@ ObjectAnimator是ValueAnimator的子类并且集合了时序引擎以及强有�
 
 为了使ObjectAnimator更新的属性值正确，要必须这样：
 
-- 目标对象的属性必须set方法，并且遵从set<propertyName>()格式
-- 如果你在使用ObjectAnimator的工厂方法来创建对象时，在传入values...参数是，只传入一个值，那么该值将作为结束值，这样的话，你必须对于该属性有一个get方法，并遵从get<propertyName>()格式
+- 目标对象的属性必须set方法，并且遵从`set<propertyName>()`格式
+- 如果你在使用ObjectAnimator的工厂方法来创建对象时，在传入values...参数是，只传入一个值，那么该值将作为结束值，这样的话，你必须对于该属性有一个get方法，并遵从`get<propertyName>()`格式
 - get方法与set方法的参数类型以及返回值类型必须一致
-- 对于属性及对象动画，你可能需要调用invalidate()来强制重新绘制视图，一般你会在onAnimationUpdate()方法中调用。但是对于视图的属性，你就不需要再调用该方法了，因为该方法会有系统在恰当的时间调用。
+- 对于属性及对象动画，你可能需要调用`invalidate()`来强制重新绘制视图，一般你会在`onAnimationUpdate()`方法中调用。但是对于视图的属性，你就不需要再调用该方法了，因为该方法会有系统在恰当的时间调用。
 
 
