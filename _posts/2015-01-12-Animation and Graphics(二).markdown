@@ -134,5 +134,82 @@ ObjectAnimator是ValueAnimator的子类并且集合了时序引擎以及强有�
     animatorSet.start();
 
 ## **动画监听器** ##
+- Animator.AnimatorListener
+	- onAnimationStart()——在动画开始时调用
+	- onAnimationEnd()——在动画结束时调用
+	- onAnimationRepeat()——在动画要重复自身时调用
+	- onAnimationCancel()——在动画被取消时调用
+- ValueAnimator.AnimatorUpdateListener
+	- onAnimationUpdate()——在动画每一帧刷新时调用
+
+如果不想实现AnimatorUpdateListener接口的话，可以继承AnimatorListenerAdapter类，从而只是重写你想调用的方法。
+
+    ValueAnimator fadeAnim = ObjectAnimator.ofFloat(newBalls,"alpha",0f,1f);
+    fadeAnim.setDuration(3000);
+    fadeAnim.addListener(new AnimatorListenerAdapter() {
+	    @Override
+	    public void onAnimationEnd(Animator animation) {
+	    	balls.remove(((ObjectAnimator)animation).getTarget());
+	    }
+    });
 
 
+## **动画布局更改ViewGroup** ##
+属性动画也提供了在布局更改时的过渡动画，通过调用setAnimator()方法可以定义在LayoutTransition中的动画
+
+LayoutTransition中的常量：
+
+- APPERING：指示已经出现在布局中的组件的动画
+- CHANGE_APPERING:指示对于已经出现在布局中的组件由于新的组件出现而产生的动画
+- DISAPPERING：指示组件正在消失在布局中执行的动画
+- CHANGE_DISAPPERING:指示由于组件消失中，依旧存在布局中的组件的动画
+
+根据这四种事件类型既可以自定制过渡动画也可以使用系统默认的动画效果。
+
+在样例LayoutAnimations中展示了如何定制布局过渡动画。LayoutAnimationsByDefault以及layout_animations_by_default.xml展示了如何使用系统提供的动画，对于开发者重要的是设置android:animateLayoutchanges="true"，如下
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:animateLayoutChanges="true"/>
+
+## **动画视图** ##
+从Android3.0开始加入了新的属性来增强属性动画：
+
+- translationX和translationY：表示在父容器中的坐标
+- scaleX和scaleY：控制组件在2D中围绕中心点的缩放
+- rotation，rotationX，rotationY：控制组件围绕中心点在2D/3D中旋转
+- pivotX和pivotY：用于指定中心点的位置，默认情况下以组件中心为中心点
+- x和y：描述组件在容器中的实际位置.x=left+translationX
+- alpha:透明度，默认1，0表示不显示
+
+## **动画中的ViewPropertyAnimator** ##
+
+ViewPropertyAnimator提供一种简单的方式只用一个Animator对象就可以实现组件同时改变好几个属性
+
+Multiple ObjectAnimator objects
+
+    ObjectAnimator animX = ObjectAnimator.ofFloat(myView, "x", 50f);
+    ObjectAnimator animY = ObjectAnimator.ofFloat(myView, "y", 100f);
+    AnimatorSet animSetXY = new AnimatorSet();
+    animSetXY.playTogether(animX, animY);
+    animSetXY.start();
+
+One ObjectAnimator
+
+    PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("x", 50f);
+    PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", 100f);
+    ObjectAnimator.ofPropertyValuesHolder(myView, pvhX, pvyY).start();
+ViewPropertyAnimator
+
+    myView.animate().x(50f).y(100f);
+
+在xml文件中声明动画
+属性动画的xml文件统一保存在res/animator文件夹中
+接着需要加载该xml文件并start()动画
+
+    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(myContext,
+    R.anim.property_animator);
+    set.setTarget(myObject);
+    set.start();
