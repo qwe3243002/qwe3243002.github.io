@@ -118,4 +118,21 @@ ObjectAnimator是ValueAnimator的子类并且集合了时序引擎以及强有�
 - get方法与set方法的参数类型以及返回值类型必须一致
 - 对于属性及对象动画，你可能需要调用`invalidate()`来强制重新绘制视图，一般你会在`onAnimationUpdate()`方法中调用。但是对于视图的属性，你就不需要再调用该方法了，因为该方法会有系统在恰当的时间调用。
 
+## **采用AnimationSet设计动画** ##
+
+采用AnimatorSet来组合动画或者组合AnimatorSet来播放动画
+
+    AnimatorSet bouncer = new AnimatorSet();
+    bouncer.play(bounceAnim).before(squashAnim1);
+    bouncer.play(squashAnim1).with(squashAnim2);
+    boncer.play(squashAnim1).with(stretchAnim1);
+    bouncer.play(squashAnim1).with(stretchAnim2);
+    bouncer.play(bounceBackAnim).after(stretchAnim2);
+    ValueAnimator fadeAnim = ObjectAnimator.ofFloat(new Ball,"alpha",1f,0f);
+    fadeAnim.setDuration(250);
+    animatorSet.play(bouncer).before(fadeAnim);
+    animatorSet.start();
+
+## **动画监听器** ##
+
 
