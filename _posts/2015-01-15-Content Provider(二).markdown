@@ -168,9 +168,11 @@ MIME类型格式：
 自定义的MIME类型也叫做"vendor-specific"MEMI类型有更加复杂的类型与子类型,其类型通常为
 
     vnd.android.cursor.dir
+
 用于多行，或者为
 
 	vnd.android.cursor.item
+
 用于单行。
 对于子类型通常是provider自己定义的，对于Android自建的provider通常含有比较简单子类型，如：
 

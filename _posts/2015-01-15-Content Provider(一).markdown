@@ -12,7 +12,7 @@ Android提供音频，视频，图象，联系人等的ContentProvider，在andr
 
 接下来主要介绍这几个方面：
 
-1. **ContentProvider基础**
+1. **[ContentProvider基础](http://qwe3243002.github.io/jekyll/update/2015/01/15/Content%20Provider(%E4%BA%8C).html)**
 
 	如何访问表格中的数据
 
