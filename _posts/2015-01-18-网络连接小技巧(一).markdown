@@ -1,0 +1,55 @@
+---
+layout: post
+title:  "网络连接小技巧(一)"
+date:   2015-01-16 14:34:30
+categories: jekyll update
+---
+# 测试是否有网 #
+
+	public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) {
+            Log.d(TAG, "+++couldn't get connectivity manager");
+        } else {
+            NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
+            for (NetworkInfo temp : info) {
+                if (temp.getState() == NetworkInfo.State.CONNECTED) {
+                    Log.d(TAG, "+++network is available: " + temp.getTypeName());
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+# **判断网络连接类型** #
+
+    public static String getNetType(Context context) {
+        String type = "";
+        if (context == null) {
+            return null;
+        }
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connManager == null) {
+            return null;
+        } else {
+            NetworkInfo networkInfoMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo networkInfoWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo.State mobile = null, wifi = null;
+            if (networkInfoMobile != null) {
+                mobile = networkInfoMobile.getState();
+            }
+            if (networkInfoWifi != null) {
+                wifi = networkInfoWifi.getState();
+            }
+            if (wifi != null && wifi == NetworkInfo.State.CONNECTED) {
+                type = "wifi";
+            }
+            if (mobile != null && mobile == NetworkInfo.State.CONNECTED) {
+                type = "mobile";
+            }
+        }
+        return type;
+
+    }
+
