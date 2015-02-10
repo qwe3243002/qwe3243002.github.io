@@ -60,13 +60,220 @@ categories: jekyll update
 
 解释：对于某一类行为提供统一方法来完成相应具体行为的实例化。
 
+    public interface Operation {
+    	Object operate(int... params);
+    }
+	public class AddOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length == 0) {
+	            return null;
+	        }
+	        int result = 0;
+	        for (int num : params) {
+	            result += num;
+	        }
+	        return result;
+	    }
+	}
+	public class SubOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result -= params[i];
+	        }
+	        return result;
+	    }
+	}
+	public class MulOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = 1;
+	        for (int num : params) {
+	            result *= num;
+	        }
+	        return result;
+	    }
+	}
+	public class DivOperation implements Operation {
+
+	    @Override
+	    public Double operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        double result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result /= params[i];
+	        }
+	        return result;
+	    }
+	}
+	public class OperationFactory {
+	
+	    public static Operation createOperation(String operate) {
+	        Operation operation = null;
+	        switch (operate) {
+	            case "+":
+	                operation = new AddOperation();
+	                break;
+	            case "-":
+	                operation = new SubOperation();
+	                break;
+	            case "*":
+	                operation = new MulOperation();
+	                break;
+	            case "/":
+	                operation = new DivOperation();
+	            default:
+	                break;
+	        }
+	        return operation;
+	    }
+	
+	}
+	public class OperationFactory {
+	
+	    public static Operation createOperation(String operate) {
+	        Operation operation = null;
+	        switch (operate) {
+	            case "+":
+	                operation = new AddOperation();
+	                break;
+	            case "-":
+	                operation = new SubOperation();
+	                break;
+	            case "*":
+	                operation = new MulOperation();
+	                break;
+	            case "/":
+	                operation = new DivOperation();
+	            default:
+	                break;
+	        }
+	        return operation;
+	    }
+	
+	}
+
 不好：虽然提供的统一方法来完成实例化相应对象，但一旦需要添加新的行为需要修改源码，破坏开放封闭原则。
 
 ### 工厂方法模式
 
 解释：定义一个用于创建对象的接口，让子类决定实例化哪个类。使一个类的实例化延迟到子类。
 
-原因：克服了简单工厂违背开放封闭原则的缺点，又保持了封装对象创建对象的优点。
+	public interface Operation {
+    	Object operate(int... params);
+    }
+	public class AddOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length == 0) {
+	            return null;
+	        }
+	        int result = 0;
+	        for (int num : params) {
+	            result += num;
+	        }
+	        return result;
+	    }
+	}
+	public class SubOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result -= params[i];
+	        }
+	        return result;
+	    }
+	}
+	public class MulOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = 1;
+	        for (int num : params) {
+	            result *= num;
+	        }
+	        return result;
+	    }
+	}
+	public class DivOperation implements Operation {
+
+	    @Override
+	    public Double operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        double result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result /= params[i];
+	        }
+	        return result;
+	    }
+	}
+
+	public interface IOperationFactory {
+    	Operation createOperation();
+	}
+	public class AddFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new AddOperation();
+	    }
+	}
+	public class SubFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new SubOperation();
+	    }
+	}
+	public class MulFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new MulOperation();
+	    }
+	}
+	public class DivFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new DivOperation();
+	    }
+	}
+	public class MainClass {
+	    public static void main(String[] args) {
+	        Operation operation = new AddFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	        operation = new SubFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	        operation = new MulFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	        operation = new DivFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	    }
+	}
+
+优点：克服了简单工厂违背开放封闭原则的缺点，又保持了封装创建对象的过程。
+缺点：代码量增加。
 
 ### 抽象工厂模式
 
