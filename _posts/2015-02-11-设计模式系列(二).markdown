@@ -472,6 +472,89 @@ categories: jekyll update
 
 解释：将一个复杂对象的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。
 
+建造者模式适用于构造流程稳定，具体细节不稳定。
+
+	public interface Builder {
+	    void buildPartA();
+	    void buildPartB();
+	    Product getResult();
+	}
+	
+	public class Product {
+	    List<String> list = new ArrayList<String>();
+	
+	    public void add(String part) {
+	        list.add(part);
+	    }
+	
+	    public void show() {
+	        System.out.println("\nproduction Creation");
+	        for (String part : list) {
+	            System.out.println(part);
+	        }
+	    }
+	}
+	
+	public class ConcreteBuilder1 implements Builder {
+	    private Product product = new Product();
+	
+	    @Override
+	    public void buildPartA() {
+	        product.add("Part A");
+	    }
+	
+	    @Override
+	    public void buildPartB() {
+	        product.add("Part B");
+	    }
+	
+	    @Override
+	    public Product getResult() {
+	        return product;
+	    }
+	}
+	
+	public class ConcreteBuilder2 implements Builder {
+	    private Product product = new Product();
+
+	    @Override
+	    public void buildPartA() {
+	        product.add("Part X");
+	    }
+	
+	    @Override
+	    public void buildPartB() {
+	        product.add("Part Y");
+	    }
+	
+	    @Override
+	    public Product getResult() {
+	        return product;
+	    }
+	}
+	
+	public class Director {
+	    public void construct(Builder builder) {
+	        builder.buildPartA();
+	        builder.buildPartB();
+	    }
+	}
+	
+	public class MainClass {
+	    public static void main(String[] args) {
+	        Builder builder1 = new ConcreteBuilder1();
+	        Builder builder2 = new ConcreteBuilder2();
+	
+	        Director director = new Director();
+	        director.construct(builder1);
+	        Product product = builder1.getResult();
+	        product.show();
+	        director.construct(builder2);
+	        product = builder2.getResult();
+	        product.show();
+	    }
+	}
+
 原因：创建复杂对象的算法应该独立于该对象的组成部分以及他们的装配方法。
 
 ## 原型模式
@@ -486,4 +569,4 @@ categories: jekyll update
 
 创建型模式隐藏了这些类的实例是如何被创建和放在一起的，整个系统关于这于这些对象所知道的是由抽象类所定义的接口。这样，创建型模式在创建了什么、谁创建他、他是怎么被创建的、以及何时创建提供了很大的灵活性。
 
-通常设计是从工厂方法开始，当设计者需要更大的灵活性时，设计便会向其他创建型模式演化。
+在通常设计一般是从工厂方法开始，当设计者需要更大的灵活性时，设计便会向其他创建型模式演化。
