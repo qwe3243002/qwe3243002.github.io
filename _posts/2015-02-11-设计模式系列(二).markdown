@@ -1,0 +1,489 @@
+---
+layout: post
+title:  "设计模式系列(二)"
+date:   2015-02-11 12:33:30
+categories: jekyll update
+---
+# 创建型模式
+
+## 单例模式
+
+解释：保证一个类仅有一个实例，并提供一个访问他的全局访问点。
+使用：
+
+	饿汉式：在加载时就将自己实例化。
+	懒汉式：在第一次引用自己时，才将自己实例化。
+
+
+## 简单工厂模式
+
+解释：对于某一类行为提供统一方法来完成相应具体行为的实例化。
+
+    public interface Operation {
+    	Object operate(int... params);
+    }
+	public class AddOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length == 0) {
+	            return null;
+	        }
+	        int result = 0;
+	        for (int num : params) {
+	            result += num;
+	        }
+	        return result;
+	    }
+	}
+	public class SubOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result -= params[i];
+	        }
+	        return result;
+	    }
+	}
+	public class MulOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = 1;
+	        for (int num : params) {
+	            result *= num;
+	        }
+	        return result;
+	    }
+	}
+	public class DivOperation implements Operation {
+
+	    @Override
+	    public Double operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        double result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result /= params[i];
+	        }
+	        return result;
+	    }
+	}
+	public class OperationFactory {
+	
+	    public static Operation createOperation(String operate) {
+	        Operation operation = null;
+	        switch (operate) {
+	            case "+":
+	                operation = new AddOperation();
+	                break;
+	            case "-":
+	                operation = new SubOperation();
+	                break;
+	            case "*":
+	                operation = new MulOperation();
+	                break;
+	            case "/":
+	                operation = new DivOperation();
+	            default:
+	                break;
+	        }
+	        return operation;
+	    }
+	
+	}
+	public class OperationFactory {
+	
+	    public static Operation createOperation(String operate) {
+	        Operation operation = null;
+	        switch (operate) {
+	            case "+":
+	                operation = new AddOperation();
+	                break;
+	            case "-":
+	                operation = new SubOperation();
+	                break;
+	            case "*":
+	                operation = new MulOperation();
+	                break;
+	            case "/":
+	                operation = new DivOperation();
+	            default:
+	                break;
+	        }
+	        return operation;
+	    }
+	
+	}
+
+不好：虽然提供的统一方法来完成实例化相应对象，但一旦需要添加新的行为需要修改源码，破坏开放封闭原则。
+
+## 工厂方法模式
+
+解释：定义一个用于创建对象的接口，让子类决定实例化哪个类。使一个类的实例化延迟到子类。
+
+	public interface Operation {
+    	Object operate(int... params);
+    }
+	public class AddOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length == 0) {
+	            return null;
+	        }
+	        int result = 0;
+	        for (int num : params) {
+	            result += num;
+	        }
+	        return result;
+	    }
+	}
+	public class SubOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result -= params[i];
+	        }
+	        return result;
+	    }
+	}
+	public class MulOperation implements Operation {
+
+	    @Override
+	    public Integer operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        int result = 1;
+	        for (int num : params) {
+	            result *= num;
+	        }
+	        return result;
+	    }
+	}
+	public class DivOperation implements Operation {
+
+	    @Override
+	    public Double operate(int... params) {
+	        if (params == null || params.length < 2) {
+	            return null;
+	        }
+	        double result = params[0];
+	        for (int i = 1; i < params.length; i++) {
+	            result /= params[i];
+	        }
+	        return result;
+	    }
+	}
+
+	public interface IOperationFactory {
+    	Operation createOperation();
+	}
+	public class AddFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new AddOperation();
+	    }
+	}
+	public class SubFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new SubOperation();
+	    }
+	}
+	public class MulFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new MulOperation();
+	    }
+	}
+	public class DivFactory implements IOperationFactory {
+	    @Override
+	    public Operation createOperation() {
+	        return new DivOperation();
+	    }
+	}
+	public class MainClass {
+	    public static void main(String[] args) {
+	        Operation operation = new AddFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	        operation = new SubFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	        operation = new MulFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	        operation = new DivFactory().createOperation();
+	        System.out.println(operation.operate(1, 2, 3, 4));
+	    }
+	}
+
+优点：克服了简单工厂违背开放封闭原则的缺点，又保持了封装创建对象的过程。
+缺点：代码量增加。
+
+## 抽象工厂模式
+
+解释：提供一个创建一系列相关或相互依赖对象的接口，而无需指定他们具体的类。
+
+	public interface IDepartment {
+	    void insert();
+	
+	    IDepartment getDepartment();
+	}
+
+	public interface IFactory {
+	    IUser createUser();
+	
+	    IDepartment createDepartment();
+	}
+	
+	public interface IUser {
+	    void insert();
+	
+	    IUser getUser();
+	}
+	
+	public class MySqlDepartment implements IDepartment {
+	    @Override
+	    public void insert() {
+	        System.out.println("在MySql数据库中插入一条Department数据");
+	    }
+	
+	    @Override
+	    public IDepartment getDepartment() {
+	        System.out.println("在MySql数据库中获取一条Department数据");
+	        return null;
+	    }
+	}
+	
+	public class MySqlUser implements IUser {
+	
+	    @Override
+	    public void insert() {
+	        System.out.println("在MySql数据库中插入一条User数据");
+	    }
+	
+	    @Override
+	    public IUser getUser() {
+	        System.out.println("在MySql数据库中取出一条User数据");
+	        return null;
+	    }
+	}
+	
+	public class MySqlFactory implements IFactory {
+	    @Override
+	    public IUser createUser() {
+	        return new MySqlUser();
+	    }
+	
+	    @Override
+	    public IDepartment createDepartment() {
+	        return new MySqlDepartment();
+	    }
+	}
+	
+	public class OracleDepartment implements IDepartment {
+	
+	    @Override
+	    public void insert() {
+            System.out.println(在Oracle数据库中插入Department数据);
+	    }
+	
+	    @Override
+	    public IDepartment getDepartment() {
+	        System.out.println("在Oracle数据库中获取一条Department数据");
+	        return null;
+	    }
+	}
+	
+	public class OracleUser implements IUser {
+	
+	    @Override
+	    public void insert() {
+	        System.out.println("在Oracle数据库中插入一条User数据");
+	    }
+	
+	    @Override
+	    public IUser getUser() {
+	        System.out.println("从Oracle数据库中取出一条数据");
+	        return null;
+	    }
+	}
+	
+	public class OracleFactory implements IFactory {
+	    @Override
+	    public IUser createUser() {
+	        return new OracleUser();
+	    }
+	
+	    @Override
+	    public IDepartment createDepartment() {
+	        return new OracleDepartment();
+	    }
+	}
+	
+	public class MainClass {
+	
+	    public static void main(String[] args) {
+	        IFactory factory = new MySqlFactory();
+	        IUser user = factory.createUser();
+	        user.insert();
+	        user.getUser();
+	        IDepartment department = factory.createDepartment();
+	        department.insert();
+	        department.getDepartment();
+	
+	        factory = new OracleFactory();
+	        user = factory.createUser();
+	        user.insert();
+	        user.getUser();
+	        department = factory.createDepartment();
+	        department.insert();
+	        department.getDepartment();
+	    }
+	}
+
+优点：
+
+	1. 抽象工厂就是将工厂模式的一个接口创建一个工厂转变为一个接口可以创建多个相互关联或相互依赖的工厂。
+	2. 通过对多个创建工厂的抽象，能够一次性方便地切换一系列的配置。
+
+缺点：
+
+	虽然保持了开放封闭的原则，但是一旦添加新的工厂接口，需要改动多个类，较为麻烦。
+
+改进：
+	
+1. 通过简单工厂模式改进：
+
+		public class DataAccess {
+		    public static final String MYSQL = "MySql";
+		    public static final String ORACLE = "oracle";
+		    public static String DB = MYSQL;
+		
+		    public IUser createUser() {
+		        IUser user = null;
+		        switch (DB) {
+		            case MYSQL:
+		                user = new MySqlUser();
+		                break;
+		            case ORACLE:
+		                user = new OracleUser();
+		                break;
+		            default:
+		                break;
+		        }
+		        return user;
+		    }
+		
+		    public IDepartment createDepartment() {
+		        IDepartment department = null;
+		        switch (DB) {
+		            case MYSQL:
+		                department = new MySqlDepartment();
+		                break;
+		            case ORACLE:
+		                department = new OracleDepartment();
+		                break;
+		            default:
+		                break;
+		        }
+		        return department;
+		    }
+		}
+		
+		public class MainClass {
+		    public static void main(String[] args) {
+		        DataAccess access = new DataAccess();
+		        IUser user = access.createUser();
+		        user.insert();
+		        user.getUser();
+		        IDepartment department = access.createDepartment();
+		        department.insert();
+		        department.getDepartment();
+		    }
+		}
+		
+评价：
+
+	相对于最初类，减少了IFactory、MySqlFactory、OracleFactory，这样虽然减少了代码量，但是由于采用switch-case，一旦发生变化则需要增加case，破坏了开放封闭原则。
+
+2.通过反射方法改进
+
+	public class DataAccess {
+	    private static final String PKG = DataAccess.class.getPackage().getName();
+	    public static final String MYSQL = "MySql";
+	    public static final String ORACLE = "Oracle";
+	    public static String DB = MYSQL;
+	
+	    public IUser createUser() {
+	        IUser user = null;
+	        try {
+	            user = (IUser) Class.forName(PKG+"."+DB+"User").newInstance();
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        } catch (InstantiationException e) {
+	            e.printStackTrace();
+	        } catch (IllegalAccessException e) {
+	            e.printStackTrace();
+	        }
+	        return user;
+	    }
+	
+	    public IDepartment createDepartment() {
+	        IDepartment department = null;
+	        try {
+	            department = (IDepartment) Class.forName(PKG+"."+DB+"Department").newInstance();
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        } catch (InstantiationException e) {
+	            e.printStackTrace();
+	        } catch (IllegalAccessException e) {
+	            e.printStackTrace();
+	        }
+	        return department;
+	    }
+	}
+	
+评价：
+
+	通过java的反射机制来动态创建对象，就算是添加新的功能访问代码也不用改变只需要添加新的类即可。
+
+总结：
+
+	1.便于交换产品系列，由于具体工厂类，在一个应用中只需要在初始化的时候出现一次，这就使得改变一个应用的具体工厂十分容易，只需要改变具体工厂就可以使用不同的产品配置。
+	2.他让具体的创建实例的过程与客户端分离，客户端是通过他们的抽象接口操纵实例，产品的具体类名也被具体工厂的实现分离，不会出现在客户端的代码中
+
+
+## 建造者模式
+
+解释：将一个复杂对象的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。
+
+原因：创建复杂对象的算法应该独立于该对象的组成部分以及他们的装配方法。
+
+## 原型模式
+
+解释：用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。
+
+原因：一般在初始化信息不发生变化的前提下，克隆是最好的办法，这既隐藏了对象创建的细节，又对性能是大大提高。
+
+注意：克隆对象是涉及深复制和浅复制
+
+## 总结：
+
+创建型模式隐藏了这些类的实例是如何被创建和放在一起的，整个系统关于这于这些对象所知道的是由抽象类所定义的接口。这样，创建型模式在创建了什么、谁创建他、他是怎么被创建的、以及何时创建提供了很大的灵活性。
+
+通常设计是从工厂方法开始，当设计者需要更大的灵活性时，设计便会向其他创建型模式演化。
