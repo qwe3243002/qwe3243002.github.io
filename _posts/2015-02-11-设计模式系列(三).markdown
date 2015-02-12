@@ -11,11 +11,153 @@ categories: jekyll update
 
 解释：将一个类的接口转换成客户希望的另外一个接口，使得原来由于接口不兼容而不能一起工作的那些类可以一起工作。
 
+	public interface Player {
+	    void attack();
+	    void defense();
+	}
+	public class Forward implements Player {
+	    private String name;
+	
+	    public Forward(String name) {
+	        this.name = name;
+	    }
+	
+	    @Override
+	    public void attack() {
+	        System.out.println(name + " attack");
+	    }
+	
+	    @Override
+	    public void defense() {
+	        System.out.println(name + " Defense");
+	    }
+	}
+	
+	public class Center implements Player {
+	    private String name;
+	
+	    public Center(String name) {
+	        this.name = name;
+	    }
+	
+	    @Override
+	    public void attack() {
+	        System.out.println(name + " Attack");
+	    }
+	
+	    @Override
+	    public void defense() {
+	        System.out.println(name + " Defense");
+	    }
+	}
+	
+	public class ForeignGuards {
+	    private String name;
+	
+	    public ForeignGuards(String name) {
+	        this.name = name;
+	    }
+	
+	    public void 进攻() {
+	        System.out.println(name+ " jin gong");
+	    }
+	
+	    public void 防守() {
+	        System.out.println(name+" fang shou");
+	    }
+	}
+	
+	public class Translator implements Player {
+	
+	    private ForeignGuards guards = new ForeignGuards("Yao Ming");
+	
+	    @Override
+	    public void attack() {
+	        guards.进攻();
+	    }
+	
+	    @Override
+	    public void defense() {
+	        guards.防守();
+	    }
+	}
+	
+	public class MainClass {
+	    public static void main(String[] args) {
+	        Player forward = new Forward("Battier");
+	        forward.attack();
+	        forward.defense();
+	
+	        Player center = new Center("McGrady");
+	        center.attack();
+	        center.defense();
+	
+	        Player guards = new Translator();
+	        guards.attack();
+	        guards.defense();
+	    }
+	}
+
+
 原因：想使用原有的类，但如果他的接口或者方法与要求不同时，就该考虑适配器模式，这样可以更简单、更直接、更紧凑。
 
 ## 桥接模式
 
 解释：将抽象部分与他的实现部分相分离，使他们能独立的变化。
+
+	public interface Implementor {
+	    void operate();
+	}
+	
+	public class ConcreteImplementorA implements Implementor {
+	    @Override
+	    public void operate() {
+	        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	    }
+	}
+	
+	public class ConcreteImplementorB implements Implementor {
+	    @Override
+	    public void operate() {
+	        System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+	    }
+	}
+	
+	public abstract class Abstraction {
+	    Implementor implementor = null;
+	
+	    void setImplementor(Implementor implementor) {
+	        this.implementor = implementor;
+	    }
+	
+	    abstract void operate();
+	}
+	
+	public class RefindAbstraction extends Abstraction {
+	
+	    @Override
+	    public void operate() {
+	        implementor.operate();
+	    }
+	}
+	
+	public class MainClass {
+	
+	    public static void main(String[] args) {
+	        Implementor implementorA = new ConcreteImplementorA();
+	        Implementor implementorB = new ConcreteImplementorB();
+	
+	        Abstraction abstraction = new RefindAbstraction();
+	        abstraction.setImplementor(implementorA);
+	        abstraction.operate();
+	
+	        abstraction.setImplementor(implementorB);
+	        abstraction.operate();
+	
+	    }
+	
+	}
+
 
 原因：实现系统可能有多角度分类，每一种分类都可能变化，那么就把这种多角度分离出来让他们独立变化，减少他们之间的耦合。
 
@@ -23,17 +165,296 @@ categories: jekyll update
 
 解释：将对象组合成树形结构，以表示部分-整体的层次结构，使得单个对象和组合对象的使用具有一致性。
 
+	public interface Company {
+	    void add(Company company);
+	
+	    void remove(Company company);
+	
+	    void display(int depth);
+	
+	    void duty();
+	}
+	
+	public class ConcreteCompany implements Company {
+	    private List<Company> companies;
+	    private String name;
+	
+	    public ConcreteCompany(String name) {
+	        this.name = name;
+	        companies = new ArrayList<Company>();
+	    }
+	
+	    @Override
+	    public void add(Company company) {
+	        companies.add(company);
+	    }
+	
+	    @Override
+	    public void remove(Company company) {
+	        companies.remove(company);
+	    }
+	
+	    @Override
+	    public void display(int depth) {
+	        StringBuilder sb = new StringBuilder();
+	        for (int i = 0; i < depth; i++) {
+	            sb.append("-");
+	        }
+	        System.out.println(sb.toString() + name);
+	        for (Company company : companies) {
+	            company.display(depth + 2);
+	        }
+	    }
+	
+	    @Override
+	    public void duty() {
+	        System.out.println(name);
+	        for (Company company : companies) {
+	            company.duty();
+	        }
+	    }
+	}
+	
+	public class FinDepartment implements Company {
+	    private String name;
+	
+	    public FinDepartment(String name) {
+	        this.name = name;
+	    }
+	
+	    @Override
+	    public void add(Company company) {
+	
+	    }
+	
+	    @Override
+	    public void remove(Company company) {
+	
+	    }
+	
+	    @Override
+	    public void display(int depth) {
+	        StringBuilder sb = new StringBuilder();
+	        for (int i = 0; i < depth; i++) {
+	            sb.append("-");
+	        }
+	        System.out.println(sb.toString() + name);
+	    }
+	
+	    @Override
+	    public void duty() {
+	        System.out.println(name + " 财务管理支出");
+	    }
+	}
+	
+	public class HRDepartment implements Company {
+	    private String name;
+	
+	    public HRDepartment(String name) {
+	        this.name = name;
+	    }
+	
+	    @Override
+	    public void add(Company company) {
+	
+	    }
+	
+	    @Override
+	    public void remove(Company company) {
+	
+	    }
+	
+	    @Override
+	    public void display(int depth) {
+	        StringBuilder sb = new StringBuilder();
+	        for (int i = 0; i < depth; i++) {
+	            sb.append("-");
+	        }
+	        System.out.println(sb.toString() + name);
+	    }
+	
+	    @Override
+	    public void duty() {
+	        System.out.println(name + " 员工招聘培训管理");
+	    }
+	}
+	
+	public class MainClass {
+	    public static void main(String[] args) {
+	        Company company = new ConcreteCompany("北京总公司");
+	        Company sub1 = new HRDepartment("人力资源部");
+	        Company sub2 = new FinDepartment("财务部");
+	
+	        Company company1 = new ConcreteCompany("东京分公司");
+	        Company sub3 = new HRDepartment("人力资源部");
+	        Company sub4 = new FinDepartment("财务部");
+	
+	        Company company2 = new ConcreteCompany("上海分公司");
+	        Company sub5 = new HRDepartment("人力资源部");
+	        Company sub6 = new FinDepartment("财务部");
+	
+	        company.add(sub1);
+	        company.add(sub2);
+	
+	        company.add(company1);
+	
+	        company1.add(sub3);
+	        company1.add(sub4);
+	
+	        company.add(company2);
+	
+	        company2.add(sub5);
+	        company2.add(sub6);
+	
+	        company.display(1);
+	        company.duty();
+	    }
+	}
+
+
 原因：基本对象可以被组合成更复杂的组合对象，而这个组合对象又可以被组合，这样不断的递归下去，客户代码中，任何用到基本对象的地方都可以使用组合对象了。
 
 ## 装饰模式
 
 解释：动态地给对象添加一些额外的职责，就增加功能而言，比生成子类更加灵活。
 
+	public interface Component {
+	    void operate();
+	}
+	
+	public class ConcreteComponent implements Component {
+	    @Override
+	    public void operate() {
+	        System.out.println("具体的组件行为");
+	    }
+	}
+	
+	public interface Decorator extends Component {
+	    void setComponent(Component component);
+	}
+	
+	public class ConcreteDecorator1 implements Decorator {
+	
+	    private Component component;
+	
+	
+	    @Override
+	    public void setComponent(Component component) {
+	        this.component = component;
+	    }
+	
+	    @Override
+	    public void operate() {
+	        component.operate();
+	        System.out.println("装饰器1号");
+	    }
+	}
+	
+	public class ConcreteDecorator2 implements Decorator {
+	
+	    private Component component;
+	
+	
+	    @Override
+	    public void setComponent(Component component) {
+	        this.component = component;
+	    }
+	
+	    @Override
+	    public void operate() {
+	        component.operate();
+	        System.out.println("装饰器2号");
+	    }
+	}
+	
+	public class MainClass {
+	
+	    public static void main(String[] args) {
+	        Component component = new ConcreteComponent();
+	        Decorator decorator1 = new ConcreteDecorator1();
+	        Decorator decorator2 = new ConcreteDecorator2();
+	
+	        decorator1.setComponent(component);
+	        decorator2.setComponent(decorator1);
+	
+	        decorator2.operate();
+	    }
+	
+	}
+
 原因：在系统设计时，在涉及新功能时会在主类中添加新的方法和逻辑，而这些新的东西只会在某些特定情况下才会执行。装饰模式，会把每个要装饰的功能放在单独的类中，并让这个类装饰他所要装饰的对象。这样客户端就可以有选择地按顺序装饰对象。这样有效地把类的核心职责和装饰功能区分开。
 
 ## 外观模式
 
 解释：为子系统的一组接口提供一致的界面，通过定义一个高层接口，使得子系统更加容易使用。
+
+	public class Stock {
+	
+	    public void buy() {
+	        System.out.println("买入股票");
+	    }
+	
+	    public void sell() {
+	        System.out.println("卖出股票");
+	    }
+	}
+	
+	public class Realty {
+	    public void buy() {
+	        System.out.println("买入房地产股票");
+	    }
+	
+	    public void sell() {
+	        System.out.println("卖出房地产股票");
+	    }
+	}
+	
+	public class NationalDebt {
+	    public void buy() {
+	        System.out.println("买入国债");
+	    }
+	
+	    public void sell() {
+	        System.out.println("卖出国债");
+	    }
+	
+	}
+	
+	public class Facade {
+	
+	    private Stock stock;
+	    private NationalDebt nationalDebt;
+	    private Realty realty;
+	
+	
+	    public Facade() {
+	        stock = new Stock();
+	        nationalDebt = new NationalDebt();
+	        realty = new Realty();
+	    }
+	
+	    public void buy() {
+	        stock.buy();
+	        nationalDebt.buy();
+	        realty.buy();
+	    }
+	
+	    public void sell() {
+	        stock.sell();
+	        nationalDebt.sell();
+	        realty.sell();
+	    }
+	
+	}
+	
+	public class MainClass {
+	    public static void main(String[] args) {
+	        Facade facade = new Facade();
+	        facade.buy();
+	        facade.sell();
+	    }
+	}
+
 
 原因：在设计初期阶段，有意识的将不同层分离开，在曾与层之间建立外观，能大大降低耦合。
 在开发阶段，随着子系统不断重构演化会越加复杂，增加外观提供简单地接口能减少他们之间的依赖。
@@ -42,6 +463,73 @@ categories: jekyll update
 ## 享元模式
 
 解释：运用共享技术有效地支持大量细粒度的对象。
+
+	public interface Website {
+	    void use(User user);
+	}
+	
+	public class User {
+	
+	    public String name;
+	
+	    public User(String name) {
+	        this.name = name;
+	    }
+	}
+	
+	public class ConcreteWebsite implements Website {
+	    private String name;
+	
+	
+	    public ConcreteWebsite(String name) {
+	        this.name = name;
+	    }
+	
+	    @Override
+	    public void use(User user) {
+	        System.out.println("网站分类:" + name + "  " + user.name);
+	    }
+	
+	}
+	
+	public class WebSiteFactory {
+	    private static WebSiteFactory webSiteFactory;
+	    private Map<String, Website> flyweight;
+	
+	    private WebSiteFactory() {
+	        flyweight = new HashMap<String, Website>();
+	    }
+	
+	    public synchronized static WebSiteFactory getInstance() {
+	        if (webSiteFactory == null) {
+	            webSiteFactory = new WebSiteFactory();
+	        }
+	        return webSiteFactory;
+	    }
+	
+	    public Website getWebSite(String key) {
+	        if (!flyweight.containsKey(key)) {
+	            flyweight.put(key, new ConcreteWebsite(key));
+	        }
+	        return flyweight.get(key);
+	    }
+	}
+	
+	public class MainClass {
+	    public static void main(String[] args) {
+	        WebSiteFactory factory = WebSiteFactory.getInstance();
+	
+	        Website website = factory.getWebSite("博客");
+	        website.use(new User("王大锤"));
+	        website.use(new User("王二麻子"));
+	        website.use(new User("翠花"));
+	
+	        website = factory.getWebSite("电子商务");
+	        website.use(new User("老板"));
+	        website.use(new User("楼下小黑"));
+	        website.use(new User("狗蛋"));
+	    }
+	}
 
 原因：程序使用了大量对象，就会造成很大开销，通过移植参数及共享就可以大幅度减少对象数目。
 
