@@ -537,4 +537,42 @@ categories: jekyll update
 
 解释：为其他对象提供一种代理以控制对这个对象的访问。
 
+    public interface GiveGift {
+        void giveFlower();
+    }
+    
+    public class Pursuit implements GiveGift{
+        private String girl;
+    
+        public Pursuit(String girl){
+            this.girl = girl;
+        }
+    
+        @Override
+        public void giveFlower() {
+            System.out.println("追求者送花给"+girl);
+        }
+    }
+    
+    public class Proxy implements GiveGift {
+        private GiveGift pursuit;
+    
+        public Proxy(GiveGift pursuit){
+            this.pursuit = pursuit;
+        }
+        @Override
+        public void giveFlower() {
+            pursuit.giveFlower();
+        }
+    }
+    
+    public class MainClass {
+        public static void main(String [] args){
+            String girl = "小红";
+            Pursuit pursuit = new Pursuit(girl);
+            Proxy proxy = new Proxy(pursuit);
+            proxy.giveFlower();
+        }
+    }
+
 原因：可以隐藏远程对象的地址空间，通过创建虚拟代理来存放实例化需要很长时间的真实对象，还可以控制对象的访问权限，及在调用真是对象时能处理一些事情。
