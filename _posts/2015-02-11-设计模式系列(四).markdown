@@ -10,6 +10,76 @@ categories: jekyll update
 ## 观察者模式
 解释：定义一种一对多的依赖关系，让多个观察者对象同时监听某一主体对象。在这个主题对象状态发生变化时，或通知所有观察者对象，使他们能够自动更新自己。
 
+    public interface Observer {
+        void update();
+    }
+    
+    public interface Subject {
+        void add(Observer observer);
+        void remove(Observer observer);
+        void publish();
+    }
+    
+    public class Boss implements  Subject{
+    
+        private List<Observer> observers;
+    
+        public Boss(){
+            this.observers = new ArrayList<Observer>();
+        }
+    
+    
+        @Override
+        public void add(Observer observer) {
+            this.observers.add(observer);
+        }
+    
+        @Override
+        public void remove(Observer observer) {
+            this.observers.remove(observer);
+        }
+    
+        @Override
+        public void publish() {
+            for (Observer observer:observers){
+                observer.update();
+            }
+        }
+    }
+    
+    public class Person implements Observer{
+        private String name;
+    
+        public Person(String name){
+            this.name = name;
+        }
+    
+        @Override
+        public void update() {
+            System.out.println(name+"开始工作了");
+        }
+    }
+    
+    public class MainClass {
+        public static void main(String[]args){
+            Subject boss = new Boss();
+    
+            Observer tom = new Person("Tom");
+    
+            Observer jack = new Person("jack");
+    
+            boss.add(tom);
+            boss.add(jack);
+    
+            boss.publish();
+            System.out.println("------------------------------------------");
+            boss.remove(tom);
+            boss.publish();
+        }
+    }
+
+
+
 原因：在一个抽象模型中，有两个方面，其中一个方面依赖于另一个方面，这是用观察者模式可以将这两者封装在独立的对象中使他们各自独立地改变和复用。
 
 改进：事件委托模式
@@ -24,6 +94,64 @@ categories: jekyll update
 
 解释：将一个请求封装成一个对象，从而可用不同的请求对客户进行参数化。
 
+    public interface Receiver {
+        void doAction();
+    }
+    
+    public interface Command {
+        void setReceiver(Receiver receiver);
+        void execute();
+    }
+    
+    public class CommandA implements Command{
+        private Receiver receiver;
+    
+        @Override
+        public void setReceiver(Receiver receiver) {
+            this.receiver =  receiver;
+        }
+    
+        @Override
+        public void execute() {
+            receiver.doAction();
+        }
+    }
+    
+    public class ReceiverA  implements  Receiver{
+    
+        @Override
+        public void doAction() {
+            System.out.println("DoAction");
+        }
+    }
+    
+    public class Invoker {
+    
+        private Command command;
+    
+        public Invoker(Command command){
+            this.command = command;
+        }
+    
+        public void invoke(){
+            command.execute();
+        }
+    
+    }
+    
+    public class MainClass {
+        public static void main(String[] args){
+            Receiver receiver = new ReceiverA();
+            Command command = new CommandA();
+            command.setReceiver(receiver);
+    
+            Invoker invoker = new Invoker(command);
+            invoker.invoke();
+        }
+    }
+
+
+
 作用：
 
 	1. 能比较容易的实现一个命令队列。
@@ -32,14 +160,209 @@ categories: jekyll update
 	4. 可以容易地实现请求的撤消和重做
 	5. 由于加入新的具体命令不影响其他类，因此容易增加新的命令类
 
+
 ## 状态模式
 
 解释：当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。
+
+    public interface State {
+    
+        void doAction();
+    }
+    
+    public class StateA implements State {
+    
+        @Override
+        public void doAction() {
+            System.out.println("DoActionA");
+        }
+    }
+    
+    public class StateB implements State {
+    
+        @Override
+        public void doAction() {
+            System.out.println("DoActionB");
+        }
+    }
+    
+    public class Context {
+        private State state;
+    
+        public Context(State state){
+            this.state = state;
+        }
+    
+        public State getState() {
+            return state;
+        }
+    
+        public void setState(State state) {
+            this.state = state;
+        }
+    
+        public void handle(){
+            state.doAction();
+        }
+    }
+    
+    public class MainClass {
+        public static void main(String[] args){
+            State state = new StateA();
+            Context context = new Context(state);
+    
+            context.handle();
+    
+            state = new StateB();
+            context.setState(state);
+    
+            context.handle();
+        }
+    }
+
 
 好处：将特定状态相关的行为局部化，并且不同状态的行为分割开来，
 
 ## 职责链模式
 
 解释：使得多个对象都以机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这个对象连成一条链，并沿着这条链传递请求，直到有一个对象处理该请求。
+
+    public class Request {
+        private String requester;
+    
+        private String content;
+    
+        /**
+         * 0~9 初级
+         * 10~19 中级
+         * 20~29 高级
+         */
+        private int permission;
+    
+    
+        public String getRequester() {
+            return requester;
+        }
+    
+        public void setRequester(String requester) {
+            this.requester = requester;
+        }
+    
+        public String getContent() {
+            return content;
+        }
+    
+        public void setContent(String content) {
+            this.content = content;
+        }
+    
+        public int getPermission() {
+            return permission;
+        }
+    
+        public void setPermission(int permission) {
+            this.permission = permission;
+        }
+    }
+    
+    public interface Handler {
+    
+        /**
+         * 处理过程
+         */
+        void handle(Request request);
+    
+        /**
+         * 上级处理者
+         */
+        void setSuper(Handler handler);
+    
+    }
+    
+    public class FirstHandler implements Handler{
+    
+        private Handler superHandler;
+        
+    
+    
+        @Override
+        public void handle(Request request) {
+            if(request.getPermission()<10){
+                System.out.println(this.getClass().getSimpleName()+"处理成功");
+            }else{
+                superHandler.handle(request);
+            }
+        }
+    
+        @Override
+        public void setSuper(Handler handler) {
+            this.superHandler = handler;
+        }
+    }
+    
+    public class SecondHandler implements Handler{
+    
+        private Handler superHandler;
+        
+    
+    
+        @Override
+        public void handle(Request request) {
+            if(request.getPermission()<20){
+                System.out.println(this.getClass().getSimpleName()+"处理成功");
+            }else{
+                superHandler.handle(request);
+            }
+        }
+    
+        @Override
+        public void setSuper(Handler handler) {
+            this.superHandler = handler;
+        }
+    }
+    
+    public class ThirdHandler implements Handler{
+    
+        private Handler superHandler;
+        
+    
+    
+        @Override
+        public void handle(Request request) {
+            if(request.getPermission()<30){
+                System.out.println(this.getClass().getSimpleName()+"处理成功");
+            }else if(superHandler!=null){
+                superHandler.handle(request);
+            }
+            System.out.println(this.getClass().getSimpleName()+"处理不成功");
+        }
+    
+        @Override
+        public void setSuper(Handler handler) {
+            this.superHandler = handler;
+        }
+    }
+    
+    public class MainClass {
+        public static void main(String[] args){
+            Handler firstHandler = new FirstHandler();
+            Handler secondHandler = new SecondHandler();
+            Handler thirdHandler = new ThirdHandler();
+    
+            firstHandler.setSuper(secondHandler);
+            secondHandler.setSuper(thirdHandler);
+    
+            int[] permissions = {1,5,10,32,8};
+            Request request = new Request();
+            request.setContent("请求涨薪水");
+            request.setRequester("庄妃");
+    
+            for(int p:permissions){
+                request.setPermission(p);
+                firstHandler.handle(request);
+            }
+        }
+    }
+
 
 好处：使得接受者和发送者都没有对方的明确信息，且链中的对象也不知道链的结构。结果是简化对象的相互链接。
