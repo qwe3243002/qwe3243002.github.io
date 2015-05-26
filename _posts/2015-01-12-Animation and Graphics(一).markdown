@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: default
 title:  "Animation and Graphics(一)"
 date:   2015-01-12 16:09:30
-categories: jekyll update
+categories: Android
+tags: 动画
 ---
 ## 动画 ##
 

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Android窗口管理</title>
+  <meta name="description" content="原文链接：http://blog.csdn.net/huanxido/article/details/7879529">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/android/2015/01/12/Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86.html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <p>原文链接：<a href="http://blog.csdn.net/huanxido/article/details/7879529">http://blog.csdn.net/huanxido/article/details/7879529</a></p>
+
+<p>窗口管理系统是基于C/S模式</p>
+
+<p>客户端–&gt;请求创建窗口和使用窗口</p>
+
+<p>服务端–&gt;负责窗口的维护，如窗口显示等。</p>
+
+<p>Android应用/公用界面(客户端)&lt;——&gt;WindowManager&lt;——&gt;WindowManagerService（服务端）</p>
+
+<h1 id="section">窗口分为两种</h1>
+
+<ol>
+  <li>应用窗口:
+    <ol>
+      <li>在每一个Activity中都有一个主窗口，对话框也有一个窗口，Menu也有一个窗口，对于在一个Activity中这些窗口是通过该Activity关联起来的。</li>
+      <li>与应用窗口相关联的类即是Window和PhoneWindow，其中PhoneWindow继承于Window，并针对手机屏幕做了些优化工作。</li>
+      <li>PhoneWindow中核心Field是mDecorView，mDecorView是顶层的View，而窗口的添加动作就是调用getDecorView()获得该变量，并调用WindowManager.addView()将该View添加到WindowManager中。</li>
+    </ol>
+  </li>
+  <li>公共界面窗口
+    <ol>
+      <li>公共界面窗口是系统级别的窗口，不从属于任何应用以及Activity。</li>
+      <li>公共界面窗口有运行对话框，关机对话框，状态栏下拉栏，锁屏界面等。</li>
+      <li>这种窗口是直接调用WindowManager.addView()来把View添加到WindowManager中。</li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="activity">应用初始化过程中如何显示Activity界面</h2>
+
+<pre><code>1. 创建Activity对象
+2. 调用该Activity的attach()方法，用于调用PolicyManaager.makeNewWindow()创建PhoneWindow对象。
+3. 在onCreate()中调用setContentView()设置该Activity的显示界面，在setContentView中，系统框架会自动生成一个布局文件mDecorView，并且该布局文件中包含如标题栏，ActionBar等元素，最重要的就是包含了该应用的ContentView。
+4. 最后通过WindowManager.addView()将DecorView添加到WindowManger中显示出来。
+</code></pre>
+
+<h2 id="windowmanagerservice">WindowManagerService介绍</h2>
+<pre><code>1. windowMangerService是运行在system_server这个独立的进程中。
+2. 当应用程序需要创建窗口时，通过进程通信的方式来请求WindowManagerService创建窗口，并由WindowManagerService向应用程序传递和窗口的交互信息。
+3. 所有窗口都由WindowManagerService管理。
+</code></pre>
+
+<h2 id="windowmanagerservice-1">WindowManagerService的主要功能</h2>
+<pre><code>1. 窗口的添加和删除
+2. 窗口的显示和隐藏
+3. Z-order的顺序管理
+4. 焦点窗口和焦点应用的管理
+5. 输入法窗口管理和墙纸窗口管理
+6. 转场动画
+7. 系统消息的收集和分发
+</code></pre>
+
+<p><strong>服务端的实现代码位置——&gt;framework/base/services/java/com/android/server/wm/</strong>，其中核心类有：</p>
+
+<pre><code>1. WindowManagerService.java
+2. WindowState.java
+	应用调用WindowManager.addView()时，最终会在WindowManagerService中添加一个WindowState与之一一对应。
+3. WindowToken.java
+	应用请求添加WindowManagerService添加窗口时，会提供一个Token，用于表示该窗口的归属，所有Token相同的WindowState会被关联到同一个WindowToken中。
+4. AppWindowToken.java
+	1. 继承自WindowToken，其中的Token实际上就是指向一个Activity。
+	2. 当ActivityManagerService通知应用启动时，会生成一个token用于标识该Activity，并将该token传递到客户端中，而客户端在申请添加窗口时，会将该token作为标识传递到WindowManagerService。
+	3. 同一个Activity中的主窗体，对话框窗体，菜单窗体都关联到同一个AppWindowToken中。
+5. Session.java
+	表示客户端与服务端的交互会话。
+	处于同一进程的不同应用通过同一个Session来交互。
+	处于不同进程的不同应用通过不同Session交互。
+6. InputManager.java和InputMonitor.java
+	负责上层的消息分发功能
+</code></pre>
+
+<h2 id="activity-1">Activity从启动到添加窗口的整个流程：</h2>
+
+<pre><code>1. ActivityManagerService生成一个token作为该Activity的唯一标识
+2. 调用WindowManagerService向其中添加一个AppWindowToken，此AppWindowToken封装了Activity的token
+3. AMS启动应用客户端进程并把token传递到该进程中，并在客户端中完成Activity的初始化。
+4. 在Activity的attach()方法中完成PhoneWindow的创建，并将token传递到PhoneWindow中。
+5. 在WindowManger.addView()中，会将token和该View关联。
+6. 在想WindowManagerService申请创建窗口是，把token传递到WMS中。
+7. WMS创建窗口时会通过mTokenMap查询该token对应的AppWindowToken，如果为空则抛出异常，否则会创建一个WindowState对象以及其他工作。
+</code></pre>
+
+<h2 id="wms">WMS中服务端和客户端的交互接口和数据结构</h2>
+<pre><code>应用创建窗口时与之直接交互的对象时WindowManager，而WindowManager只是一个接口而已，真正交互的是实现该接口的WindowManagerImpl对象。
+
+WindowManager.addView()执行过程
+	1. 检查所添加的窗口是否已经添加(不允许重复添加)
+	2. 如果所添加的窗口是子窗口，找到其父窗口并保存在内部变量中
+	3. 创建新的ViewRoot，并保存对应的View（DecorView）和LayoutParams
+	4. 调用ViewRoot的setView()方法，完成添加工作
+
+ViewRoot本质上是一个Handler，并实现了ViewParent接口，其主要功能有：
+	1. 负责分发消息事件，如key，Motion事件
+	2. 负责和WMS交互，分发WMS的交互命令
+	3. 作为DecorView的parent，负责DecorView的measure,layout,draw等操作
+
+在addView()完成后就由ViewRoot全权负责与WMS的交互，他们之间的交互主要以一下两种数据结构进行:
+	1. IWindowSession:负责ViewRoot到WMS的单向请求
+	2. IWindow:用于WMS回调ViewRoot
+	这两个数据结构都是aidl接口，所以可以用于进程间的通信。
+	一个进程中只有一个IWindowSession对象，但可以有多个IWindow对象。
+
+ViewRoot的构造方法中会调用getWindowSession()初始化sWindowSession和mWindow。
+在调用setView()方法时，ViewRoot会调用sWindowSession.add()方法，把IWindow添加到WMS中，这是WMS就是生成一个WindowState与之一一对应，并把IWindow对象保存到WindowState内部作为回调的接口。
+</code></pre>
+
+<h2 id="windowstatesurface">WindowState和Surface</h2>
+<pre><code>1. 从WindowManger.addView()方法到WMS完成WindowState的初始化工作，客服端与服务端已经建立了良好的通信关系，这时客服端就能够对服务端发出命令，服务端也就能客户端进行透明操作了。
+2. 想要WindowState显示在屏幕上，那必须先申请一个显示缓存，关于显示缓存的管理和维护是在底层图形模块实现的，在java层由封装对象Surface操作。windowState会先申请Surface对象，并将此Surface的相关数据拷贝到ViewRoot中，这样ViewRoot中也有一个Surface对象，但实际上这两个对象都指向同一块显示缓存。
+3. ViewRoot就可以通过lockCanvas()来获取画布进行绘制，并通过unlockAndPostCanvas来讲绘制内容刷新到显示缓存中，最后由服务端绘制到窗口上。
+4. 窗口的显示过程：
+	1. Client请求显示窗口，并传递布局参数
+	2. WMS根据布局参数申请Surface对象，并传递给Client
+	3. Client对Surface进行绘制，并在完成后通知WMS
+	4. WMS将Surface显示在屏幕上，并进行层级等相应调整
+</code></pre>
+
+<p>窗口管理系统完整架构图<br />
+	<img src="http://img.my.csdn.net/uploads/201208/17/1345218629_9884.png" alt="" /></p>
+
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

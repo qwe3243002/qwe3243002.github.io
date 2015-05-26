@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Animation and Graphics(一)</title>
+  <meta name="description" content="动画">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/android/2015/01/13/Animation%20and%20Graphics(%E4%B8%80).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <h2 id="section">动画</h2>
+
+<p>Android框架提供两种动画体系属性动画（从Android3.0引入），视图动画。虽然两种动画系统都能够正常使用，但是建议使用属性动画系统，因为属性动画更加灵活并且能提供更多的特性。除了这两种动画系统外，还可以使用Drawable动画，他能加载Drawable资源并且一帧一帧显示出来。</p>
+
+<ol>
+  <li>
+    <p><strong>属性动画（Property Animation）</strong></p>
+
+    <p>从Android3.0开始引入，用来动态改变任何对象的属性，甚至是没有呈现在屏幕上的对象，并且你可以用于动态改变自定义类型的属性。</p>
+  </li>
+  <li>
+    <p><strong>视图动画（View Animation）</strong></p>
+
+    <p>视图动画相对更加简单，并且能满足大多数应用的需求。</p>
+  </li>
+  <li>
+    <p><strong>Drawable动画</strong></p>
+
+    <p>Drawable动画会一帧一帧的显示Drawable资源，在需要不断重复呈现Drawable时，是非常好的选择。</p>
+  </li>
+</ol>
+
+<h2 id="d3d">2D/3D图形</h2>
+<ol>
+  <li>
+    <p><strong>Canvas与Drawable</strong></p>
+
+    <p>Android提供了一组View组件，来满足用户通常使用。你也可以继承这些组件，自定义样式与行为来满足自己需求。此外，你可以使用Canvas提供的各种绘图方法来决定你想呈现的图案，或者使用drawable资源。</p>
+  </li>
+  <li>
+    <p><strong>硬件加速</strong></p>
+
+    <p>从Android3.0开始对大部分Canvas绘图API进行硬件加速，以提高性能。</p>
+  </li>
+  <li>
+    <p><strong>OpenGL</strong></p>
+
+    <p>Android supports OpenGL ES 1.0 and 2.0, with Android framework APIs as well as natively with the Native Development Kit (NDK). Using the framework APIs is desireable when you want to add a few graphical enhancements to your application that are not supported with the Canvas APIs, or if you desire platform independence and don’t demand high performance. There is a performance hit in using the framework APIs compared to the NDK, so for many graphic intensive applications such as games, using the NDK is beneficial (It is important to note though that you can still get adequate performance using the framework APIs. For example, the Google Body app is developed entirely using the framework APIs). OpenGL with the NDK is also useful if you have a lot of native code that you want to port over to Android. For more information about using the NDK, read the docs in the docs/ directory of the NDK download.</p>
+  </li>
+</ol>
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

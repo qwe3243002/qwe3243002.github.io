@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: default
 title:  "Android窗口管理"
 date:   2015-01-11 19:40:30
-categories: jekyll update
+categories: Android 
+tags: 窗口管理
 ---
 原文链接：[http://blog.csdn.net/huanxido/article/details/7879529](http://blog.csdn.net/huanxido/article/details/7879529)
 

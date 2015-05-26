@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
-
   {% include head.html %}
-
   <body>
 
-    {% include header.html %}
-
-    <div class="page-content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
     </div>
 
-    {% include footer.html %}
+    <div role="main" class="main">
+      {{ content }}
+    </div>
 
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
   </body>
-
 </html>

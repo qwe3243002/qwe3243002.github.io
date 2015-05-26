@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Content Provider(一)</title>
+  <meta name="description" content="ContentProvider用于访问结构化数据，他们在压缩数据的同时提供了保护数据安全的机制，并且提供了标准化接口用于在一个进程在另一个进程中进行数据访问。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/android/2015/01/15/Content%20Provider(%E4%B8%80).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <p>ContentProvider用于访问结构化数据，他们在压缩数据的同时提供了保护数据安全的机制，并且提供了标准化接口用于在一个进程在另一个进程中进行数据访问。</p>
+
+<p>在访问contentProvider提供的数据时，需要使用ContentResolver对象作为客户端来访问创建了ContentProvider对象的应用程序，由contentProvider执行访问要求并返回结果。</p>
+
+<p>Android提供音频，视频，图象，联系人等的ContentProvider，在android.provider文档中看到有关介绍。</p>
+
+<p>接下来主要介绍这几个方面：</p>
+
+<ol>
+  <li>
+    <p><strong><a href="http://qwe3243002.github.io/jekyll/update/2015/01/15/Content%20Provider(%E4%BA%8C).html">ContentProvider基础</a></strong></p>
+
+    <p>如何访问表格中的数据</p>
+  </li>
+  <li>
+    <p><strong>创建CotentProvider</strong></p>
+
+    <p>如何创建自己应用的ContentProvider</p>
+  </li>
+  <li>
+    <p><strong>日历ContentProvider</strong></p>
+
+    <p>访问日历提供数据</p>
+  </li>
+  <li>
+    <p><strong>联系人ContentProvider</strong></p>
+
+    <p>访问联系人提供数据</p>
+  </li>
+</ol>
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

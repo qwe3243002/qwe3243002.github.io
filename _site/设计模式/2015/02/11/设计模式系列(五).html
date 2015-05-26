@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>设计模式系列(五)</title>
+  <meta name="description" content="行为型模式二组">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/2015/02/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%B3%BB%E5%88%97(%E4%BA%94).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <h1 id="section">行为型模式二组</h1>
+
+<h2 id="section-1">解释器模式</h2>
+
+<p>解释：给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</p>
+
+<p>好处：可以很容易地改变和拓展文法。</p>
+
+<h2 id="section-2">中介者模式</h2>
+
+<p>解释：用一个中介对象来封装一系列对象的交互，使得一系列对象不用相互引用，从而降低之间的耦合。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+    
+        <span class="kd">private</span> <span class="n">Mediator</span> <span class="n">mediator</span><span class="o">;</span>
+    
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">type</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="n">Mediator</span> <span class="nf">getMediator</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">mediator</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getType</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">type</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setType</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">type</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMediator</span><span class="o">(</span><span class="n">Mediator</span> <span class="n">mediator</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">mediator</span> <span class="o">=</span> <span class="n">mediator</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">handler</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Mediator</span> <span class="o">{</span>
+        <span class="kt">void</span> <span class="nf">send</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">,</span><span class="n">Person</span> <span class="n">person</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Buyer</span> <span class="kd">extends</span> <span class="n">Person</span><span class="o">{</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handler</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;buyer receive message: &quot;</span><span class="o">+</span><span class="n">msg</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Seller</span> <span class="kd">extends</span> <span class="n">Person</span> <span class="o">{</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handler</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;seller receiver message: &quot;</span><span class="o">+</span><span class="n">msg</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">HouseMediator</span> <span class="kd">implements</span>  <span class="n">Mediator</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Person</span> <span class="n">buyer</span> <span class="o">;</span>
+        <span class="kd">private</span> <span class="n">Person</span> <span class="n">seller</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="n">Person</span> <span class="nf">getBuyer</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">buyer</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBuyer</span><span class="o">(</span><span class="n">Person</span> <span class="n">buyer</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">buyer</span> <span class="o">=</span> <span class="n">buyer</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="n">Person</span> <span class="nf">getSeller</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">seller</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSeller</span><span class="o">(</span><span class="n">Person</span> <span class="n">seller</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">seller</span> <span class="o">=</span> <span class="n">seller</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">send</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">,</span> <span class="n">Person</span> <span class="n">person</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getType</span><span class="o">()==</span><span class="s">&quot;buyer&quot;</span><span class="o">){</span>
+                <span class="n">seller</span><span class="o">.</span><span class="na">handler</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+            <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                <span class="n">buyer</span><span class="o">.</span><span class="na">handler</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+            <span class="n">Person</span> <span class="n">buyer</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Buyer</span><span class="o">();</span>
+            <span class="n">buyer</span><span class="o">.</span><span class="na">setType</span><span class="o">(</span><span class="s">&quot;buyer&quot;</span><span class="o">);</span>
+            <span class="n">Person</span> <span class="n">seller</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Seller</span><span class="o">();</span>
+            <span class="n">seller</span><span class="o">.</span><span class="na">setType</span><span class="o">(</span><span class="s">&quot;seller&quot;</span><span class="o">);</span>
+            <span class="n">HouseMediator</span> <span class="n">houseMediator</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HouseMediator</span><span class="o">();</span>
+            <span class="n">houseMediator</span><span class="o">.</span><span class="na">setBuyer</span><span class="o">(</span><span class="n">buyer</span><span class="o">);</span>
+            <span class="n">houseMediator</span><span class="o">.</span><span class="na">setSeller</span><span class="o">(</span><span class="n">seller</span><span class="o">);</span>
+    
+            <span class="n">buyer</span><span class="o">.</span><span class="na">setMediator</span><span class="o">(</span><span class="n">houseMediator</span><span class="o">);</span>
+            <span class="n">seller</span><span class="o">.</span><span class="na">setMediator</span><span class="o">(</span><span class="n">houseMediator</span><span class="o">);</span>
+    
+            <span class="n">houseMediator</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="s">&quot;我要买房子&quot;</span><span class="o">,</span><span class="n">buyer</span><span class="o">);</span>
+            <span class="n">houseMediator</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="s">&quot;我要卖房子&quot;</span><span class="o">,</span><span class="n">seller</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+<h2 id="section-3">访问者模式</h2>
+
+<p>解释：表示一个作用于某对象结构中的各元素的操作。它使得你可以在不改变各元素类的前提下定义作用与这些新元素的操作。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Action</span> <span class="o">{</span>
+        <span class="kt">void</span> <span class="nf">getManConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">man</span><span class="o">);</span>
+        <span class="kt">void</span> <span class="nf">getWomanConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">woman</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Person</span> <span class="o">{</span>
+        <span class="kt">void</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Action</span> <span class="n">visitor</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Success</span> <span class="kd">implements</span> <span class="n">Action</span> <span class="o">{</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getManConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">man</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">manName</span> <span class="o">=</span> <span class="n">man</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">actionName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">manName</span><span class="o">+</span><span class="n">actionName</span><span class="o">+</span><span class="s">&quot;时，背后多半有一个伟大的女人&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getWomanConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">woman</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">womanName</span> <span class="o">=</span> <span class="n">woman</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">actionName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">womanName</span><span class="o">+</span><span class="n">actionName</span><span class="o">+</span><span class="s">&quot;时，背后多半有一个不成功的男人&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Fail</span> <span class="kd">implements</span> <span class="n">Action</span> <span class="o">{</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getManConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">man</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">manName</span> <span class="o">=</span> <span class="n">man</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">actionName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">manName</span><span class="o">+</span><span class="n">actionName</span><span class="o">+</span><span class="s">&quot;时,闷头喝酒谁也不用劝&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getWomanConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">woman</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">womanName</span> <span class="o">=</span> <span class="n">woman</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">actionName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">womanName</span><span class="o">+</span><span class="n">actionName</span><span class="o">+</span><span class="s">&quot;时，眼泪汪汪谁也劝不了&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Amativeness</span> <span class="kd">implements</span> <span class="n">Action</span> <span class="o">{</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getManConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">man</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">manName</span> <span class="o">=</span> <span class="n">man</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">actionName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">manName</span><span class="o">+</span><span class="n">actionName</span><span class="o">+</span><span class="s">&quot;时,凡是不懂也要装懂&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getWomanConclusion</span><span class="o">(</span><span class="n">Person</span> <span class="n">woman</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">womanName</span> <span class="o">=</span> <span class="n">woman</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">actionName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">womanName</span><span class="o">+</span><span class="n">actionName</span><span class="o">+</span><span class="s">&quot;时，遇事懂了也是不懂&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Man</span> <span class="kd">implements</span> <span class="n">Person</span> <span class="o">{</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Action</span> <span class="n">visitor</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">visitor</span><span class="o">.</span><span class="na">getManConclusion</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Woman</span> <span class="kd">implements</span> <span class="n">Person</span> <span class="o">{</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Action</span> <span class="n">visitor</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">visitor</span><span class="o">.</span><span class="na">getWomanConclusion</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Objects</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">persons</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;();</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Person</span> <span class="n">person</span><span class="o">){</span>
+            <span class="n">persons</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">person</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Person</span> <span class="n">person</span><span class="o">){</span>
+            <span class="n">persons</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">person</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">display</span><span class="o">(</span><span class="n">Action</span> <span class="n">visitor</span><span class="o">){</span>
+            <span class="k">for</span><span class="o">(</span><span class="n">Person</span> <span class="nl">person:</span><span class="n">persons</span><span class="o">){</span>
+                <span class="n">person</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">visitor</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+    
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+            <span class="n">Objects</span> <span class="n">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Objects</span><span class="o">();</span>
+            <span class="n">o</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nf">Man</span><span class="o">());</span>
+            <span class="n">o</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nf">Woman</span><span class="o">());</span>
+    
+            <span class="n">Success</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Success</span><span class="o">();</span>
+            <span class="n">o</span><span class="o">.</span><span class="na">display</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    
+            <span class="n">Fail</span> <span class="n">fail</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Fail</span><span class="o">();</span>
+            <span class="n">o</span><span class="o">.</span><span class="na">display</span><span class="o">(</span><span class="n">fail</span><span class="o">);</span>
+    
+            <span class="n">Amativeness</span> <span class="n">amativeness</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Amativeness</span><span class="o">();</span>
+            <span class="n">o</span><span class="o">.</span><span class="na">display</span><span class="o">(</span><span class="n">amativeness</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+<p>好处：适用与数据结构相对稳定的系统，将数据结构和作用于数据结构上的操作解耦。</p>
+
+<h2 id="section-4">策略模式</h2>
+
+<p>解释：定义算法家族，并分别封装起来，让他们之间能相互替换，而不影响到使用算法的用户。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Strategy</span> <span class="o">{</span>
+        <span class="kt">void</span> <span class="nf">cal</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">StrategyA</span> <span class="kd">implements</span> <span class="n">Strategy</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">cal</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;算法A&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">StrategyB</span> <span class="kd">implements</span> <span class="n">Strategy</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">cal</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;算法B&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">StrategyC</span> <span class="kd">implements</span> <span class="n">Strategy</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">cal</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;算法C&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Context</span> <span class="o">{</span>
+    
+        <span class="kd">private</span> <span class="n">Strategy</span> <span class="n">strategy</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="nf">Context</span><span class="o">(</span><span class="n">Strategy</span> <span class="n">strategy</span><span class="o">){</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">strategy</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setStrategy</span><span class="o">(</span><span class="n">Strategy</span> <span class="n">strategy</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">strategy</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">cal</span><span class="o">(){</span>
+            <span class="n">strategy</span><span class="o">.</span><span class="na">cal</span><span class="o">();</span>
+        <span class="o">}</span>
+    
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+            <span class="n">Strategy</span> <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StrategyA</span><span class="o">();</span>
+            <span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Context</span><span class="o">(</span><span class="n">strategy</span><span class="o">);</span>
+            <span class="n">context</span><span class="o">.</span><span class="na">cal</span><span class="o">();</span>
+            <span class="n">context</span><span class="o">.</span><span class="na">setStrategy</span><span class="o">(</span><span class="k">new</span> <span class="nf">StrategyB</span><span class="o">());</span>
+            <span class="n">context</span><span class="o">.</span><span class="na">cal</span><span class="o">();</span>
+            <span class="n">context</span><span class="o">.</span><span class="na">setStrategy</span><span class="o">(</span><span class="k">new</span> <span class="nf">StrategyC</span><span class="o">());</span>
+            <span class="n">context</span><span class="o">.</span><span class="na">cal</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+<h2 id="section-5">备忘录模式</h2>
+
+<p>解释：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Memento</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">state</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getState</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="n">String</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Originator</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">state</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getState</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="n">String</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="n">Memento</span> <span class="nf">createMemento</span><span class="o">(){</span>
+            <span class="n">Memento</span> <span class="n">memento</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Memento</span><span class="o">();</span>
+            <span class="n">memento</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="n">state</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">memento</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMemento</span><span class="o">(</span><span class="n">Memento</span> <span class="n">memento</span><span class="o">){</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="n">memento</span><span class="o">.</span><span class="na">getState</span><span class="o">());</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">show</span><span class="o">(){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;State:&quot;</span><span class="o">+</span><span class="n">state</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Caretaker</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Memento</span> <span class="n">memento</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="n">Memento</span> <span class="nf">getMemento</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">memento</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMemento</span><span class="o">(</span><span class="n">Memento</span> <span class="n">memento</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">memento</span> <span class="o">=</span> <span class="n">memento</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+    
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+            <span class="n">Originator</span> <span class="n">originator</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Originator</span><span class="o">();</span>
+            <span class="n">originator</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="s">&quot;On&quot;</span><span class="o">);</span>
+            <span class="n">originator</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+    
+            <span class="n">Memento</span> <span class="n">memento</span> <span class="o">=</span> <span class="n">originator</span><span class="o">.</span><span class="na">createMemento</span><span class="o">();</span>
+            <span class="n">Caretaker</span> <span class="n">caretaker</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Caretaker</span><span class="o">();</span>
+            <span class="n">caretaker</span><span class="o">.</span><span class="na">setMemento</span><span class="o">(</span><span class="n">memento</span><span class="o">);</span>
+            <span class="n">originator</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="s">&quot;Off&quot;</span><span class="o">);</span>
+            <span class="n">originator</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+    
+            <span class="n">originator</span><span class="o">.</span><span class="na">setMemento</span><span class="o">(</span><span class="n">caretaker</span><span class="o">.</span><span class="na">getMemento</span><span class="o">());</span>
+            <span class="n">originator</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+<h2 id="section-6">迭代器模式</h2>
+
+<p>解释：提供一个方法顺序访问一个聚合对象中各个元素，而不暴露该对象的内部表示。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterator</span> <span class="o">{</span>
+        <span class="n">Object</span> <span class="nf">getFirst</span><span class="o">();</span>
+        <span class="n">Object</span> <span class="nf">next</span><span class="o">();</span>
+        <span class="n">Object</span> <span class="nf">currentItem</span><span class="o">();</span>
+        <span class="kt">boolean</span> <span class="nf">isDone</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Aggregate</span> <span class="o">{</span>
+        <span class="n">Iterator</span> <span class="nf">iterator</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteIterator</span> <span class="kd">implements</span> <span class="n">Iterator</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">ConcreteAggregate</span> <span class="n">aggregate</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">index</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">ConcreteIterator</span><span class="o">(</span><span class="n">ConcreteAggregate</span> <span class="n">aggregate</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">aggregate</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">;</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getFirst</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">aggregate</span><span class="o">.</span><span class="na">getList</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">aggregate</span><span class="o">.</span><span class="na">getList</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="n">index</span><span class="o">++);</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">currentItem</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">aggregate</span><span class="o">.</span><span class="na">getList</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isDone</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">index</span><span class="o">&lt;</span><span class="n">aggregate</span><span class="o">.</span><span class="na">getList</span><span class="o">().</span><span class="na">size</span><span class="o">()){</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteAggregate</span> <span class="kd">implements</span> <span class="n">Aggregate</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;();</span>
+    
+        <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">getList</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setList</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">list</span> <span class="o">=</span> <span class="n">list</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Iterator</span> <span class="nf">iterator</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">ConcreteIterator</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getCount</span><span class="o">(){</span>
+            <span class="k">return</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+        <span class="o">}</span>
+    
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+            <span class="n">ConcreteAggregate</span> <span class="n">aggregate</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteAggregate</span><span class="o">();</span>
+    
+            <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;();</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;one&quot;</span><span class="o">);</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;two&quot;</span><span class="o">);</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;three&quot;</span><span class="o">);</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;four&quot;</span><span class="o">);</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;five&quot;</span><span class="o">);</span>
+    
+            <span class="n">aggregate</span><span class="o">.</span><span class="na">setList</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+    
+            <span class="n">Iterator</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+            <span class="k">while</span><span class="o">(!</span><span class="n">iterator</span><span class="o">.</span><span class="na">isDone</span><span class="o">()){</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">());</span>
+            <span class="o">}</span>
+    
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

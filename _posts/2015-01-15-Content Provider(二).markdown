@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: default
 title:  "Content Provider(二)"
 date:   2015-01-15 17:00:30
-categories: jekyll update
+categories: Android
+tags: ContentProvider
 ---
 这篇文章主要介绍有：
 

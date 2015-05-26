@@ -1,14 +1,16 @@
 ---
-layout: post
+layout: default
 title:  "设计模式系列(四)"
 date:   2015-02-11 12:36:30
-categories: jekyll update
+categories: 设计模式
 ---
 
 # 三、行为型模式一组
 
 ## 观察者模式
 解释：定义一种一对多的依赖关系，让多个观察者对象同时监听某一主体对象。在这个主题对象状态发生变化时，或通知所有观察者对象，使他们能够自动更新自己。
+
+{% highlight java %}
 
     public interface Observer {
         void update();
@@ -78,7 +80,7 @@ categories: jekyll update
         }
     }
 
-
+{% endhighlight %}
 
 原因：在一个抽象模型中，有两个方面，其中一个方面依赖于另一个方面，这是用观察者模式可以将这两者封装在独立的对象中使他们各自独立地改变和复用。
 
@@ -93,6 +95,8 @@ categories: jekyll update
 ## 命令模式
 
 解释：将一个请求封装成一个对象，从而可用不同的请求对客户进行参数化。
+
+{% highlight java %}
 
     public interface Receiver {
         void doAction();
@@ -150,7 +154,7 @@ categories: jekyll update
         }
     }
 
-
+{% endhighlight %}
 
 作用：
 
@@ -164,6 +168,8 @@ categories: jekyll update
 ## 状态模式
 
 解释：当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。
+
+{% highlight java %}
 
     public interface State {
     
@@ -220,12 +226,15 @@ categories: jekyll update
         }
     }
 
+{% endhighlight %}
 
 好处：将特定状态相关的行为局部化，并且不同状态的行为分割开来，
 
 ## 职责链模式
 
 解释：使得多个对象都以机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这个对象连成一条链，并沿着这条链传递请求，直到有一个对象处理该请求。
+
+{% highlight java %}
 
     public class Request {
         private String requester;
@@ -364,5 +373,6 @@ categories: jekyll update
         }
     }
 
+{% endhighlight %}
 
 好处：使得接受者和发送者都没有对方的明确信息，且链中的对象也不知道链的结构。结果是简化对象的相互链接。

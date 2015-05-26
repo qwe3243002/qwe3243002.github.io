@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>网络连接小技巧(一)</title>
+  <meta name="description" content="测试是否有网">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/android/2015/01/16/%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%B0%8F%E6%8A%80%E5%B7%A7(%E4%B8%80).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <h1 id="section">测试是否有网</h1>
+
+<pre><code>public static boolean isNetworkAvailable(Context context) {
+    ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivityManager == null) {
+        Log.d(TAG, "+++couldn't get connectivity manager");
+    } else {
+        NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
+        for (NetworkInfo temp : info) {
+            if (temp.getState() == NetworkInfo.State.CONNECTED) {
+                Log.d(TAG, "+++network is available: " + temp.getTypeName());
+                return true;
+            }
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<h1 id="section-1"><strong>判断网络连接类型</strong></h1>
+
+<pre><code>public static String getNetType(Context context) {
+    String type = "";
+    if (context == null) {
+        return null;
+    }
+    ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connManager == null) {
+        return null;
+    } else {
+        NetworkInfo networkInfoMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo networkInfoWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo.State mobile = null, wifi = null;
+        if (networkInfoMobile != null) {
+            mobile = networkInfoMobile.getState();
+        }
+        if (networkInfoWifi != null) {
+            wifi = networkInfoWifi.getState();
+        }
+        if (wifi != null &amp;&amp; wifi == NetworkInfo.State.CONNECTED) {
+            type = "wifi";
+        }
+        if (mobile != null &amp;&amp; mobile == NetworkInfo.State.CONNECTED) {
+            type = "mobile";
+        }
+    }
+    return type;
+
+}
+</code></pre>
+
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

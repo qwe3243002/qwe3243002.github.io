@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: default
 title:  "网络连接小技巧(一)"
 date:   2015-01-16 14:34:30
-categories: jekyll update
+categories: Android
+tags: 网络
 ---
 # 测试是否有网 #
 

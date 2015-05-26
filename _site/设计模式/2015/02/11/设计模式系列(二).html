@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>设计模式系列(二)</title>
+  <meta name="description" content="创建型模式">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/2015/02/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%B3%BB%E5%88%97(%E4%BA%8C).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <h1 id="section">创建型模式</h1>
+
+<h2 id="section-1">单例模式</h2>
+
+<p>解释：保证一个类仅有一个实例，并提供一个访问他的全局访问点。<br />
+使用：</p>
+
+<pre><code>饿汉式：在加载时就将自己实例化。
+懒汉式：在第一次引用自己时，才将自己实例化。
+</code></pre>
+
+<h2 id="section-2">简单工厂模式</h2>
+
+<p>解释：对于某一类行为提供统一方法来完成相应具体行为的实例化。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Operation</span> <span class="o">{</span>
+    	<span class="n">Object</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">);</span>
+    <span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AddOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">:</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">+=</span> <span class="n">num</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SubOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">-=</span> <span class="n">params</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MulOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">:</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">*=</span> <span class="n">num</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DivOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Double</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">double</span> <span class="n">result</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">/=</span> <span class="n">params</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OperationFactory</span> <span class="o">{</span>
+	
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Operation</span> <span class="nf">createOperation</span><span class="o">(</span><span class="n">String</span> <span class="n">operate</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="k">switch</span> <span class="o">(</span><span class="n">operate</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">case</span> <span class="s">&quot;+&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AddOperation</span><span class="o">();</span>
+	                <span class="k">break</span><span class="o">;</span>
+	            <span class="k">case</span> <span class="s">&quot;-&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SubOperation</span><span class="o">();</span>
+	                <span class="k">break</span><span class="o">;</span>
+	            <span class="k">case</span> <span class="s">&quot;*&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MulOperation</span><span class="o">();</span>
+	                <span class="k">break</span><span class="o">;</span>
+	            <span class="k">case</span> <span class="s">&quot;/&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DivOperation</span><span class="o">();</span>
+	            <span class="k">default</span><span class="o">:</span>
+	                <span class="k">break</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OperationFactory</span> <span class="o">{</span>
+	
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Operation</span> <span class="nf">createOperation</span><span class="o">(</span><span class="n">String</span> <span class="n">operate</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="k">switch</span> <span class="o">(</span><span class="n">operate</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">case</span> <span class="s">&quot;+&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AddOperation</span><span class="o">();</span>
+	                <span class="k">break</span><span class="o">;</span>
+	            <span class="k">case</span> <span class="s">&quot;-&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SubOperation</span><span class="o">();</span>
+	                <span class="k">break</span><span class="o">;</span>
+	            <span class="k">case</span> <span class="s">&quot;*&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MulOperation</span><span class="o">();</span>
+	                <span class="k">break</span><span class="o">;</span>
+	            <span class="k">case</span> <span class="s">&quot;/&quot;</span><span class="o">:</span>
+	                <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DivOperation</span><span class="o">();</span>
+	            <span class="k">default</span><span class="o">:</span>
+	                <span class="k">break</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	<span class="o">}</span></code></pre></div>
+
+<p>不好：虽然提供的统一方法来完成实例化相应对象，但一旦需要添加新的行为需要修改源码，破坏开放封闭原则。</p>
+
+<h2 id="section-3">工厂方法模式</h2>
+
+<p>解释：定义一个用于创建对象的接口，让子类决定实例化哪个类。使一个类的实例化延迟到子类。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Operation</span> <span class="o">{</span>
+    	<span class="n">Object</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">);</span>
+    <span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AddOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">:</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">+=</span> <span class="n">num</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SubOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">-=</span> <span class="n">params</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MulOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">:</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">*=</span> <span class="n">num</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DivOperation</span> <span class="kd">implements</span> <span class="n">Operation</span> <span class="o">{</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Double</span> <span class="nf">operate</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">params</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="o">}</span>
+	        <span class="kt">double</span> <span class="n">result</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+	            <span class="n">result</span> <span class="o">/=</span> <span class="n">params</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IOperationFactory</span> <span class="o">{</span>
+    	<span class="n">Operation</span> <span class="nf">createOperation</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AddFactory</span> <span class="kd">implements</span> <span class="n">IOperationFactory</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Operation</span> <span class="nf">createOperation</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">AddOperation</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SubFactory</span> <span class="kd">implements</span> <span class="n">IOperationFactory</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Operation</span> <span class="nf">createOperation</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">SubOperation</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MulFactory</span> <span class="kd">implements</span> <span class="n">IOperationFactory</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Operation</span> <span class="nf">createOperation</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">MulOperation</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DivFactory</span> <span class="kd">implements</span> <span class="n">IOperationFactory</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Operation</span> <span class="nf">createOperation</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">DivOperation</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AddFactory</span><span class="o">().</span><span class="na">createOperation</span><span class="o">();</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">operation</span><span class="o">.</span><span class="na">operate</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+	        <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SubFactory</span><span class="o">().</span><span class="na">createOperation</span><span class="o">();</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">operation</span><span class="o">.</span><span class="na">operate</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+	        <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MulFactory</span><span class="o">().</span><span class="na">createOperation</span><span class="o">();</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">operation</span><span class="o">.</span><span class="na">operate</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+	        <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DivFactory</span><span class="o">().</span><span class="na">createOperation</span><span class="o">();</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">operation</span><span class="o">.</span><span class="na">operate</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>优点：克服了简单工厂违背开放封闭原则的缺点，又保持了封装创建对象的过程。<br />
+缺点：代码量增加。</p>
+
+<h2 id="section-4">抽象工厂模式</h2>
+
+<p>解释：提供一个创建一系列相关或相互依赖对象的接口，而无需指定他们具体的类。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IDepartment</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">insert</span><span class="o">();</span>
+	
+	    <span class="n">IDepartment</span> <span class="nf">getDepartment</span><span class="o">();</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IFactory</span> <span class="o">{</span>
+	    <span class="n">IUser</span> <span class="nf">createUser</span><span class="o">();</span>
+	
+	    <span class="n">IDepartment</span> <span class="nf">createDepartment</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IUser</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">insert</span><span class="o">();</span>
+	
+	    <span class="n">IUser</span> <span class="nf">getUser</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySqlDepartment</span> <span class="kd">implements</span> <span class="n">IDepartment</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;在MySql数据库中插入一条Department数据&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IDepartment</span> <span class="nf">getDepartment</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;在MySql数据库中获取一条Department数据&quot;</span><span class="o">);</span>
+	        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySqlUser</span> <span class="kd">implements</span> <span class="n">IUser</span> <span class="o">{</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;在MySql数据库中插入一条User数据&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IUser</span> <span class="nf">getUser</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;在MySql数据库中取出一条User数据&quot;</span><span class="o">);</span>
+	        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySqlFactory</span> <span class="kd">implements</span> <span class="n">IFactory</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IUser</span> <span class="nf">createUser</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">MySqlUser</span><span class="o">();</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IDepartment</span> <span class="nf">createDepartment</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">MySqlDepartment</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OracleDepartment</span> <span class="kd">implements</span> <span class="n">IDepartment</span> <span class="o">{</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">在Oracle数据库中插入Department数据</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IDepartment</span> <span class="nf">getDepartment</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;在Oracle数据库中获取一条Department数据&quot;</span><span class="o">);</span>
+	        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OracleUser</span> <span class="kd">implements</span> <span class="n">IUser</span> <span class="o">{</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;在Oracle数据库中插入一条User数据&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IUser</span> <span class="nf">getUser</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;从Oracle数据库中取出一条数据&quot;</span><span class="o">);</span>
+	        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OracleFactory</span> <span class="kd">implements</span> <span class="n">IFactory</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IUser</span> <span class="nf">createUser</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">OracleUser</span><span class="o">();</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">IDepartment</span> <span class="nf">createDepartment</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="k">new</span> <span class="nf">OracleDepartment</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">IFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MySqlFactory</span><span class="o">();</span>
+	        <span class="n">IUser</span> <span class="n">user</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createUser</span><span class="o">();</span>
+	        <span class="n">user</span><span class="o">.</span><span class="na">insert</span><span class="o">();</span>
+	        <span class="n">user</span><span class="o">.</span><span class="na">getUser</span><span class="o">();</span>
+	        <span class="n">IDepartment</span> <span class="n">department</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createDepartment</span><span class="o">();</span>
+	        <span class="n">department</span><span class="o">.</span><span class="na">insert</span><span class="o">();</span>
+	        <span class="n">department</span><span class="o">.</span><span class="na">getDepartment</span><span class="o">();</span>
+	
+	        <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">OracleFactory</span><span class="o">();</span>
+	        <span class="n">user</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createUser</span><span class="o">();</span>
+	        <span class="n">user</span><span class="o">.</span><span class="na">insert</span><span class="o">();</span>
+	        <span class="n">user</span><span class="o">.</span><span class="na">getUser</span><span class="o">();</span>
+	        <span class="n">department</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createDepartment</span><span class="o">();</span>
+	        <span class="n">department</span><span class="o">.</span><span class="na">insert</span><span class="o">();</span>
+	        <span class="n">department</span><span class="o">.</span><span class="na">getDepartment</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>优点：</p>
+
+<pre><code>1. 抽象工厂就是将工厂模式的一个接口创建一个工厂转变为一个接口可以创建多个相互关联或相互依赖的工厂。
+2. 通过对多个创建工厂的抽象，能够一次性方便地切换一系列的配置。
+</code></pre>
+
+<p>缺点：</p>
+
+<pre><code>虽然保持了开放封闭的原则，但是一旦添加新的工厂接口，需要改动多个类，较为麻烦。
+</code></pre>
+
+<p>改进：</p>
+
+<ol>
+  <li>通过简单工厂模式改进：</li>
+</ol>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataAccess</span> <span class="o">{</span>
+		    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">MYSQL</span> <span class="o">=</span> <span class="s">&quot;MySql&quot;</span><span class="o">;</span>
+		    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ORACLE</span> <span class="o">=</span> <span class="s">&quot;oracle&quot;</span><span class="o">;</span>
+		    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">MYSQL</span><span class="o">;</span>
+		
+		    <span class="kd">public</span> <span class="n">IUser</span> <span class="nf">createUser</span><span class="o">()</span> <span class="o">{</span>
+		        <span class="n">IUser</span> <span class="n">user</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		        <span class="k">switch</span> <span class="o">(</span><span class="n">DB</span><span class="o">)</span> <span class="o">{</span>
+		            <span class="k">case</span> <span class="nl">MYSQL:</span>
+		                <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MySqlUser</span><span class="o">();</span>
+		                <span class="k">break</span><span class="o">;</span>
+		            <span class="k">case</span> <span class="nl">ORACLE:</span>
+		                <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">OracleUser</span><span class="o">();</span>
+		                <span class="k">break</span><span class="o">;</span>
+		            <span class="k">default</span><span class="o">:</span>
+		                <span class="k">break</span><span class="o">;</span>
+		        <span class="o">}</span>
+		        <span class="k">return</span> <span class="n">user</span><span class="o">;</span>
+		    <span class="o">}</span>
+		
+		    <span class="kd">public</span> <span class="n">IDepartment</span> <span class="nf">createDepartment</span><span class="o">()</span> <span class="o">{</span>
+		        <span class="n">IDepartment</span> <span class="n">department</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		        <span class="k">switch</span> <span class="o">(</span><span class="n">DB</span><span class="o">)</span> <span class="o">{</span>
+		            <span class="k">case</span> <span class="nl">MYSQL:</span>
+		                <span class="n">department</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MySqlDepartment</span><span class="o">();</span>
+		                <span class="k">break</span><span class="o">;</span>
+		            <span class="k">case</span> <span class="nl">ORACLE:</span>
+		                <span class="n">department</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">OracleDepartment</span><span class="o">();</span>
+		                <span class="k">break</span><span class="o">;</span>
+		            <span class="k">default</span><span class="o">:</span>
+		                <span class="k">break</span><span class="o">;</span>
+		        <span class="o">}</span>
+		        <span class="k">return</span> <span class="n">department</span><span class="o">;</span>
+		    <span class="o">}</span>
+		<span class="o">}</span>
+		
+		<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+		    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		        <span class="n">DataAccess</span> <span class="n">access</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DataAccess</span><span class="o">();</span>
+		        <span class="n">IUser</span> <span class="n">user</span> <span class="o">=</span> <span class="n">access</span><span class="o">.</span><span class="na">createUser</span><span class="o">();</span>
+		        <span class="n">user</span><span class="o">.</span><span class="na">insert</span><span class="o">();</span>
+		        <span class="n">user</span><span class="o">.</span><span class="na">getUser</span><span class="o">();</span>
+		        <span class="n">IDepartment</span> <span class="n">department</span> <span class="o">=</span> <span class="n">access</span><span class="o">.</span><span class="na">createDepartment</span><span class="o">();</span>
+		        <span class="n">department</span><span class="o">.</span><span class="na">insert</span><span class="o">();</span>
+		        <span class="n">department</span><span class="o">.</span><span class="na">getDepartment</span><span class="o">();</span>
+		    <span class="o">}</span>
+		<span class="o">}</span></code></pre></div>
+
+<p>评价：</p>
+
+<pre><code>相对于最初类，减少了IFactory、MySqlFactory、OracleFactory，这样虽然减少了代码量，但是由于采用switch-case，一旦发生变化则需要增加case，破坏了开放封闭原则。
+</code></pre>
+
+<p>2.通过反射方法改进</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataAccess</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">PKG</span> <span class="o">=</span> <span class="n">DataAccess</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getPackage</span><span class="o">().</span><span class="na">getName</span><span class="o">();</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">MYSQL</span> <span class="o">=</span> <span class="s">&quot;MySql&quot;</span><span class="o">;</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ORACLE</span> <span class="o">=</span> <span class="s">&quot;Oracle&quot;</span><span class="o">;</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">MYSQL</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="n">IUser</span> <span class="nf">createUser</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">IUser</span> <span class="n">user</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="k">try</span> <span class="o">{</span>
+	            <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="n">IUser</span><span class="o">)</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">PKG</span><span class="o">+</span><span class="s">&quot;.&quot;</span><span class="o">+</span><span class="n">DB</span><span class="o">+</span><span class="s">&quot;User&quot;</span><span class="o">).</span><span class="na">newInstance</span><span class="o">();</span>
+	        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClassNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">user</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="n">IDepartment</span> <span class="nf">createDepartment</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">IDepartment</span> <span class="n">department</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	        <span class="k">try</span> <span class="o">{</span>
+	            <span class="n">department</span> <span class="o">=</span> <span class="o">(</span><span class="n">IDepartment</span><span class="o">)</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">PKG</span><span class="o">+</span><span class="s">&quot;.&quot;</span><span class="o">+</span><span class="n">DB</span><span class="o">+</span><span class="s">&quot;Department&quot;</span><span class="o">).</span><span class="na">newInstance</span><span class="o">();</span>
+	        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClassNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">department</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>评价：</p>
+
+<pre><code>通过java的反射机制来动态创建对象，就算是添加新的功能访问代码也不用改变只需要添加新的类即可。
+</code></pre>
+
+<p>总结：</p>
+
+<pre><code>1.便于交换产品系列，由于具体工厂类，在一个应用中只需要在初始化的时候出现一次，这就使得改变一个应用的具体工厂十分容易，只需要改变具体工厂就可以使用不同的产品配置。
+2.他让具体的创建实例的过程与客户端分离，客户端是通过他们的抽象接口操纵实例，产品的具体类名也被具体工厂的实现分离，不会出现在客户端的代码中
+</code></pre>
+
+<h2 id="section-5">建造者模式</h2>
+
+<p>解释：将一个复杂对象的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+
+<p>建造者模式适用于构造流程稳定，具体细节不稳定。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Builder</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">buildPartA</span><span class="o">();</span>
+	    <span class="kt">void</span> <span class="nf">buildPartB</span><span class="o">();</span>
+	    <span class="n">Product</span> <span class="nf">getResult</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
+	    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">String</span> <span class="n">part</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">part</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">show</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;\nproduction Creation&quot;</span><span class="o">);</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">part</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">part</span><span class="o">);</span>
+	        <span class="o">}</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteBuilder1</span> <span class="kd">implements</span> <span class="n">Builder</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">Product</span> <span class="n">product</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Product</span><span class="o">();</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buildPartA</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">product</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Part A&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buildPartB</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">product</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Part B&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Product</span> <span class="nf">getResult</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="n">product</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteBuilder2</span> <span class="kd">implements</span> <span class="n">Builder</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">Product</span> <span class="n">product</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Product</span><span class="o">();</span>
+
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buildPartA</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">product</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Part X&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buildPartB</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">product</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Part Y&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="n">Product</span> <span class="nf">getResult</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="n">product</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Director</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">construct</span><span class="o">(</span><span class="n">Builder</span> <span class="n">builder</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">builder</span><span class="o">.</span><span class="na">buildPartA</span><span class="o">();</span>
+	        <span class="n">builder</span><span class="o">.</span><span class="na">buildPartB</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Builder</span> <span class="n">builder1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteBuilder1</span><span class="o">();</span>
+	        <span class="n">Builder</span> <span class="n">builder2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteBuilder2</span><span class="o">();</span>
+	
+	        <span class="n">Director</span> <span class="n">director</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Director</span><span class="o">();</span>
+	        <span class="n">director</span><span class="o">.</span><span class="na">construct</span><span class="o">(</span><span class="n">builder1</span><span class="o">);</span>
+	        <span class="n">Product</span> <span class="n">product</span> <span class="o">=</span> <span class="n">builder1</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
+	        <span class="n">product</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+	        <span class="n">director</span><span class="o">.</span><span class="na">construct</span><span class="o">(</span><span class="n">builder2</span><span class="o">);</span>
+	        <span class="n">product</span> <span class="o">=</span> <span class="n">builder2</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
+	        <span class="n">product</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>原因：创建复杂对象的算法应该独立于该对象的组成部分以及他们的装配方法。</p>
+
+<h2 id="section-6">原型模式</h2>
+
+<p>解释：用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+
+<p>原因：一般在初始化信息不发生变化的前提下，克隆是最好的办法，这既隐藏了对象创建的细节，又对性能是大大提高。</p>
+
+<p>注意：克隆对象是涉及深复制和浅复制</p>
+
+<h2 id="section-7">总结：</h2>
+
+<p>创建型模式隐藏了这些类的实例是如何被创建和放在一起的，整个系统关于这于这些对象所知道的是由抽象类所定义的接口。这样，创建型模式在创建了什么、谁创建他、他是怎么被创建的、以及何时创建提供了很大的灵活性。</p>
+
+<p>在通常设计一般是从工厂方法开始，当设计者需要更大的灵活性时，设计便会向其他创建型模式演化。</p>
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

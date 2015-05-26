@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: default
 title:  "设计模式系列(二)"
 date:   2015-02-11 12:33:30
-categories: jekyll update
+categories: 设计模式
 ---
 # 创建型模式
 
@@ -18,6 +18,8 @@ categories: jekyll update
 ## 简单工厂模式
 
 解释：对于某一类行为提供统一方法来完成相应具体行为的实例化。
+
+{% highlight java %}
 
     public interface Operation {
     	Object operate(int... params);
@@ -125,11 +127,15 @@ categories: jekyll update
 	
 	}
 
+{% endhighlight %}
+
 不好：虽然提供的统一方法来完成实例化相应对象，但一旦需要添加新的行为需要修改源码，破坏开放封闭原则。
 
 ## 工厂方法模式
 
 解释：定义一个用于创建对象的接口，让子类决定实例化哪个类。使一个类的实例化延迟到子类。
+
+{% highlight java %}
 
 	public interface Operation {
     	Object operate(int... params);
@@ -231,12 +237,16 @@ categories: jekyll update
 	    }
 	}
 
+{% endhighlight %}
+
 优点：克服了简单工厂违背开放封闭原则的缺点，又保持了封装创建对象的过程。
 缺点：代码量增加。
 
 ## 抽象工厂模式
 
 解释：提供一个创建一系列相关或相互依赖对象的接口，而无需指定他们具体的类。
+
+{% highlight java %}
 
 	public interface IDepartment {
 	    void insert();
@@ -356,6 +366,8 @@ categories: jekyll update
 	    }
 	}
 
+{% endhighlight %}
+
 优点：
 
 	1. 抽象工厂就是将工厂模式的一个接口创建一个工厂转变为一个接口可以创建多个相互关联或相互依赖的工厂。
@@ -368,6 +380,8 @@ categories: jekyll update
 改进：
 	
 1. 通过简单工厂模式改进：
+
+{% highlight java %}
 
 		public class DataAccess {
 		    public static final String MYSQL = "MySql";
@@ -416,12 +430,16 @@ categories: jekyll update
 		        department.getDepartment();
 		    }
 		}
+
+{% endhighlight %}
 		
 评价：
 
 	相对于最初类，减少了IFactory、MySqlFactory、OracleFactory，这样虽然减少了代码量，但是由于采用switch-case，一旦发生变化则需要增加case，破坏了开放封闭原则。
 
 2.通过反射方法改进
+
+{% highlight java %}
 
 	public class DataAccess {
 	    private static final String PKG = DataAccess.class.getPackage().getName();
@@ -457,6 +475,8 @@ categories: jekyll update
 	        return department;
 	    }
 	}
+
+{% endhighlight %}
 	
 评价：
 
@@ -473,6 +493,8 @@ categories: jekyll update
 解释：将一个复杂对象的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。
 
 建造者模式适用于构造流程稳定，具体细节不稳定。
+
+{% highlight java %}
 
 	public interface Builder {
 	    void buildPartA();
@@ -554,6 +576,8 @@ categories: jekyll update
 	        product.show();
 	    }
 	}
+
+{% endhighlight %}
 
 原因：创建复杂对象的算法应该独立于该对象的组成部分以及他们的装配方法。
 

@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: default
 title:  "设计模式系列(一)"
 date:   2015-02-04 22:36:30
-categories: jekyll update
+categories: 设计模式
 ---
 
 

@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: default
 title:  "Content Provider(一)"
 date:   2015-01-15 12:34:30
-categories: jekyll update
+categories: Android
+tags: ContentProvider
 ---
 ContentProvider用于访问结构化数据，他们在压缩数据的同时提供了保护数据安全的机制，并且提供了标准化接口用于在一个进程在另一个进程中进行数据访问。
 

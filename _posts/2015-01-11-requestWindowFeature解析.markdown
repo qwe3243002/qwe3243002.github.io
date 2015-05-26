@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: default
 title:  "requestWindowFeature解析"
 date:   2015-01-12 14:53:30
-categories: jekyll update
+categories: Android 
+tags: 窗口管理
 ---
 ![](http://qwe3243002.github.io/assets/20150111204342.png)
 

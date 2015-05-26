@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: default
 title:  "设计模式系列(三)"
 date:   2015-02-11 12:35:30
-categories: jekyll update
+categories: 设计模式
 ---
 
 # 结构型模式
@@ -10,6 +10,8 @@ categories: jekyll update
 ## 适配器模式
 
 解释：将一个类的接口转换成客户希望的另外一个接口，使得原来由于接口不兼容而不能一起工作的那些类可以一起工作。
+
+{% highlight java %}
 
 	public interface Player {
 	    void attack();
@@ -98,12 +100,15 @@ categories: jekyll update
 	    }
 	}
 
+{% endhighlight %}
 
 原因：想使用原有的类，但如果他的接口或者方法与要求不同时，就该考虑适配器模式，这样可以更简单、更直接、更紧凑。
 
 ## 桥接模式
 
 解释：将抽象部分与他的实现部分相分离，使他们能独立的变化。
+
+{% highlight java %}
 
 	public interface Implementor {
 	    void operate();
@@ -158,12 +163,15 @@ categories: jekyll update
 	
 	}
 
+{% endhighlight %}
 
 原因：实现系统可能有多角度分类，每一种分类都可能变化，那么就把这种多角度分离出来让他们独立变化，减少他们之间的耦合。
 
 ## 组合模式
 
 解释：将对象组合成树形结构，以表示部分-整体的层次结构，使得单个对象和组合对象的使用具有一致性。
+
+{% highlight java %}
 
 	public interface Company {
 	    void add(Company company);
@@ -311,12 +319,15 @@ categories: jekyll update
 	    }
 	}
 
+{% endhighlight %}
 
 原因：基本对象可以被组合成更复杂的组合对象，而这个组合对象又可以被组合，这样不断的递归下去，客户代码中，任何用到基本对象的地方都可以使用组合对象了。
 
 ## 装饰模式
 
 解释：动态地给对象添加一些额外的职责，就增加功能而言，比生成子类更加灵活。
+
+{% highlight java %}
 
 	public interface Component {
 	    void operate();
@@ -382,11 +393,15 @@ categories: jekyll update
 	
 	}
 
+{% endhighlight %}
+
 原因：在系统设计时，在涉及新功能时会在主类中添加新的方法和逻辑，而这些新的东西只会在某些特定情况下才会执行。装饰模式，会把每个要装饰的功能放在单独的类中，并让这个类装饰他所要装饰的对象。这样客户端就可以有选择地按顺序装饰对象。这样有效地把类的核心职责和装饰功能区分开。
 
 ## 外观模式
 
 解释：为子系统的一组接口提供一致的界面，通过定义一个高层接口，使得子系统更加容易使用。
+
+{% highlight java %}
 
 	public class Stock {
 	
@@ -455,6 +470,7 @@ categories: jekyll update
 	    }
 	}
 
+{% endhighlight %}
 
 原因：在设计初期阶段，有意识的将不同层分离开，在曾与层之间建立外观，能大大降低耦合。
 在开发阶段，随着子系统不断重构演化会越加复杂，增加外观提供简单地接口能减少他们之间的依赖。
@@ -463,6 +479,8 @@ categories: jekyll update
 ## 享元模式
 
 解释：运用共享技术有效地支持大量细粒度的对象。
+
+{% highlight java %}
 
 	public interface Website {
 	    void use(User user);
@@ -531,11 +549,15 @@ categories: jekyll update
 	    }
 	}
 
+{% endhighlight %}
+
 原因：程序使用了大量对象，就会造成很大开销，通过移植参数及共享就可以大幅度减少对象数目。
 
 ## 代理模式
 
 解释：为其他对象提供一种代理以控制对这个对象的访问。
+
+{% highlight java %}
 
     public interface GiveGift {
         void giveFlower();
@@ -574,5 +596,7 @@ categories: jekyll update
             proxy.giveFlower();
         }
     }
+
+{% endhighlight %}
 
 原因：可以隐藏远程对象的地址空间，通过创建虚拟代理来存放实例化需要很长时间的真实对象，还可以控制对象的访问权限，及在调用真是对象时能处理一些事情。

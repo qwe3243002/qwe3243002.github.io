@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>requestWindowFeature解析</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/android/2015/01/12/requestWindowFeature%E8%A7%A3%E6%9E%90.html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <p><img src="http://qwe3243002.github.io/assets/20150111204342.png" alt="" /></p>
+
+<p>Android官方文档中关于requestWindowFeature(int featureId)的介绍。（未完待续）<br />
+requestWindowFeature()必须在addContent之前调用，不然会报这个错误。</p>
+
+<p><img src="http://qwe3243002.github.io/assets/20150111210342.png" alt="" /></p>
+
+<p>关于输入参数及产生情况，见下方列表(测试版本Android)。</p>
+
+<ol>
+  <li>
+    <p>DEFAULT_FEATURES（The default features enabled）</p>
+
+    <p>系统默认情况，不解释。</p>
+
+    <p><img src="http://qwe3243002.github.io/assets/S50111-205928.jpg" alt="" /></p>
+  </li>
+  <li>
+    <p>FEATURE_ACTION_BAR</p>
+
+    <p>显示ActionBar，在Android3.0之后引入，用于取代标题栏</p>
+  </li>
+</ol>
+
+<p><img src="http://qwe3243002.github.io/assets/S50111-211811.jpg" alt="" /></p>
+
+<ol>
+  <li>
+    <p>FEATURE_ACTION_BAR_OVERLAY</p>
+
+    <p>官网解释为ActionBar会覆盖住内容本身，但现在在手机上实验结果与官方不同，并没有覆盖住内容本身。</p>
+
+    <p><img src="http://qwe3243002.github.io/assets/S50111-211811.jpg" alt="" /><br />
+ 解决方法：</p>
+
+    <pre><code> 1. 导入ActionBarsherlock
+	
+ 2. import com.actionbarsherlock.view.Window;
+</code></pre>
+
+    <p><img src="http://qwe3243002.github.io/assets/S50112-110616.jpg" alt="" /></p>
+  </li>
+  <li>FEATURE_ACTION_MODE_OVERLAY</li>
+  <li>FEATURE_ACTIVITY_TRANSITIONS</li>
+  <li>FEATURE_NO_TITLE</li>
+</ol>
+
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+---
+layout: default
+title:  "Android事件传播机制（译文）"
+date:   2015-02-16 18:02:33
+categories: Android 
+tags: 事件传播
+---
+
+# Android系统如何处理触摸事件
+
+* 每一个用户触摸事件都被包装成MotionEvent对象
+
+* 用户触摸类型有：
+
+    * ACTION_DOWN 按下
+    * ACTION_UP 释放
+    * ACTION_MOVE 移动
+    * ACTION_POINTER_DOWN 多点触控按下
+    * ACTION_POINTER_UP 多点触控释放
+    * ACTION_CANCEL 触摸事件结束
+    
+* 触摸事件元数据
+    * 触摸位置
+    * 触摸点数
+    * 触摸时间
+    
+* 触摸手势行为定义为以ACTION_DOWN为开始，以ACTION_UP为结束
+
+* 触摸事件开始于Activity中的dispatchTouchEvent()方法
+
+* 触摸事件是从上到下依次传输到View中
+
+    * 父级组件（ViewGroups）将事件分发到所有的Views中
+    * 在事件分发过程中可以随时拦截该事件
+
+* 触摸事件会在Views链中依次向下传递（然后反向传递）直到被消费掉为止
+
+    * Views必须在ACTION_DOWN中确定是否对事件处理，否则后续事件不会再分派到该View中
+
+* 所有未被消费掉的事件最后都会传递的Activity中onTouchEvent()中
+
+* onTouchListener
+ 

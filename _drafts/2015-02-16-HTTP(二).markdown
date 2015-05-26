@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: default
 title:  "URL与资源"
 date:   2015-02-16 18:02:33
-categories: jekyll update
+categories: Http
+tags: 网络 http
 ---
 

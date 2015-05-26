@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Animation and Graphics(三)</title>
+  <meta name="description" content="视图动画存在位置：	res/anim">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/android/2015/01/14/Animation%20and%20Graphics(%E4%B8%89).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <h2 id="section"><strong>视图动画</strong></h2>
+<p>存在位置：<br />
+	res/anim</p>
+
+<p>对于设置相对位置：”50” for 50% relative to the parent, or “50%” for 50% relative to itself</p>
+
+<p>如何使用：</p>
+
+<pre><code>ImageView spaceshipImage = (ImageView) findViewById(R.id.spaceshipImage);
+Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
+spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+</code></pre>
+
+<h2 id="drawable"><strong>Drawable动画</strong></h2>
+<p>AnimationDrawable是Drawable动画的基类<br />
+存在于res/drawable文件夹</p>
+
+<pre><code>&lt;animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+android:oneshot="true"&gt;
+&lt;item android:drawable="@drawable/rocket_thrust1" android:duration="200" /&gt;
+&lt;item android:drawable="@drawable/rocket_thrust2" android:duration="200" /&gt;
+&lt;item android:drawable="@drawable/rocket_thrust3" android:duration="200" /&gt;
+&lt;/animation-list&gt;
+</code></pre>
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Content Provider(二)</title>
+  <meta name="description" content="这篇文章主要介绍有：">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/android/2015/01/16/Content%20Provider(%E4%BA%8C).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <p>这篇文章主要介绍有：</p>
+
+<ol>
+  <li>ContentProvider如何工作</li>
+  <li>用于检索ContentProvider的API</li>
+  <li>用于插入，更新，删除数据的API</li>
+  <li>其他便于与ContentProvider工作的API</li>
+</ol>
+
+<h1 id="section"><strong>概述</strong></h1>
+<p>## 访问provider ##<br />
+访问provider必须提供一个ContentResolver，ContentResolver会同等地调用provider提供的“CRUD”方法<br />
+&gt; 注意：要访问provider，必须提供某些权限</p>
+
+<p>样例：</p>
+
+<pre><code>mCursor = getContentResolver().query(
+	UserDictionary.Words.CONTENT_URI,    //提供表格URI
+	mProjection,					     // 要检索的列
+	mSelectionClause,					 // 检索条件
+	mSeletionArgs,						 // 检索条件参数
+	mSortOrder,							 // 返回结果顺序
+);
+</code></pre>
+
+<h2 id="content-uris">Content URIs</h2>
+<p>Content URI是用来标示一个Content Provider的中的表格的，他不仅包含一个authority(确定是哪个provider)还有一个path（确定是哪个表），通过这种解析方法才能找到要处理的表格。例如：</p>
+
+<pre><code>content://user_dictionary/words
+</code></pre>
+
+<p>这个uri中user_dictionary代表authority，words代表表格，而前面的content://(这是scheme)是必须有的代表了这是一个content Uri。</p>
+
+<blockquote>
+  <p>注意：Uri和Uri.Builder类提供了便捷的方法来通过字符串构造Uri对象，ContentUris也提供了便捷方法用来在Uri上添加值，比如withAppendedId()用来添加id</p>
+</blockquote>
+
+<h1 id="provider">从provider中检索数据</h1>
+<p>建议在检索数据时不要在UI主线程中执行，而要再开辟一个新线程来执行。如果在主线程中使用的话，要使用CursorLoader类。</p>
+
+<p>检索数据步骤：</p>
+
+<ol>
+  <li>申请访问权限
+    <ol>
+      <li>针对不同的provider需要不同的权限</li>
+    </ol>
+  </li>
+  <li>
+    <p>写访问代码</p>
+
+  	String[] mProjection = {<br />
+ 		UserDictionary.Words._ID,
+    <pre><code>     UserDictionary.Words.WORD,
+     UserDictionary.Words.LOCALE
+ 	};
+ String mSelectionClause = null;
+ String[] mSelectionArgs = {""};
+</code></pre>
+  </li>
+</ol>
+
+<p><strong>防止恶意Sql注入</strong></p>
+
+<p>如果直接使用字符串拼接来完成sql语句，如</p>
+
+<pre><code>String mSelectionClause = "var = "+mUserInput;
+</code></pre>
+
+<p>用户可能写入“nothing;Drop Table *;”这样就会删除所有相关数据，而使用</p>
+
+<pre><code>String mSelectionClause = "var = ?";
+</code></pre>
+
+<p>通过？替代就没有sql注入问题</p>
+
+<p><strong>显示查询结果</strong></p>
+
+<p>ContentResolver提供的查询结果为Cursor对象，他能够随机访问返回的数据，如果查不到数据curosr.getCount()返回为0，如果出现错误则返回为null或者抛出Exception，系统默认中通过SimpleCursorAdapter来展示数据，是一个非常好的方式。代码如下</p>
+
+<pre><code>// 指定要查询的列
+String[] mWordListColumns = {
+	UserDictionary.Words.WORD,
+	UserDictionary.Words.LOCALE,
+};
+// 指定通过那些组件显示
+int[] mWordListItems ={R.id.dictWord,R.id.locale};
+mCursorAdapter = new SimpleCursorAdapter(){
+    getApplicationContext,
+    R.layout.wordlistrow,   // 每一行的布局
+    mCursor,
+    mWordListColumns,
+    mWordListItems,
+    0						// 通常没啥用
+};
+mWordList.setAdapter(mCursorAdapter);
+</code></pre>
+
+<blockquote>
+  <p>这种使用方式必须包含_ID列，即使不显示出来也必须要有</p>
+</blockquote>
+
+<h2 id="section-1"><strong>插入数据</strong></h2>
+
+<pre><code>ContentValues mNewValues = new ContentValues();
+
+/*
+ * Sets the values of each column and inserts the word. The arguments to the "put"
+ * method are "column name" and "value"
+ */
+mNewValues.put(UserDictionary.Words.APP_ID, "example.user");
+mNewValues.put(UserDictionary.Words.LOCALE, "en_US");
+mNewValues.put(UserDictionary.Words.WORD, "insert");
+mNewValues.put(UserDictionary.Words.FREQUENCY, "100");
+
+mNewUri = getContentResolver().insert(
+UserDictionary.Word.CONTENT_URI,   // the user dictionary content URI
+mNewValues  // the values to insert
+);
+</code></pre>
+
+<p>插入成功后会返回函数插入数据ID的新的Uri</p>
+
+<h2 id="section-2"><strong>更新数据</strong></h2>
+
+<pre><code>// Defines an object to contain the updated values
+ContentValues mUpdateValues = new ContentValues();
+
+// Defines selection criteria for the rows you want to update
+String mSelectionClause = UserDictionary.Words.LOCALE +  "LIKE ?";
+String[] mSelectionArgs = {"en_%"};
+
+// Defines a variable to contain the number of updated rows
+int mRowsUpdated = 0;
+
+...
+
+/*
+ * Sets the updated value and updates the selected words.
+ */
+mUpdateValues.putNull(UserDictionary.Words.LOCALE);
+
+mRowsUpdated = getContentResolver().update(
+UserDictionary.Words.CONTENT_URI,   // the user dictionary content URI
+mUpdateValues   // the columns to update
+mSelectionClause// the column to select on
+mSelectionArgs  // the value to compare to
+);
+</code></pre>
+
+<h2 id="section-3"><strong>删除数据</strong></h2>
+
+<pre><code>// Defines selection criteria for the rows you want to delete
+String mSelectionClause = UserDictionary.Words.APP_ID + " LIKE ?";
+String[] mSelectionArgs = {"user"};
+
+// Defines a variable to contain the number of rows deleted
+int mRowsDeleted = 0;
+
+...
+
+// Deletes the words that match the selection criteria
+mRowsDeleted = getContentResolver().delete(
+UserDictionary.Words.CONTENT_URI,   // the user dictionary content URI
+mSelectionClause// the column to select on
+mSelectionArgs  // the value to compare to
+);
+</code></pre>
+
+<h2 id="provider-1"><strong>其他访问provider方式</strong></h2>
+
+<ul>
+  <li>批处理：利用ContentProviderOperation类</li>
+  <li>异步访问：开辟新线程访问</li>
+  <li>通过intent访问数据：通过发送intent给应用程序来间接访问数据</li>
+</ul>
+
+<h2 id="mime"><strong>MIME类型参考</strong></h2>
+
+<p>provider可以返回标准的或自定义的MIME类型<br />
+MIME类型格式：</p>
+
+<pre><code>type/subtype
+</code></pre>
+
+<p>自定义的MIME类型也叫做”vendor-specific”MEMI类型有更加复杂的类型与子类型,其类型通常为</p>
+
+<pre><code>vnd.android.cursor.dir
+</code></pre>
+
+<p>用于多行，或者为</p>
+
+<pre><code>vnd.android.cursor.item
+</code></pre>
+
+<p>用于单行。<br />
+对于子类型通常是provider自己定义的，对于Android自建的provider通常含有比较简单子类型，如：</p>
+
+<pre><code>vnd.android.cursor.item/phone_v2
+</code></pre>
+
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>

@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: default
 title:  "内核剖析之Binder(未完)"
 date:   2015-01-21 17:52:30
-categories: jekyll update
+categories: Android
+tags: Binder 内核
 ---
 **Binder的意思是回形针，在Android中Binder用于完成进程间通信，即把多个进程别在一起。**
 # 一、Binder框架 #

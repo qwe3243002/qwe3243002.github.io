@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>设计模式系列(三)</title>
+  <meta name="description" content="结构型模式">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="canonical" href="http://qwe3243002.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/2015/02/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%B3%BB%E5%88%97(%E4%B8%89).html">
+  <link rel="alternate" type="application/rss+xml" title="jambla's Blog" href="http://qwe3243002.github.io/feed.xml" />
+	  <!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" href="/js/responsive-nav.js"></script>
+</head>
+
+  <body>
+
+    <div role="navigationjs" id="foo" class="nav-collapse">
+      <ul>
+          <li> <a href="/index.html"> 首页 </a> </li>
+          <li> <a href="/categories.html"> 目录 </a> </li>
+          <li> <a href="/contact.html"> 联系我 </a> </li>
+      </ul>
+    </div>
+
+    <div role="main" class="main">
+      <h1 id="section">结构型模式</h1>
+
+<h2 id="section-1">适配器模式</h2>
+
+<p>解释：将一个类的接口转换成客户希望的另外一个接口，使得原来由于接口不兼容而不能一起工作的那些类可以一起工作。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Player</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">attack</span><span class="o">();</span>
+	    <span class="kt">void</span> <span class="nf">defense</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Forward</span> <span class="kd">implements</span> <span class="n">Player</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="nf">Forward</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attack</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; attack&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">defense</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; Defense&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Center</span> <span class="kd">implements</span> <span class="n">Player</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="nf">Center</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attack</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; Attack&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">defense</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; Defense&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ForeignGuards</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="nf">ForeignGuards</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">进攻</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">+</span> <span class="s">&quot; jin gong&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">防守</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">+</span><span class="s">&quot; fang shou&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Translator</span> <span class="kd">implements</span> <span class="n">Player</span> <span class="o">{</span>
+	
+	    <span class="kd">private</span> <span class="n">ForeignGuards</span> <span class="n">guards</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ForeignGuards</span><span class="o">(</span><span class="s">&quot;Yao Ming&quot;</span><span class="o">);</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attack</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">guards</span><span class="o">.</span><span class="na">进攻</span><span class="o">();</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">defense</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">guards</span><span class="o">.</span><span class="na">防守</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Player</span> <span class="n">forward</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Forward</span><span class="o">(</span><span class="s">&quot;Battier&quot;</span><span class="o">);</span>
+	        <span class="n">forward</span><span class="o">.</span><span class="na">attack</span><span class="o">();</span>
+	        <span class="n">forward</span><span class="o">.</span><span class="na">defense</span><span class="o">();</span>
+	
+	        <span class="n">Player</span> <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Center</span><span class="o">(</span><span class="s">&quot;McGrady&quot;</span><span class="o">);</span>
+	        <span class="n">center</span><span class="o">.</span><span class="na">attack</span><span class="o">();</span>
+	        <span class="n">center</span><span class="o">.</span><span class="na">defense</span><span class="o">();</span>
+	
+	        <span class="n">Player</span> <span class="n">guards</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Translator</span><span class="o">();</span>
+	        <span class="n">guards</span><span class="o">.</span><span class="na">attack</span><span class="o">();</span>
+	        <span class="n">guards</span><span class="o">.</span><span class="na">defense</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>原因：想使用原有的类，但如果他的接口或者方法与要求不同时，就该考虑适配器模式，这样可以更简单、更直接、更紧凑。</p>
+
+<h2 id="section-2">桥接模式</h2>
+
+<p>解释：将抽象部分与他的实现部分相分离，使他们能独立的变化。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Implementor</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">operate</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteImplementorA</span> <span class="kd">implements</span> <span class="n">Implementor</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteImplementorB</span> <span class="kd">implements</span> <span class="n">Implementor</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;BBBBBBBBBBBBBBBBBBBBBBBBBBBBB&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Abstraction</span> <span class="o">{</span>
+	    <span class="n">Implementor</span> <span class="n">implementor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	
+	    <span class="kt">void</span> <span class="nf">setImplementor</span><span class="o">(</span><span class="n">Implementor</span> <span class="n">implementor</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">implementor</span> <span class="o">=</span> <span class="n">implementor</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RefindAbstraction</span> <span class="kd">extends</span> <span class="n">Abstraction</span> <span class="o">{</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">implementor</span><span class="o">.</span><span class="na">operate</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Implementor</span> <span class="n">implementorA</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteImplementorA</span><span class="o">();</span>
+	        <span class="n">Implementor</span> <span class="n">implementorB</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteImplementorB</span><span class="o">();</span>
+	
+	        <span class="n">Abstraction</span> <span class="n">abstraction</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">RefindAbstraction</span><span class="o">();</span>
+	        <span class="n">abstraction</span><span class="o">.</span><span class="na">setImplementor</span><span class="o">(</span><span class="n">implementorA</span><span class="o">);</span>
+	        <span class="n">abstraction</span><span class="o">.</span><span class="na">operate</span><span class="o">();</span>
+	
+	        <span class="n">abstraction</span><span class="o">.</span><span class="na">setImplementor</span><span class="o">(</span><span class="n">implementorB</span><span class="o">);</span>
+	        <span class="n">abstraction</span><span class="o">.</span><span class="na">operate</span><span class="o">();</span>
+	
+	    <span class="o">}</span>
+	
+	<span class="o">}</span></code></pre></div>
+
+<p>原因：实现系统可能有多角度分类，每一种分类都可能变化，那么就把这种多角度分离出来让他们独立变化，减少他们之间的耦合。</p>
+
+<h2 id="section-3">组合模式</h2>
+
+<p>解释：将对象组合成树形结构，以表示部分-整体的层次结构，使得单个对象和组合对象的使用具有一致性。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Company</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">);</span>
+	
+	    <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">);</span>
+	
+	    <span class="kt">void</span> <span class="nf">display</span><span class="o">(</span><span class="kt">int</span> <span class="n">depth</span><span class="o">);</span>
+	
+	    <span class="kt">void</span> <span class="nf">duty</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteCompany</span> <span class="kd">implements</span> <span class="n">Company</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Company</span><span class="o">&gt;</span> <span class="n">companies</span><span class="o">;</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="nf">ConcreteCompany</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	        <span class="n">companies</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Company</span><span class="o">&gt;();</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">companies</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">company</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">companies</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">company</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">display</span><span class="o">(</span><span class="kt">int</span> <span class="n">depth</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">();</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">depth</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+	            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;-&quot;</span><span class="o">);</span>
+	        <span class="o">}</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="n">Company</span> <span class="n">company</span> <span class="o">:</span> <span class="n">companies</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">company</span><span class="o">.</span><span class="na">display</span><span class="o">(</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">2</span><span class="o">);</span>
+	        <span class="o">}</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">duty</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="n">Company</span> <span class="n">company</span> <span class="o">:</span> <span class="n">companies</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">company</span><span class="o">.</span><span class="na">duty</span><span class="o">();</span>
+	        <span class="o">}</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FinDepartment</span> <span class="kd">implements</span> <span class="n">Company</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="nf">FinDepartment</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">)</span> <span class="o">{</span>
+	
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">)</span> <span class="o">{</span>
+	
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">display</span><span class="o">(</span><span class="kt">int</span> <span class="n">depth</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">();</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">depth</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+	            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;-&quot;</span><span class="o">);</span>
+	        <span class="o">}</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">duty</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; 财务管理支出&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HRDepartment</span> <span class="kd">implements</span> <span class="n">Company</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="nf">HRDepartment</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">)</span> <span class="o">{</span>
+	
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Company</span> <span class="n">company</span><span class="o">)</span> <span class="o">{</span>
+	
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">display</span><span class="o">(</span><span class="kt">int</span> <span class="n">depth</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">();</span>
+	        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">depth</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+	            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;-&quot;</span><span class="o">);</span>
+	        <span class="o">}</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">duty</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; 员工招聘培训管理&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Company</span> <span class="n">company</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteCompany</span><span class="o">(</span><span class="s">&quot;北京总公司&quot;</span><span class="o">);</span>
+	        <span class="n">Company</span> <span class="n">sub1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HRDepartment</span><span class="o">(</span><span class="s">&quot;人力资源部&quot;</span><span class="o">);</span>
+	        <span class="n">Company</span> <span class="n">sub2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FinDepartment</span><span class="o">(</span><span class="s">&quot;财务部&quot;</span><span class="o">);</span>
+	
+	        <span class="n">Company</span> <span class="n">company1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteCompany</span><span class="o">(</span><span class="s">&quot;东京分公司&quot;</span><span class="o">);</span>
+	        <span class="n">Company</span> <span class="n">sub3</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HRDepartment</span><span class="o">(</span><span class="s">&quot;人力资源部&quot;</span><span class="o">);</span>
+	        <span class="n">Company</span> <span class="n">sub4</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FinDepartment</span><span class="o">(</span><span class="s">&quot;财务部&quot;</span><span class="o">);</span>
+	
+	        <span class="n">Company</span> <span class="n">company2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteCompany</span><span class="o">(</span><span class="s">&quot;上海分公司&quot;</span><span class="o">);</span>
+	        <span class="n">Company</span> <span class="n">sub5</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HRDepartment</span><span class="o">(</span><span class="s">&quot;人力资源部&quot;</span><span class="o">);</span>
+	        <span class="n">Company</span> <span class="n">sub6</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FinDepartment</span><span class="o">(</span><span class="s">&quot;财务部&quot;</span><span class="o">);</span>
+	
+	        <span class="n">company</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sub1</span><span class="o">);</span>
+	        <span class="n">company</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sub2</span><span class="o">);</span>
+	
+	        <span class="n">company</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">company1</span><span class="o">);</span>
+	
+	        <span class="n">company1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sub3</span><span class="o">);</span>
+	        <span class="n">company1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sub4</span><span class="o">);</span>
+	
+	        <span class="n">company</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">company2</span><span class="o">);</span>
+	
+	        <span class="n">company2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sub5</span><span class="o">);</span>
+	        <span class="n">company2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sub6</span><span class="o">);</span>
+	
+	        <span class="n">company</span><span class="o">.</span><span class="na">display</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+	        <span class="n">company</span><span class="o">.</span><span class="na">duty</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>原因：基本对象可以被组合成更复杂的组合对象，而这个组合对象又可以被组合，这样不断的递归下去，客户代码中，任何用到基本对象的地方都可以使用组合对象了。</p>
+
+<h2 id="section-4">装饰模式</h2>
+
+<p>解释：动态地给对象添加一些额外的职责，就增加功能而言，比生成子类更加灵活。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Component</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">operate</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteComponent</span> <span class="kd">implements</span> <span class="n">Component</span> <span class="o">{</span>
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;具体的组件行为&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Decorator</span> <span class="kd">extends</span> <span class="n">Component</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">setComponent</span><span class="o">(</span><span class="n">Component</span> <span class="n">component</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteDecorator1</span> <span class="kd">implements</span> <span class="n">Decorator</span> <span class="o">{</span>
+	
+	    <span class="kd">private</span> <span class="n">Component</span> <span class="n">component</span><span class="o">;</span>
+	
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setComponent</span><span class="o">(</span><span class="n">Component</span> <span class="n">component</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">component</span> <span class="o">=</span> <span class="n">component</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">component</span><span class="o">.</span><span class="na">operate</span><span class="o">();</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;装饰器1号&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteDecorator2</span> <span class="kd">implements</span> <span class="n">Decorator</span> <span class="o">{</span>
+	
+	    <span class="kd">private</span> <span class="n">Component</span> <span class="n">component</span><span class="o">;</span>
+	
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setComponent</span><span class="o">(</span><span class="n">Component</span> <span class="n">component</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">component</span> <span class="o">=</span> <span class="n">component</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">component</span><span class="o">.</span><span class="na">operate</span><span class="o">();</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;装饰器2号&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Component</span> <span class="n">component</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteComponent</span><span class="o">();</span>
+	        <span class="n">Decorator</span> <span class="n">decorator1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteDecorator1</span><span class="o">();</span>
+	        <span class="n">Decorator</span> <span class="n">decorator2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConcreteDecorator2</span><span class="o">();</span>
+	
+	        <span class="n">decorator1</span><span class="o">.</span><span class="na">setComponent</span><span class="o">(</span><span class="n">component</span><span class="o">);</span>
+	        <span class="n">decorator2</span><span class="o">.</span><span class="na">setComponent</span><span class="o">(</span><span class="n">decorator1</span><span class="o">);</span>
+	
+	        <span class="n">decorator2</span><span class="o">.</span><span class="na">operate</span><span class="o">();</span>
+	    <span class="o">}</span>
+	
+	<span class="o">}</span></code></pre></div>
+
+<p>原因：在系统设计时，在涉及新功能时会在主类中添加新的方法和逻辑，而这些新的东西只会在某些特定情况下才会执行。装饰模式，会把每个要装饰的功能放在单独的类中，并让这个类装饰他所要装饰的对象。这样客户端就可以有选择地按顺序装饰对象。这样有效地把类的核心职责和装饰功能区分开。</p>
+
+<h2 id="section-5">外观模式</h2>
+
+<p>解释：为子系统的一组接口提供一致的界面，通过定义一个高层接口，使得子系统更加容易使用。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stock</span> <span class="o">{</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buy</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;买入股票&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sell</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;卖出股票&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Realty</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buy</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;买入房地产股票&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sell</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;卖出房地产股票&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NationalDebt</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buy</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;买入国债&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sell</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;卖出国债&quot;</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Facade</span> <span class="o">{</span>
+	
+	    <span class="kd">private</span> <span class="n">Stock</span> <span class="n">stock</span><span class="o">;</span>
+	    <span class="kd">private</span> <span class="n">NationalDebt</span> <span class="n">nationalDebt</span><span class="o">;</span>
+	    <span class="kd">private</span> <span class="n">Realty</span> <span class="n">realty</span><span class="o">;</span>
+	
+	
+	    <span class="kd">public</span> <span class="nf">Facade</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">stock</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Stock</span><span class="o">();</span>
+	        <span class="n">nationalDebt</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NationalDebt</span><span class="o">();</span>
+	        <span class="n">realty</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Realty</span><span class="o">();</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buy</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">stock</span><span class="o">.</span><span class="na">buy</span><span class="o">();</span>
+	        <span class="n">nationalDebt</span><span class="o">.</span><span class="na">buy</span><span class="o">();</span>
+	        <span class="n">realty</span><span class="o">.</span><span class="na">buy</span><span class="o">();</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sell</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">stock</span><span class="o">.</span><span class="na">sell</span><span class="o">();</span>
+	        <span class="n">nationalDebt</span><span class="o">.</span><span class="na">sell</span><span class="o">();</span>
+	        <span class="n">realty</span><span class="o">.</span><span class="na">sell</span><span class="o">();</span>
+	    <span class="o">}</span>
+	
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">Facade</span> <span class="n">facade</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Facade</span><span class="o">();</span>
+	        <span class="n">facade</span><span class="o">.</span><span class="na">buy</span><span class="o">();</span>
+	        <span class="n">facade</span><span class="o">.</span><span class="na">sell</span><span class="o">();</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>原因：在设计初期阶段，有意识的将不同层分离开，在曾与层之间建立外观，能大大降低耦合。<br />
+在开发阶段，随着子系统不断重构演化会越加复杂，增加外观提供简单地接口能减少他们之间的依赖。<br />
+在维护遗留大型系统时，开发外观能在与新系统交互时，更加简单便捷。</p>
+
+<h2 id="section-6">享元模式</h2>
+
+<p>解释：运用共享技术有效地支持大量细粒度的对象。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Website</span> <span class="o">{</span>
+	    <span class="kt">void</span> <span class="nf">use</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+	
+	    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcreteWebsite</span> <span class="kd">implements</span> <span class="n">Website</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	
+	    <span class="kd">public</span> <span class="nf">ConcreteWebsite</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="nd">@Override</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">use</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;网站分类:&quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;  &quot;</span> <span class="o">+</span> <span class="n">user</span><span class="o">.</span><span class="na">name</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebSiteFactory</span> <span class="o">{</span>
+	    <span class="kd">private</span> <span class="kd">static</span> <span class="n">WebSiteFactory</span> <span class="n">webSiteFactory</span><span class="o">;</span>
+	    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Website</span><span class="o">&gt;</span> <span class="n">flyweight</span><span class="o">;</span>
+	
+	    <span class="kd">private</span> <span class="nf">WebSiteFactory</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="n">flyweight</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Website</span><span class="o">&gt;();</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kd">static</span> <span class="n">WebSiteFactory</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(</span><span class="n">webSiteFactory</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">webSiteFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">WebSiteFactory</span><span class="o">();</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">webSiteFactory</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="n">Website</span> <span class="nf">getWebSite</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">if</span> <span class="o">(!</span><span class="n">flyweight</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">))</span> <span class="o">{</span>
+	            <span class="n">flyweight</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="k">new</span> <span class="nf">ConcreteWebsite</span><span class="o">(</span><span class="n">key</span><span class="o">));</span>
+	        <span class="o">}</span>
+	        <span class="k">return</span> <span class="n">flyweight</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+	    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="n">WebSiteFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">WebSiteFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	
+	        <span class="n">Website</span> <span class="n">website</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">getWebSite</span><span class="o">(</span><span class="s">&quot;博客&quot;</span><span class="o">);</span>
+	        <span class="n">website</span><span class="o">.</span><span class="na">use</span><span class="o">(</span><span class="k">new</span> <span class="nf">User</span><span class="o">(</span><span class="s">&quot;王大锤&quot;</span><span class="o">));</span>
+	        <span class="n">website</span><span class="o">.</span><span class="na">use</span><span class="o">(</span><span class="k">new</span> <span class="nf">User</span><span class="o">(</span><span class="s">&quot;王二麻子&quot;</span><span class="o">));</span>
+	        <span class="n">website</span><span class="o">.</span><span class="na">use</span><span class="o">(</span><span class="k">new</span> <span class="nf">User</span><span class="o">(</span><span class="s">&quot;翠花&quot;</span><span class="o">));</span>
+	
+	        <span class="n">website</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">getWebSite</span><span class="o">(</span><span class="s">&quot;电子商务&quot;</span><span class="o">);</span>
+	        <span class="n">website</span><span class="o">.</span><span class="na">use</span><span class="o">(</span><span class="k">new</span> <span class="nf">User</span><span class="o">(</span><span class="s">&quot;老板&quot;</span><span class="o">));</span>
+	        <span class="n">website</span><span class="o">.</span><span class="na">use</span><span class="o">(</span><span class="k">new</span> <span class="nf">User</span><span class="o">(</span><span class="s">&quot;楼下小黑&quot;</span><span class="o">));</span>
+	        <span class="n">website</span><span class="o">.</span><span class="na">use</span><span class="o">(</span><span class="k">new</span> <span class="nf">User</span><span class="o">(</span><span class="s">&quot;狗蛋&quot;</span><span class="o">));</span>
+	    <span class="o">}</span>
+	<span class="o">}</span></code></pre></div>
+
+<p>原因：程序使用了大量对象，就会造成很大开销，通过移植参数及共享就可以大幅度减少对象数目。</p>
+
+<h2 id="section-7">代理模式</h2>
+
+<p>解释：为其他对象提供一种代理以控制对这个对象的访问。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GiveGift</span> <span class="o">{</span>
+        <span class="kt">void</span> <span class="nf">giveFlower</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Pursuit</span> <span class="kd">implements</span> <span class="n">GiveGift</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">girl</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="nf">Pursuit</span><span class="o">(</span><span class="n">String</span> <span class="n">girl</span><span class="o">){</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">girl</span> <span class="o">=</span> <span class="n">girl</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">giveFlower</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;追求者送花给&quot;</span><span class="o">+</span><span class="n">girl</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Proxy</span> <span class="kd">implements</span> <span class="n">GiveGift</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">GiveGift</span> <span class="n">pursuit</span><span class="o">;</span>
+    
+        <span class="kd">public</span> <span class="nf">Proxy</span><span class="o">(</span><span class="n">GiveGift</span> <span class="n">pursuit</span><span class="o">){</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">pursuit</span> <span class="o">=</span> <span class="n">pursuit</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">giveFlower</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">pursuit</span><span class="o">.</span><span class="na">giveFlower</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainClass</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+            <span class="n">String</span> <span class="n">girl</span> <span class="o">=</span> <span class="s">&quot;小红&quot;</span><span class="o">;</span>
+            <span class="n">Pursuit</span> <span class="n">pursuit</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Pursuit</span><span class="o">(</span><span class="n">girl</span><span class="o">);</span>
+            <span class="n">Proxy</span> <span class="n">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Proxy</span><span class="o">(</span><span class="n">pursuit</span><span class="o">);</span>
+            <span class="n">proxy</span><span class="o">.</span><span class="na">giveFlower</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+<p>原因：可以隐藏远程对象的地址空间，通过创建虚拟代理来存放实例化需要很长时间的真实对象，还可以控制对象的访问权限，及在调用真是对象时能处理一些事情。</p>
+
+    </div>
+
+    <script>
+      var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+    </script>
+  </body>
+</html>
