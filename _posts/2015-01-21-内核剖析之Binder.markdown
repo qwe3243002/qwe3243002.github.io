@@ -6,13 +6,16 @@ categories: Android
 tags: Binder 内核
 ---
 **Binder的意思是回形针，在Android中Binder用于完成进程间通信，即把多个进程别在一起。**
+
 # 一、Binder框架 #
+
 Binder框架分为三个模块：
 	
-1. 服务端接口
-
+1.服务端接口
+	
 	实际是一个Binder对象，一旦对象创建成功就会启动一个隐藏线程用于接收Binder驱动传送过来的消息，在接收到消息后会执行onTransact()方法。
-2. Binder驱动
+	
+2.Binder驱动
 
 	在服务端的Binder对象创建成功会在Binder驱动中创建mRemote对象，该对象类型是Binder，客服端就是通过该mRemote对象与服务器交互。
 	mRemote对象重载了transact()方法，主要内容包括：
@@ -22,11 +25,12 @@ Binder框架分为三个模块：
 		3. 接收服务端线程通知，然后执行客户端线程，并返回客户端代码区
 
 
-3. 客户端接口
+3.客户端接口
 
 	获取mRemote对象，通过调用其transact()方法来访问服务器
 
 # 二、客户端获取Binder对象 #
+
 在客户端中调用Service有两种方法，一种是startService()，这是不返回服务端的Binder引用，另一种是bindService()，在调用过程中必须传入参数ServiceConnection，ServiceConnection是一个接口，其中包含两个方法
 
 	public void onServiceConnected(ComponentName name,IBinder service);
@@ -37,6 +41,7 @@ Binder框架分为三个模块：
 在系统中由于进程中通信需要aidl，而获取系统服务内部细节也是类似于通过aidl获取Binder对象，来获取Service服务。
 
 # 三、理解Manager #
+
 在Android中ServiceManager管理所有的Service，并且以Manager对象来返回给客户端。Manager在Android中类似于经纪人的概念，通过经纪人来调用API获取系统服务
 
 	

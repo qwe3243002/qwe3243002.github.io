@@ -5,8 +5,8 @@
     <description>FFF团员</description>
     <link>http://qwe3243002.github.io/</link>
     <atom:link href="http://qwe3243002.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 26 May 2015 22:13:56 +0800</pubDate>
-    <lastBuildDate>Tue, 26 May 2015 22:13:56 +0800</lastBuildDate>
+    <pubDate>Wed, 27 May 2015 11:21:02 +0800</pubDate>
+    <lastBuildDate>Wed, 27 May 2015 11:21:02 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -2009,12 +2009,11 @@
 
 &lt;p&gt;MEMI类型是一种文本标记，表示一个主要对象类型和一个特定的子类型，中间由一条斜杠来分隔。&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;HTML文件由text/html标记&lt;/li&gt;
-  &lt;li&gt;普通ASCII文件由text/plain标记&lt;/li&gt;
-  &lt;li&gt;JPEG格式图片为image/jpeg&lt;/li&gt;
-  &lt;li&gt;GIF格式图片为image/gif&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;HTML文件由text/html标记    
+普通ASCII文件由text/plain标记
+JPEG格式图片为image/jpeg
+GIF格式图片为image/gif
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;其他格式，可以上网搜索查看。&lt;/p&gt;
 
@@ -2030,11 +2029,10 @@
 
 &lt;p&gt;大部分URL都遵从一种标准格式。这种格式分为三部分：&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;第一部分为scheme（方案），说明访问资源所用的协议类型，这部分通常是http协议(http://)&lt;/li&gt;
-  &lt;li&gt;第二部分为协议的英特网地址，比如www.google.com&lt;/li&gt;
-  &lt;li&gt;其余部分指定服务器上的资源地址，如/user/login&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;第一部分为scheme（方案），说明访问资源所用的协议类型，这部分通常是http协议(http://)
+第二部分为协议的英特网地址，比如www.google.com
+其余部分指定服务器上的资源地址，如/user/login
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;现在几乎所有的URI都为URL&lt;/p&gt;
 
@@ -2052,23 +2050,21 @@
 
 &lt;p&gt;HTTP支持多种命令，这些命令被称为方法，每个HTTP请求都会包含一个方法，这个方法会告诉服务器执行什么动作。常见的方法有如下几种：&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;GET		 从服务器获取资源&lt;/li&gt;
-  &lt;li&gt;PUT		 将从客户端传来的资源储存在服务器中&lt;/li&gt;
-  &lt;li&gt;DELETE	  从服务器中删除对应资源&lt;/li&gt;
-  &lt;li&gt;POST		将客户端数据发送到服务器的一个网关应用程序中&lt;/li&gt;
-  &lt;li&gt;HEAD		仅发送对应资源的HTTP首部&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;GET		 从服务器获取资源
+PUT		 将从客户端传来的资源储存在服务器中
+DELETE	  从服务器中删除对应资源
+POST		将客户端数据发送到服务器的一个网关应用程序中
+HEAD		仅发送对应资源的HTTP首部
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id=&quot;section-3&quot;&gt;2.2 状态码&lt;/h3&gt;
 
 &lt;p&gt;每条HTTP返回响应是都会携带状态码，状态码为三位数字，用于告知服务器的响应状态，常见的状态码有：&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;200 OK，文档返回正确&lt;/li&gt;
-  &lt;li&gt;302 重定向，指定客户端到其他位置获取资源&lt;/li&gt;
-  &lt;li&gt;404 资源未找到&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;200 OK，文档返回正确
+302 重定向，指定客户端到其他位置获取资源
+404 资源未找到
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id=&quot;web&quot;&gt;2.3 Web页面中可以包含多个对象&lt;/h3&gt;
 
@@ -2082,25 +2078,20 @@
 
 &lt;p&gt;Http报文包含三个部分：&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;起始行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;起始行
 
-    &lt;p&gt;报文的第一行就是起始行。在请求报文中说明要做什么，在响应报文中说明出现了什么状况。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;首部字段&lt;/p&gt;
+	报文的第一行就是起始行。在请求报文中说明要做什么，在响应报文中说明出现了什么状况。
+	
+首部字段
 
-    &lt;p&gt;起始行后面会有0至多个首部字段，首部字段采用键值对方式，键值之间用”:”分隔。&lt;/p&gt;
+	起始行后面会有0至多个首部字段，首部字段采用键值对方式，键值之间用&quot;:&quot;分隔。
+	
+	首部以一个空行结束。
 
-    &lt;p&gt;首部以一个空行结束。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;主体&lt;/p&gt;
+主体
 
-    &lt;p&gt;请求主体中包含要发送给服务器的数据，响应主体中包含返回给客户端的数据，主体较为特殊，可以包含二进制数据。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    请求主体中包含要发送给服务器的数据，响应主体中包含返回给客户端的数据，主体较为特殊，可以包含二进制数据。
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;section-5&quot;&gt;4. 连接&lt;/h2&gt;
 
@@ -2116,23 +2107,18 @@
 
 &lt;p&gt;对于客户端如何获取服务器地址和端口，一般通过解析URL来获取的，有如下3中形式：&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;http://204.209.34.83:80/index.html&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://204.209.34.83:80/index.html
 
-    &lt;p&gt;直接告知IP地址和端口号&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;http://baidu.com:80/index.html&lt;/p&gt;
+	直接告知IP地址和端口号
 
-    &lt;p&gt;通过DNS(Domain Name Service)域名服务机制来解析主机名获取IP地址&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;http://baidu.com/index.html&lt;/p&gt;
+http://baidu.com:80/index.html
 
-    &lt;p&gt;若URL中没有端口号则默认为80端口&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+	通过DNS(Domain Name Service)域名服务机制来解析主机名获取IP地址
+
+http://baidu.com/index.html
+
+	若URL中没有端口号则默认为80端口
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;一个Http具体事务如下：&lt;/p&gt;
 
@@ -2164,71 +2150,57 @@ g. 关闭连接，显示返回结果
 
 &lt;p&gt;到当前世纪，http有多种版本号，Http应用程序要实现对多种http版本协议的支持。目前HTTP的版本有:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;HTTP/0.9&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;* HTTP/0.9
 
-    &lt;p&gt;1991年HTTP的原型版本，有较多的设计缺陷，如只支持GET方法，没有首部之类的下版本HTTP特性，最初设计只是用来获取HTML网页。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;HTTTP/1.0&lt;/p&gt;
+    1991年HTTP的原型版本，有较多的设计缺陷，如只支持GET方法，没有首部之类的下版本HTTP特性，最初设计只是用来获取HTML网页。
 
-    &lt;p&gt;HTTP开始流行时使用的版本号，开始支持较多特性，如MEMI等多媒体类型，添加了版本号，以及一些额外的方法，能够生成生动的网页与用户交互，实现了互联网的巨大商业价值。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;HTTP/1.0+&lt;/p&gt;
+* HTTTP/1.0
 
-    &lt;p&gt;非官方正式发布版本，由于HTTP/1.0版本的大幅度使用并具有极大的商业价值，很多公司针对1.0版本进行二次开发，添加了多种特性如keep-alive等，来增加商业用途。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;HTTP/1.1&lt;/p&gt;
+    HTTP开始流行时使用的版本号，开始支持较多特性，如MEMI等多媒体类型，添加了版本号，以及一些额外的方法，能够生成生动的网页与用户交互，实现了互联网的巨大商业价值。
 
-    &lt;p&gt;当前正在使用的HTTP版本号，对HTTP进行多方面优化，摒弃结构设计的缺陷，剔除不必要的特性，并引入重要的性能优化措施。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;HTTP-NG(HTTP/2.0)&lt;/p&gt;
+* HTTP/1.0+
 
-    &lt;p&gt;终止于1998年研究。主要关注与大幅度提高HTTP性能。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    非官方正式发布版本，由于HTTP/1.0版本的大幅度使用并具有极大的商业价值，很多公司针对1.0版本进行二次开发，添加了多种特性如keep-alive等，来增加商业用途。
+
+* HTTP/1.1
+
+    当前正在使用的HTTP版本号，对HTTP进行多方面优化，摒弃结构设计的缺陷，剔除不必要的特性，并引入重要的性能优化措施。
+
+* HTTP-NG(HTTP/2.0)
+
+    终止于1998年研究。主要关注与大幅度提高HTTP性能。
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;web-1&quot;&gt;6. Web的组件结构&lt;/h2&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;代理&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;* 代理
 
-    &lt;p&gt;位于客户端哈服务器中的中间服务器&lt;/p&gt;
+    位于客户端哈服务器中的中间服务器
+    
+    代理是Web安全、应用集成和性能优化的重要组成模块。
+    
+    通过代理能够实现对Web流量的过滤，比如检测下载软件是否带有病毒等。
 
-    &lt;p&gt;代理是Web安全、应用集成和性能优化的重要组成模块。&lt;/p&gt;
+* 缓存
 
-    &lt;p&gt;通过代理能够实现对Web流量的过滤，比如检测下载软件是否带有病毒等。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;缓存&lt;/p&gt;
+    是一种特殊的代理服务器，将客户端经常访问的资源保存在代理服务器中，这样下次客户端访问资源的速度能更快，提高性能。
 
-    &lt;p&gt;是一种特殊的代理服务器，将客户端经常访问的资源保存在代理服务器中，这样下次客户端访问资源的速度能更快，提高性能。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;网关&lt;/p&gt;
+* 网关
 
-    &lt;p&gt;是一种特殊的服务器，经常用来作为其他服务器的中间实体使用，用来实现协议的转换。&lt;/p&gt;
+    是一种特殊的服务器，经常用来作为其他服务器的中间实体使用，用来实现协议的转换。
+    
+    比如一条http请求接收ftp协议的文档，会由网关转换为ftpURI来请求服务器资源，并将返回的资源包装为HTTP格式返回。
 
-    &lt;p&gt;比如一条http请求接收ftp协议的文档，会由网关转换为ftpURI来请求服务器资源，并将返回的资源包装为HTTP格式返回。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;隧道&lt;/p&gt;
+* 隧道
 
-    &lt;p&gt;一条建立起来的隧道会在两端对原始数据进行盲转发，并且不会对数据进行探测。&lt;/p&gt;
+    一条建立起来的隧道会在两端对原始数据进行盲转发，并且不会对数据进行探测。
+    
+    比如通过隧道可以传输SSL加密数据。
 
-    &lt;p&gt;比如通过隧道可以传输SSL加密数据。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Agent代理&lt;/p&gt;
+* Agent代理
 
-    &lt;p&gt;通常的Agent代理指的是Web浏览器，用来自动转发Web请求到服务器中。还可以建立自动访问互联网的半自动代理，比如搜索引擎，就是一种半自动代理，在互联网上搜索资源并保存在本地数据库中。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    通常的Agent代理指的是Web浏览器，用来自动转发Web请求到服务器中。还可以建立自动访问互联网的半自动代理，比如搜索引擎，就是一种半自动代理，在互联网上搜索资源并保存在本地数据库中。
+&lt;/code&gt;&lt;/pre&gt;
 </description>
         <pubDate>Wed, 11 Feb 2015 09:17:30 +0800</pubDate>
         <link>http://qwe3243002.github.io/http/2015/02/11/HTTP(%E4%B8%80).html</link>
@@ -2288,35 +2260,34 @@ B.抽象不应该依赖细节。细节应该依赖抽象。
     
       <item>
         <title>内核剖析之Binder(未完)</title>
-        <description>&lt;p&gt;&lt;strong&gt;Binder的意思是回形针，在Android中Binder用于完成进程间通信，即把多个进程别在一起。&lt;/strong&gt;&lt;br /&gt;
-# 一、Binder框架 #&lt;br /&gt;
-Binder框架分为三个模块：&lt;/p&gt;
+        <description>&lt;p&gt;&lt;strong&gt;Binder的意思是回形针，在Android中Binder用于完成进程间通信，即把多个进程别在一起。&lt;/strong&gt;&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;服务端接口&lt;/p&gt;
+&lt;h1 id=&quot;binder&quot;&gt;一、Binder框架&lt;/h1&gt;
 
-    &lt;p&gt;实际是一个Binder对象，一旦对象创建成功就会启动一个隐藏线程用于接收Binder驱动传送过来的消息，在接收到消息后会执行onTransact()方法。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Binder驱动&lt;/p&gt;
+&lt;p&gt;Binder框架分为三个模块：&lt;/p&gt;
 
-    &lt;p&gt;在服务端的Binder对象创建成功会在Binder驱动中创建mRemote对象，该对象类型是Binder，客服端就是通过该mRemote对象与服务器交互。&lt;br /&gt;
- mRemote对象重载了transact()方法，主要内容包括：&lt;/p&gt;
+&lt;p&gt;1.服务端接口&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code&gt; 1. 以线程见通信方式，向服务端发送客户端传送过来的参数
- 2. 挂起当前客户端线程，等待服务端执行完任务后再通知唤醒
- 3. 接收服务端线程通知，然后执行客户端线程，并返回客户端代码区
+&lt;pre&gt;&lt;code&gt;实际是一个Binder对象，一旦对象创建成功就会启动一个隐藏线程用于接收Binder驱动传送过来的消息，在接收到消息后会执行onTransact()方法。
 &lt;/code&gt;&lt;/pre&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;客户端接口&lt;/p&gt;
 
-    &lt;p&gt;获取mRemote对象，通过调用其transact()方法来访问服务器&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;2.Binder驱动&lt;/p&gt;
 
-&lt;h1 id=&quot;binder&quot;&gt;二、客户端获取Binder对象&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;在服务端的Binder对象创建成功会在Binder驱动中创建mRemote对象，该对象类型是Binder，客服端就是通过该mRemote对象与服务器交互。
+mRemote对象重载了transact()方法，主要内容包括：
+
+	1. 以线程见通信方式，向服务端发送客户端传送过来的参数
+	2. 挂起当前客户端线程，等待服务端执行完任务后再通知唤醒
+	3. 接收服务端线程通知，然后执行客户端线程，并返回客户端代码区
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.客户端接口&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;获取mRemote对象，通过调用其transact()方法来访问服务器
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;binder-1&quot;&gt;二、客户端获取Binder对象&lt;/h1&gt;
+
 &lt;p&gt;在客户端中调用Service有两种方法，一种是startService()，这是不返回服务端的Binder引用，另一种是bindService()，在调用过程中必须传入参数ServiceConnection，ServiceConnection是一个接口，其中包含两个方法&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;public void onServiceConnected(ComponentName name,IBinder service);
@@ -2328,6 +2299,7 @@ public void onServiceDisconnected(ComponentName name);
 &lt;p&gt;在系统中由于进程中通信需要aidl，而获取系统服务内部细节也是类似于通过aidl获取Binder对象，来获取Service服务。&lt;/p&gt;
 
 &lt;h1 id=&quot;manager&quot;&gt;三、理解Manager&lt;/h1&gt;
+
 &lt;p&gt;在Android中ServiceManager管理所有的Service，并且以Manager对象来返回给客户端。Manager在Android中类似于经纪人的概念，通过经纪人来调用API获取系统服务&lt;/p&gt;
 
 </description>
@@ -2348,55 +2320,52 @@ public void onServiceDisconnected(ComponentName name);
         <title>网络连接小技巧(一)</title>
         <description>&lt;h1 id=&quot;section&quot;&gt;测试是否有网&lt;/h1&gt;
 
-&lt;pre&gt;&lt;code&gt;public static boolean isNetworkAvailable(Context context) {
-    ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    if (connectivityManager == null) {
-        Log.d(TAG, &quot;+++couldn&#39;t get connectivity manager&quot;);
-    } else {
-        NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
-        for (NetworkInfo temp : info) {
-            if (temp.getState() == NetworkInfo.State.CONNECTED) {
-                Log.d(TAG, &quot;+++network is available: &quot; + temp.getTypeName());
-                return true;
-            }
-        }
-    }
-    return false;
-}
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isNetworkAvailable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ConnectivityManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connectivityManager&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectivityManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSystemService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONNECTIVITY_SERVICE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connectivityManager&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;+++couldn&amp;#39;t get connectivity manager&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;info&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connectivityManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getAllNetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;State&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONNECTED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;Log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;+++network is available: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getTypeName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;section-1&quot;&gt;&lt;strong&gt;判断网络连接类型&lt;/strong&gt;&lt;/h1&gt;
 
-&lt;pre&gt;&lt;code&gt;public static String getNetType(Context context) {
-    String type = &quot;&quot;;
-    if (context == null) {
-        return null;
-    }
-    ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    if (connManager == null) {
-        return null;
-    } else {
-        NetworkInfo networkInfoMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        NetworkInfo networkInfoWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo.State mobile = null, wifi = null;
-        if (networkInfoMobile != null) {
-            mobile = networkInfoMobile.getState();
-        }
-        if (networkInfoWifi != null) {
-            wifi = networkInfoWifi.getState();
-        }
-        if (wifi != null &amp;amp;&amp;amp; wifi == NetworkInfo.State.CONNECTED) {
-            type = &quot;wifi&quot;;
-        }
-        if (mobile != null &amp;amp;&amp;amp; mobile == NetworkInfo.State.CONNECTED) {
-            type = &quot;mobile&quot;;
-        }
-    }
-    return type;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getNetType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ConnectivityManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connManager&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectivityManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSystemService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONNECTIVITY_SERVICE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connManager&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;networkInfoMobile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getNetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectivityManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;TYPE_MOBILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;networkInfoWifi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getNetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectivityManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;TYPE_WIFI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mobile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wifi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;networkInfoMobile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;mobile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;networkInfoMobile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;networkInfoWifi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;wifi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;networkInfoWifi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wifi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wifi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;State&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONNECTED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;wifi&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mobile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mobile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetworkInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;State&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONNECTED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;mobile&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 </description>
         <pubDate>Fri, 16 Jan 2015 22:34:30 +0800</pubDate>
         <link>http://qwe3243002.github.io/android/2015/01/16/%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%B0%8F%E6%8A%80%E5%B7%A7(%E4%B8%80).html</link>
@@ -2413,28 +2382,31 @@ public void onServiceDisconnected(ComponentName name);
         <title>Content Provider(二)</title>
         <description>&lt;p&gt;这篇文章主要介绍有：&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;ContentProvider如何工作&lt;/li&gt;
-  &lt;li&gt;用于检索ContentProvider的API&lt;/li&gt;
-  &lt;li&gt;用于插入，更新，删除数据的API&lt;/li&gt;
-  &lt;li&gt;其他便于与ContentProvider工作的API&lt;/li&gt;
-&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;1. ContentProvider如何工作
+2. 用于检索ContentProvider的API
+3. 用于插入，更新，删除数据的API
+4. 其他便于与ContentProvider工作的API
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h1 id=&quot;section&quot;&gt;&lt;strong&gt;概述&lt;/strong&gt;&lt;/h1&gt;
-&lt;p&gt;## 访问provider ##&lt;br /&gt;
-访问provider必须提供一个ContentResolver，ContentResolver会同等地调用provider提供的“CRUD”方法&lt;br /&gt;
-&amp;gt; 注意：要访问provider，必须提供某些权限&lt;/p&gt;
+
+&lt;h2 id=&quot;provider&quot;&gt;访问provider&lt;/h2&gt;
+
+&lt;p&gt;访问provider必须提供一个ContentResolver，ContentResolver会同等地调用provider提供的“CRUD”方法&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注意：要访问provider，必须提供某些权限&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;样例：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;mCursor = getContentResolver().query(
-	UserDictionary.Words.CONTENT_URI,    //提供表格URI
-	mProjection,					     // 要检索的列
-	mSelectionClause,					 // 检索条件
-	mSeletionArgs,						 // 检索条件参数
-	mSortOrder,							 // 返回结果顺序
-);
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;mCursor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getContentResolver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONTENT_URI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;//提供表格URI&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;mProjection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;					     &lt;span class=&quot;c1&quot;&gt;// 要检索的列&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;mSelectionClause&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;					 &lt;span class=&quot;c1&quot;&gt;// 检索条件&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;mSeletionArgs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;						 &lt;span class=&quot;c1&quot;&gt;// 检索条件参数&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;mSortOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;							 &lt;span class=&quot;c1&quot;&gt;// 返回结果顺序&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;content-uris&quot;&gt;Content URIs&lt;/h2&gt;
 &lt;p&gt;Content URI是用来标示一个Content Provider的中的表格的，他不仅包含一个authority(确定是哪个provider)还有一个path（确定是哪个表），通过这种解析方法才能找到要处理的表格。例如：&lt;/p&gt;
@@ -2448,30 +2420,25 @@ public void onServiceDisconnected(ComponentName name);
   &lt;p&gt;注意：Uri和Uri.Builder类提供了便捷的方法来通过字符串构造Uri对象，ContentUris也提供了便捷方法用来在Uri上添加值，比如withAppendedId()用来添加id&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;provider&quot;&gt;从provider中检索数据&lt;/h1&gt;
+&lt;h1 id=&quot;provider-1&quot;&gt;从provider中检索数据&lt;/h1&gt;
 &lt;p&gt;建议在检索数据时不要在UI主线程中执行，而要再开辟一个新线程来执行。如果在主线程中使用的话，要使用CursorLoader类。&lt;/p&gt;
 
 &lt;p&gt;检索数据步骤：&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;申请访问权限
-    &lt;ol&gt;
-      &lt;li&gt;针对不同的provider需要不同的权限&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;写访问代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1. 申请访问权限
 
-  	String[] mProjection = {&lt;br /&gt;
- 		UserDictionary.Words._ID,
-    &lt;pre&gt;&lt;code&gt;     UserDictionary.Words.WORD,
-     UserDictionary.Words.LOCALE
- 	};
- String mSelectionClause = null;
- String[] mSelectionArgs = {&quot;&quot;};
+	针对不同的provider需要不同的权限
+	
+2. 写访问代码
+
+	 	String[] mProjection = {
+    		UserDictionary.Words._ID,
+			UserDictionary.Words.WORD,
+			UserDictionary.Words.LOCALE
+    	};
+		String mSelectionClause = null;
+		String[] mSelectionArgs = {&quot;&quot;};
 &lt;/code&gt;&lt;/pre&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
 
 &lt;p&gt;&lt;strong&gt;防止恶意Sql注入&lt;/strong&gt;&lt;/p&gt;
 
@@ -2491,23 +2458,22 @@ public void onServiceDisconnected(ComponentName name);
 
 &lt;p&gt;ContentResolver提供的查询结果为Cursor对象，他能够随机访问返回的数据，如果查不到数据curosr.getCount()返回为0，如果出现错误则返回为null或者抛出Exception，系统默认中通过SimpleCursorAdapter来展示数据，是一个非常好的方式。代码如下&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;// 指定要查询的列
-String[] mWordListColumns = {
-	UserDictionary.Words.WORD,
-	UserDictionary.Words.LOCALE,
-};
-// 指定通过那些组件显示
-int[] mWordListItems ={R.id.dictWord,R.id.locale};
-mCursorAdapter = new SimpleCursorAdapter(){
-    getApplicationContext,
-    R.layout.wordlistrow,   // 每一行的布局
-    mCursor,
-    mWordListColumns,
-    mWordListItems,
-    0						// 通常没啥用
-};
-mWordList.setAdapter(mCursorAdapter);
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// 指定要查询的列&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mWordListColumns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;WORD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;LOCALE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// 指定通过那些组件显示&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mWordListItems&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;={&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;dictWord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mCursorAdapter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SimpleCursorAdapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;getApplicationContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;wordlistrow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 每一行的布局&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;mCursor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;mWordListColumns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;mWordListItems&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+	    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;						&lt;span class=&quot;c1&quot;&gt;// 通常没啥用&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;mWordList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setAdapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mCursorAdapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;这种使用方式必须包含_ID列，即使不显示出来也必须要有&lt;/p&gt;
@@ -2515,78 +2481,74 @@ mWordList.setAdapter(mCursorAdapter);
 
 &lt;h2 id=&quot;section-1&quot;&gt;&lt;strong&gt;插入数据&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;ContentValues mNewValues = new ContentValues();
-
-/*
- * Sets the values of each column and inserts the word. The arguments to the &quot;put&quot;
- * method are &quot;column name&quot; and &quot;value&quot;
- */
-mNewValues.put(UserDictionary.Words.APP_ID, &quot;example.user&quot;);
-mNewValues.put(UserDictionary.Words.LOCALE, &quot;en_US&quot;);
-mNewValues.put(UserDictionary.Words.WORD, &quot;insert&quot;);
-mNewValues.put(UserDictionary.Words.FREQUENCY, &quot;100&quot;);
-
-mNewUri = getContentResolver().insert(
-UserDictionary.Word.CONTENT_URI,   // the user dictionary content URI
-mNewValues  // the values to insert
-);
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;ContentValues&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mNewValues&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ContentValues&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    
+    &lt;span class=&quot;cm&quot;&gt;/*&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Sets the values of each column and inserts the word. The arguments to the &amp;quot;put&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * method are &amp;quot;column name&amp;quot; and &amp;quot;value&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mNewValues&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;APP_ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;example.user&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mNewValues&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;LOCALE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;en_US&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mNewValues&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;WORD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;insert&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mNewValues&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;FREQUENCY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;100&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;mNewUri&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getContentResolver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Word&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONTENT_URI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// the user dictionary content URI&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mNewValues&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// the values to insert&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;插入成功后会返回函数插入数据ID的新的Uri&lt;/p&gt;
 
 &lt;h2 id=&quot;section-2&quot;&gt;&lt;strong&gt;更新数据&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;// Defines an object to contain the updated values
-ContentValues mUpdateValues = new ContentValues();
-
-// Defines selection criteria for the rows you want to update
-String mSelectionClause = UserDictionary.Words.LOCALE +  &quot;LIKE ?&quot;;
-String[] mSelectionArgs = {&quot;en_%&quot;};
-
-// Defines a variable to contain the number of updated rows
-int mRowsUpdated = 0;
-
-...
-
-/*
- * Sets the updated value and updates the selected words.
- */
-mUpdateValues.putNull(UserDictionary.Words.LOCALE);
-
-mRowsUpdated = getContentResolver().update(
-UserDictionary.Words.CONTENT_URI,   // the user dictionary content URI
-mUpdateValues   // the columns to update
-mSelectionClause// the column to select on
-mSelectionArgs  // the value to compare to
-);
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Defines an object to contain the updated values&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ContentValues&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mUpdateValues&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ContentValues&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Defines selection criteria for the rows you want to update&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mSelectionClause&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;LOCALE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;&amp;quot;LIKE ?&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mSelectionArgs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;en_%&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Defines a variable to contain the number of updated rows&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mRowsUpdated&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    
+    &lt;span class=&quot;cm&quot;&gt;/*&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Sets the updated value and updates the selected words.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mUpdateValues&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;putNull&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;LOCALE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;mRowsUpdated&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getContentResolver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONTENT_URI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// the user dictionary content URI&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mUpdateValues&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// the columns to update&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mSelectionClause&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// the column to select on&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mSelectionArgs&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// the value to compare to&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;section-3&quot;&gt;&lt;strong&gt;删除数据&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;// Defines selection criteria for the rows you want to delete
-String mSelectionClause = UserDictionary.Words.APP_ID + &quot; LIKE ?&quot;;
-String[] mSelectionArgs = {&quot;user&quot;};
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Defines selection criteria for the rows you want to delete&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mSelectionClause&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;APP_ID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; LIKE ?&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mSelectionArgs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;user&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Defines a variable to contain the number of rows deleted&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mRowsDeleted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Deletes the words that match the selection criteria&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mRowsDeleted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getContentResolver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;UserDictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONTENT_URI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// the user dictionary content URI&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mSelectionClause&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// the column to select on&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mSelectionArgs&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// the value to compare to&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-// Defines a variable to contain the number of rows deleted
-int mRowsDeleted = 0;
+&lt;h2 id=&quot;provider-2&quot;&gt;&lt;strong&gt;其他访问provider方式&lt;/strong&gt;&lt;/h2&gt;
 
-...
-
-// Deletes the words that match the selection criteria
-mRowsDeleted = getContentResolver().delete(
-UserDictionary.Words.CONTENT_URI,   // the user dictionary content URI
-mSelectionClause// the column to select on
-mSelectionArgs  // the value to compare to
-);
+&lt;pre&gt;&lt;code&gt;- 批处理：利用ContentProviderOperation类
+- 异步访问：开辟新线程访问
+- 通过intent访问数据：通过发送intent给应用程序来间接访问数据
 &lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;provider-1&quot;&gt;&lt;strong&gt;其他访问provider方式&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;批处理：利用ContentProviderOperation类&lt;/li&gt;
-  &lt;li&gt;异步访问：开辟新线程访问&lt;/li&gt;
-  &lt;li&gt;通过intent访问数据：通过发送intent给应用程序来间接访问数据&lt;/li&gt;
-&lt;/ul&gt;
 
 &lt;h2 id=&quot;mime&quot;&gt;&lt;strong&gt;MIME类型参考&lt;/strong&gt;&lt;/h2&gt;
 
@@ -2626,7 +2588,9 @@ MIME类型格式：&lt;/p&gt;
     
       <item>
         <title>Content Provider(一)</title>
-        <description>&lt;p&gt;ContentProvider用于访问结构化数据，他们在压缩数据的同时提供了保护数据安全的机制，并且提供了标准化接口用于在一个进程在另一个进程中进行数据访问。&lt;/p&gt;
+        <description>&lt;h1 id=&quot;content-provider&quot;&gt;Content Provider(一)&lt;/h1&gt;
+
+&lt;p&gt;ContentProvider用于访问结构化数据，他们在压缩数据的同时提供了保护数据安全的机制，并且提供了标准化接口用于在一个进程在另一个进程中进行数据访问。&lt;/p&gt;
 
 &lt;p&gt;在访问contentProvider提供的数据时，需要使用ContentResolver对象作为客户端来访问创建了ContentProvider对象的应用程序，由contentProvider执行访问要求并返回结果。&lt;/p&gt;
 
@@ -2638,22 +2602,26 @@ MIME类型格式：&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://qwe3243002.github.io/jekyll/update/2015/01/15/Content%20Provider(%E4%BA%8C).html&quot;&gt;ContentProvider基础&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;如何访问表格中的数据&lt;/p&gt;
+    &lt;pre&gt;&lt;code&gt; 如何访问表格中的数据
+&lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;创建CotentProvider&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;如何创建自己应用的ContentProvider&lt;/p&gt;
+    &lt;pre&gt;&lt;code&gt; 如何创建自己应用的ContentProvider
+&lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;日历ContentProvider&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;访问日历提供数据&lt;/p&gt;
+    &lt;pre&gt;&lt;code&gt; 访问日历提供数据
+&lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;联系人ContentProvider&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;访问联系人提供数据&lt;/p&gt;
+    &lt;pre&gt;&lt;code&gt; 访问联系人提供数据
+&lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 </description>

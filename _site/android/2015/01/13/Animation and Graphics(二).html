@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Animation and Graphics(二)</title>
-  <meta name="description" content="属性动画属性动画的强大在于几乎能使所有东西能运动起来。如果需要指定某个对象运动，你需要通过指定你想修改的对象属性，如坐标，运动时间，最大值，最小值等。">
+  <meta name="description" content="属性动画">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
@@ -39,17 +39,17 @@
 
     <div role="main" class="main">
       <h1 id="section"><strong>属性动画</strong></h1>
+
 <p>属性动画的强大在于几乎能使所有东西能运动起来。如果需要指定某个对象运动，你需要通过指定你想修改的对象属性，如坐标，运动时间，最大值，最小值等。</p>
 
 <p>通过属性动画你可以指定如下这些属性：</p>
 
-<ul>
-  <li>Duration：动画持续时间，默认300ms。</li>
-  <li>Time interpolation：时间插值函数，规定动画持续时间中物体的加速减速。</li>
-  <li>Repeat count and behavior：可以指定是否需要重复以及重复次数，并且指定重复方式是逆序播放还是顺序播放。</li>
-  <li>Animator sets：将一组动画放入逻辑集合中，并且能规定是同时播放，还是依次播放，还是延时播放。</li>
-  <li>Frame refresh delay：规定每一帧刷新的间隔时间，默认10ms，但是由于系统的繁忙程度和服务速度有可能会有所偏差。</li>
-</ul>
+<pre><code>- Duration：动画持续时间，默认300ms。
+- Time interpolation：时间插值函数，规定动画持续时间中物体的加速减速。
+- Repeat count and behavior：可以指定是否需要重复以及重复次数，并且指定重复方式是逆序播放还是顺序播放。
+- Animator sets：将一组动画放入逻辑集合中，并且能规定是同时播放，还是依次播放，还是延时播放。
+- Frame refresh delay：规定每一帧刷新的间隔时间，默认10ms，但是由于系统的繁忙程度和服务速度有可能会有所偏差。
+</code></pre>
 
 <h2 id="section-1"><strong>属性动画是如何工作的</strong></h2>
 <p>首先看一个小例子。我们假设操作一个对象的x属性，即表示让他在水平方向上移动。动画持续时间是40ms，并且移动距离为40px。也就是说在默认为10ms的刷新时间中，每隔10ms该对象移动10px。在40ms持续时间过去后动画停止，并且该对象水平位移40px。在这个例子中，该对象是匀速行驶，即水平速度为常量。</p>
@@ -71,117 +71,63 @@ ValueAnimator封装了TimeInterpolator属性，用于指定使用哪种时间插
 在谷歌API例子的<strong>com.example.android.apis.animation</strong>包中提供了多个关于如何使用属性动画的案例。</p>
 
 <h2 id="section-2"><strong>属性动画与视图动画的区别</strong></h2>
-<ul>
-  <li>视图动画只是对于视图对象提供了强大的功能，而对于非试图组件对象则需要你自己写代码来实现。视图动画还有一些局限在于他只能影响视图组件一些方面比如缩放，旋转，但不会改变其背景颜色。</li>
-  <li>视图动画的另一个缺点就是他只是指定组件被画的位置，而不是组件实际位置</li>
-  <li>属性动画就完全没有视图动画的缺点，他不但可以操纵任何对象，并且会实际修改该对象的属性。</li>
-  <li>然而视图动画的创建需要的时间更少，所需的代码量也会减少。所以你需要根据情况选择合适的动画系统。</li>
-</ul>
+
+<pre><code>- 视图动画只是对于视图对象提供了强大的功能，而对于非试图组件对象则需要你自己写代码来实现。视图动画还有一些局限在于他只能影响视图组件一些方面比如缩放，旋转，但不会改变其背景颜色。
+- 视图动画的另一个缺点就是他只是指定组件被画的位置，而不是组件实际位置
+- 属性动画就完全没有视图动画的缺点，他不但可以操纵任何对象，并且会实际修改该对象的属性。
+- 然而视图动画的创建需要的时间更少，所需的代码量也会减少。所以你需要根据情况选择合适的动画系统。
+</code></pre>
 
 <h2 id="api"><strong>API概述</strong></h2>
 <p>属性动画的API位于android.animation,而在android.view.animation中还有大量的插值函数类。</p>
 
 <p><strong>Animator类提供了创建动画的基本数据结构。由于提供的功能不够全面，通常情况下不需要直接使用该对象。</strong></p>
 
-<ul>
-  <li><strong>ValueAnimator</strong>
-    <ul>
-      <li>属性动画的主要时序引擎并计算动画中的属性值。</li>
-      <li>含有计算属性值的核心方法，包括每个动画的时序细节，每个动画是否重复，监听更新事件，以及自定义计算类型</li>
-    </ul>
-  </li>
-  <li><strong>ObjectAnimator</strong>
-    <ul>
-      <li>ValueAnimator的子类，允许你设置一个目标对象以及目标属性来进行动画。</li>
-      <li>比ValueAnimator使用更简单，但是也有一些限制，如目标对象上必须定义一些特定访问方法。</li>
-    </ul>
-  </li>
-  <li><strong>AnimatorSet</strong>
-    <ul>
-      <li>提供播放一组动画的机制，你可以规定是同时播放，顺序播放还是延时播放。</li>
-    </ul>
-  </li>
-</ul>
+<pre><code>**ValueAnimator**
+	- 属性动画的主要时序引擎并计算动画中的属性值。
+	- 含有计算属性值的核心方法，包括每个动画的时序细节，每个动画是否重复，监听更新事件，以及自定义计算类型
+**ObjectAnimator**
+	- ValueAnimator的子类，允许你设置一个目标对象以及目标属性来进行动画。
+	- 比ValueAnimator使用更简单，但是也有一些限制，如目标对象上必须定义一些特定访问方法。
+**AnimatorSet**
+	- 提供播放一组动画的机制，你可以规定是同时播放，顺序播放还是延时播放。
+</code></pre>
 
 <p><strong>Evaluators</strong></p>
 
-<ul>
-  <li><strong>IntEvaluator</strong>
-    <ul>
-      <li>默认Int类型的计算器</li>
-    </ul>
-  </li>
-  <li><strong>FloatEvaluator</strong>
-    <ul>
-      <li>默认Float类型的计算器</li>
-    </ul>
-  </li>
-  <li><strong>ArgbEvaluator</strong>
-    <ul>
-      <li>默认计算Color属性的计算器，值为16进制</li>
-    </ul>
-  </li>
-  <li><strong>TypeEvaluator</strong>
-    <ul>
-      <li>计算器接口，可以用于实现自定义类型的计算</li>
-    </ul>
-  </li>
-</ul>
+<pre><code>- **IntEvaluator**
+	- 默认Int类型的计算器
+- **FloatEvaluator**
+	- 默认Float类型的计算器
+- **ArgbEvaluator**
+	- 默认计算Color属性的计算器，值为16进制
+- **TypeEvaluator**
+	- 计算器接口，可以用于实现自定义类型的计算
+</code></pre>
 
 <p><strong>Interpolators</strong></p>
 
-<ul>
-  <li><strong>AccelerateDecelerateInterpolator</strong>
-    <ul>
-      <li>先加速后减速，其变化率开始和结束缓慢而中间加速</li>
-    </ul>
-  </li>
-  <li><strong>AccelerateInterpolator</strong>
-    <ul>
-      <li>加速，其变化率慢慢提高</li>
-    </ul>
-  </li>
-  <li><strong>AnticipateInterpolator</strong>
-    <ul>
-      <li>开始时先向后，然后在先前甩</li>
-    </ul>
-  </li>
-  <li><strong>AnticipateOvershootInterpolator</strong>
-    <ul>
-      <li>开始时先向后，然后向前甩，冲过目标对象，最后返回目标对象</li>
-    </ul>
-  </li>
-  <li><strong>BounceInterpolator</strong>
-    <ul>
-      <li>表示在动画结束时再弹一下</li>
-    </ul>
-  </li>
-  <li><strong>CycleInterpolator</strong>
-    <ul>
-      <li>指定动画重复次数</li>
-    </ul>
-  </li>
-  <li><strong>DecelerateInterpolator</strong>
-    <ul>
-      <li>减速，其变化率逐渐降低</li>
-    </ul>
-  </li>
-  <li><strong>LinearInterpolator</strong>
-    <ul>
-      <li>匀速行驶</li>
-    </ul>
-  </li>
-  <li><strong>OverShootInterpolator</strong>
-    <ul>
-      <li>开始时向前甩动，冲过目标对象，最后返回目标对象</li>
-    </ul>
-  </li>
-  <li><strong>TimeInterpolator</strong>
-    <ul>
-      <li>接口，可以自己定制插值函数</li>
-    </ul>
-  </li>
-</ul>
+<pre><code>- **AccelerateDecelerateInterpolator**
+	- 先加速后减速，其变化率开始和结束缓慢而中间加速
+- **AccelerateInterpolator**
+	- 加速，其变化率慢慢提高
+- **AnticipateInterpolator**
+	- 开始时先向后，然后在先前甩
+- **AnticipateOvershootInterpolator**
+	- 开始时先向后，然后向前甩，冲过目标对象，最后返回目标对象
+- **BounceInterpolator**
+	- 表示在动画结束时再弹一下
+- **CycleInterpolator**
+	- 指定动画重复次数
+- **DecelerateInterpolator**
+	- 减速，其变化率逐渐降低
+- **LinearInterpolator**
+	- 匀速行驶
+- **OverShootInterpolator**
+	- 开始时向前甩动，冲过目标对象，最后返回目标对象
+- **TimeInterpolator**
+	- 接口，可以自己定制插值函数
+</code></pre>
 
 <h2 id="valueanimator"><strong>ValueAnimator动画</strong></h2>
 
@@ -211,45 +157,36 @@ objectAnimator.start();
 
 <p>为了使ObjectAnimator更新的属性值正确，要必须这样：</p>
 
-<ul>
-  <li>目标对象的属性必须set方法，并且遵从<code>set&lt;propertyName&gt;()</code>格式</li>
-  <li>如果你在使用ObjectAnimator的工厂方法来创建对象时，在传入values…参数是，只传入一个值，那么该值将作为结束值，这样的话，你必须对于该属性有一个get方法，并遵从<code>get&lt;propertyName&gt;()</code>格式</li>
-  <li>get方法与set方法的参数类型以及返回值类型必须一致</li>
-  <li>对于属性及对象动画，你可能需要调用<code>invalidate()</code>来强制重新绘制视图，一般你会在<code>onAnimationUpdate()</code>方法中调用。但是对于视图的属性，你就不需要再调用该方法了，因为该方法会有系统在恰当的时间调用。</li>
-</ul>
+<pre><code>- 目标对象的属性必须set方法，并且遵从`set&lt;propertyName&gt;()`格式
+- 如果你在使用ObjectAnimator的工厂方法来创建对象时，在传入values...参数是，只传入一个值，那么该值将作为结束值，这样的话，你必须对于该属性有一个get方法，并遵从`get&lt;propertyName&gt;()`格式
+- get方法与set方法的参数类型以及返回值类型必须一致
+- 对于属性及对象动画，你可能需要调用`invalidate()`来强制重新绘制视图，一般你会在`onAnimationUpdate()`方法中调用。但是对于视图的属性，你就不需要再调用该方法了，因为该方法会有系统在恰当的时间调用。
+</code></pre>
 
 <h2 id="animationset"><strong>采用AnimationSet设计动画</strong></h2>
 
 <p>采用AnimatorSet来组合动画或者组合AnimatorSet来播放动画</p>
 
-<pre><code>AnimatorSet bouncer = new AnimatorSet();
-bouncer.play(bounceAnim).before(squashAnim1);
-bouncer.play(squashAnim1).with(squashAnim2);
-boncer.play(squashAnim1).with(stretchAnim1);
-bouncer.play(squashAnim1).with(stretchAnim2);
-bouncer.play(bounceBackAnim).after(stretchAnim2);
-ValueAnimator fadeAnim = ObjectAnimator.ofFloat(new Ball,"alpha",1f,0f);
-fadeAnim.setDuration(250);
-animatorSet.play(bouncer).before(fadeAnim);
-animatorSet.start();
-</code></pre>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">AnimatorSet</span> <span class="n">bouncer</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AnimatorSet</span><span class="o">();</span>
+    <span class="n">bouncer</span><span class="o">.</span><span class="na">play</span><span class="o">(</span><span class="n">bounceAnim</span><span class="o">).</span><span class="na">before</span><span class="o">(</span><span class="n">squashAnim1</span><span class="o">);</span>
+    <span class="n">bouncer</span><span class="o">.</span><span class="na">play</span><span class="o">(</span><span class="n">squashAnim1</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">squashAnim2</span><span class="o">);</span>
+    <span class="n">boncer</span><span class="o">.</span><span class="na">play</span><span class="o">(</span><span class="n">squashAnim1</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">stretchAnim1</span><span class="o">);</span>
+    <span class="n">bouncer</span><span class="o">.</span><span class="na">play</span><span class="o">(</span><span class="n">squashAnim1</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">stretchAnim2</span><span class="o">);</span>
+    <span class="n">bouncer</span><span class="o">.</span><span class="na">play</span><span class="o">(</span><span class="n">bounceBackAnim</span><span class="o">).</span><span class="na">after</span><span class="o">(</span><span class="n">stretchAnim2</span><span class="o">);</span>
+    <span class="n">ValueAnimator</span> <span class="n">fadeAnim</span> <span class="o">=</span> <span class="n">ObjectAnimator</span><span class="o">.</span><span class="na">ofFloat</span><span class="o">(</span><span class="k">new</span> <span class="n">Ball</span><span class="o">,</span><span class="s">&quot;alpha&quot;</span><span class="o">,</span><span class="mi">1</span><span class="n">f</span><span class="o">,</span><span class="mi">0</span><span class="n">f</span><span class="o">);</span>
+    <span class="n">fadeAnim</span><span class="o">.</span><span class="na">setDuration</span><span class="o">(</span><span class="mi">250</span><span class="o">);</span>
+    <span class="n">animatorSet</span><span class="o">.</span><span class="na">play</span><span class="o">(</span><span class="n">bouncer</span><span class="o">).</span><span class="na">before</span><span class="o">(</span><span class="n">fadeAnim</span><span class="o">);</span>
+    <span class="n">animatorSet</span><span class="o">.</span><span class="na">start</span><span class="o">();</span></code></pre></div>
 
 <h2 id="section-3"><strong>动画监听器</strong></h2>
-<ul>
-  <li>Animator.AnimatorListener
-    <ul>
-      <li>onAnimationStart()——在动画开始时调用</li>
-      <li>onAnimationEnd()——在动画结束时调用</li>
-      <li>onAnimationRepeat()——在动画要重复自身时调用</li>
-      <li>onAnimationCancel()——在动画被取消时调用</li>
-    </ul>
-  </li>
-  <li>ValueAnimator.AnimatorUpdateListener
-    <ul>
-      <li>onAnimationUpdate()——在动画每一帧刷新时调用</li>
-    </ul>
-  </li>
-</ul>
+<pre><code>- Animator.AnimatorListener
+	- onAnimationStart()——在动画开始时调用
+	- onAnimationEnd()——在动画结束时调用
+	- onAnimationRepeat()——在动画要重复自身时调用
+	- onAnimationCancel()——在动画被取消时调用
+- ValueAnimator.AnimatorUpdateListener
+	- onAnimationUpdate()——在动画每一帧刷新时调用
+</code></pre>
 
 <p>如果不想实现AnimatorUpdateListener接口的话，可以继承AnimatorListenerAdapter类，从而只是重写你想调用的方法。</p>
 
@@ -268,12 +205,10 @@ fadeAnim.addListener(new AnimatorListenerAdapter() {
 
 <p>LayoutTransition中的常量：</p>
 
-<ul>
-  <li>APPERING：指示已经出现在布局中的组件的动画</li>
-  <li>CHANGE_APPERING:指示对于已经出现在布局中的组件由于新的组件出现而产生的动画</li>
-  <li>DISAPPERING：指示组件正在消失在布局中执行的动画</li>
-  <li>CHANGE_DISAPPERING:指示由于组件消失中，依旧存在布局中的组件的动画</li>
-</ul>
+<pre><code>- APPERING：指示已经出现在布局中的组件的动画
+- CHANGE_APPERING:指示对于已经出现在布局中的组件由于新的组件出现而产生的动画
+- DISAPPERING：指示组件正在消失在布局中执行的动画 - CHANGE_DISAPPERING:指示由于组件消失中，依旧存在布局中的组件的动画
+</code></pre>
 
 <p>根据这四种事件类型既可以自定制过渡动画也可以使用系统默认的动画效果。</p>
 
@@ -289,14 +224,13 @@ android:animateLayoutChanges="true"/&gt;
 <h2 id="section-4"><strong>动画视图</strong></h2>
 <p>从Android3.0开始加入了新的属性来增强属性动画：</p>
 
-<ul>
-  <li>translationX和translationY：表示在父容器中的坐标</li>
-  <li>scaleX和scaleY：控制组件在2D中围绕中心点的缩放</li>
-  <li>rotation，rotationX，rotationY：控制组件围绕中心点在2D/3D中旋转</li>
-  <li>pivotX和pivotY：用于指定中心点的位置，默认情况下以组件中心为中心点</li>
-  <li>x和y：描述组件在容器中的实际位置.x=left+translationX</li>
-  <li>alpha:透明度，默认1，0表示不显示</li>
-</ul>
+<pre><code>- translationX和translationY：表示在父容器中的坐标
+- scaleX和scaleY：控制组件在2D中围绕中心点的缩放
+- rotation，rotationX，rotationY：控制组件围绕中心点在2D/3D中旋转
+- pivotX和pivotY：用于指定中心点的位置，默认情况下以组件中心为中心点
+- x和y：描述组件在容器中的实际位置.x=left+translationX
+- alpha:透明度，默认1，0表示不显示
+</code></pre>
 
 <h2 id="viewpropertyanimator"><strong>动画中的ViewPropertyAnimator</strong></h2>
 

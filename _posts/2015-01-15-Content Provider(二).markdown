@@ -7,18 +7,21 @@ tags: ContentProvider
 ---
 这篇文章主要介绍有：
 
-1. ContentProvider如何工作
-2. 用于检索ContentProvider的API
-3. 用于插入，更新，删除数据的API
-4. 其他便于与ContentProvider工作的API
+    1. ContentProvider如何工作
+    2. 用于检索ContentProvider的API
+    3. 用于插入，更新，删除数据的API
+    4. 其他便于与ContentProvider工作的API
 
 # **概述** #
+
 ## 访问provider ##
+
 访问provider必须提供一个ContentResolver，ContentResolver会同等地调用provider提供的“CRUD”方法
+
 > 注意：要访问provider，必须提供某些权限
 
 样例：
-
+{% highlight java %}
     mCursor = getContentResolver().query(
     	UserDictionary.Words.CONTENT_URI,    //提供表格URI
     	mProjection,					     // 要检索的列
@@ -26,6 +29,7 @@ tags: ContentProvider
     	mSeletionArgs,						 // 检索条件参数
     	mSortOrder,							 // 返回结果顺序
     );
+{% endhighlight %}
 
 ## Content URIs ##
 Content URI是用来标示一个Content Provider的中的表格的，他不仅包含一个authority(确定是哪个provider)还有一个path（确定是哪个表），通过这种解析方法才能找到要处理的表格。例如：
@@ -41,17 +45,19 @@ Content URI是用来标示一个Content Provider的中的表格的，他不仅�
 
 检索数据步骤：
 
-1. 申请访问权限
-	1. 针对不同的provider需要不同的权限
-2. 写访问代码
-
-	 	String[] mProjection = {
-    		UserDictionary.Words._ID,
-			UserDictionary.Words.WORD,
-			UserDictionary.Words.LOCALE
-    	};
-		String mSelectionClause = null;
-		String[] mSelectionArgs = {""};
+    1. 申请访问权限
+    
+    	针对不同的provider需要不同的权限
+    	
+    2. 写访问代码
+    
+    	 	String[] mProjection = {
+        		UserDictionary.Words._ID,
+    			UserDictionary.Words.WORD,
+    			UserDictionary.Words.LOCALE
+        	};
+    		String mSelectionClause = null;
+    		String[] mSelectionArgs = {""};
 
 **防止恶意Sql注入**
 
@@ -69,6 +75,7 @@ Content URI是用来标示一个Content Provider的中的表格的，他不仅�
 **显示查询结果**
 
 ContentResolver提供的查询结果为Cursor对象，他能够随机访问返回的数据，如果查不到数据curosr.getCount()返回为0，如果出现错误则返回为null或者抛出Exception，系统默认中通过SimpleCursorAdapter来展示数据，是一个非常好的方式。代码如下
+{% highlight java %}
 	
 	// 指定要查询的列
     String[] mWordListColumns = {
@@ -87,9 +94,14 @@ ContentResolver提供的查询结果为Cursor对象，他能够随机访问返�
     };
 	mWordList.setAdapter(mCursorAdapter);
 
+{% endhighlight %}
+
 > 这种使用方式必须包含_ID列，即使不显示出来也必须要有
 
+
 ## **插入数据** ##
+
+{% highlight java %}
 
     ContentValues mNewValues = new ContentValues();
     
@@ -107,9 +119,13 @@ ContentResolver提供的查询结果为Cursor对象，他能够随机访问返�
     mNewValues  // the values to insert
     );
 
+{% endhighlight %}
+
 插入成功后会返回函数插入数据ID的新的Uri
 
 ## **更新数据** ##
+
+{% highlight java %}
 
     // Defines an object to contain the updated values
     ContentValues mUpdateValues = new ContentValues();
@@ -135,7 +151,11 @@ ContentResolver提供的查询结果为Cursor对象，他能够随机访问返�
     mSelectionArgs  // the value to compare to
     );
 
+{% endhighlight %}
+
 ## **删除数据** ##
+
+{% highlight java %}
 
     // Defines selection criteria for the rows you want to delete
     String mSelectionClause = UserDictionary.Words.APP_ID + " LIKE ?";
@@ -152,12 +172,14 @@ ContentResolver提供的查询结果为Cursor对象，他能够随机访问返�
     mSelectionClause// the column to select on
     mSelectionArgs  // the value to compare to
     );
+
+{% endhighlight %} 
  
 ## **其他访问provider方式** ##
 
-- 批处理：利用ContentProviderOperation类
-- 异步访问：开辟新线程访问
-- 通过intent访问数据：通过发送intent给应用程序来间接访问数据
+    - 批处理：利用ContentProviderOperation类
+    - 异步访问：开辟新线程访问
+    - 通过intent访问数据：通过发送intent给应用程序来间接访问数据
 
 ## **MIME类型参考** ##
 

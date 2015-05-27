@@ -7,6 +7,8 @@ tags: 网络
 ---
 # 测试是否有网 #
 
+{% highlight java %}
+
 	public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager == null) {
@@ -23,7 +25,11 @@ tags: 网络
         return false;
     }
 
+{% endhighlight %}
+
 # **判断网络连接类型** #
+
+{% highlight java %}
 
     public static String getNetType(Context context) {
         String type = "";
@@ -54,3 +60,4 @@ tags: 网络
 
     }
 
+{% endhighlight %}

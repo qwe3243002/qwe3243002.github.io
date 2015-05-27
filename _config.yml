@@ -9,4 +9,5 @@ github_username:  qwe3243002
 encoding: UTF-8
 
 # Build settings
-markdown: kramdown
+markdown: maruku
+markdown_ext: markdown,mkd,mkdn,md
