@@ -7,9 +7,9 @@ tags: 事件传播
 ---
 
 # Android系统如何处理触摸事件
-
-* 每一个用户触摸事件都被包装成MotionEvent对象
-
+        
+1.每一个用户触摸事件都被包装成MotionEvent对象
+    
 * 用户触摸类型有：
 
     * ACTION_DOWN 按下

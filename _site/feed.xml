@@ -5,9 +5,74 @@
     <description>FFF团员</description>
     <link>http://qwe3243002.github.io/</link>
     <atom:link href="http://qwe3243002.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 May 2015 12:45:14 +0800</pubDate>
-    <lastBuildDate>Wed, 27 May 2015 12:45:14 +0800</lastBuildDate>
+    <pubDate>Wed, 27 May 2015 13:11:45 +0800</pubDate>
+    <lastBuildDate>Wed, 27 May 2015 13:11:45 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Android事件传播机制（译文）</title>
+        <description>&lt;h1 id=&quot;android&quot;&gt;Android系统如何处理触摸事件&lt;/h1&gt;
+
+&lt;p&gt;1.每一个用户触摸事件都被包装成MotionEvent对象&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;用户触摸类型有：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;ACTION_DOWN 按下&lt;/li&gt;
+      &lt;li&gt;ACTION_UP 释放&lt;/li&gt;
+      &lt;li&gt;ACTION_MOVE 移动&lt;/li&gt;
+      &lt;li&gt;ACTION_POINTER_DOWN 多点触控按下&lt;/li&gt;
+      &lt;li&gt;ACTION_POINTER_UP 多点触控释放&lt;/li&gt;
+      &lt;li&gt;ACTION_CANCEL 触摸事件结束&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;触摸事件元数据
+    &lt;ul&gt;
+      &lt;li&gt;触摸位置&lt;/li&gt;
+      &lt;li&gt;触摸点数&lt;/li&gt;
+      &lt;li&gt;触摸时间&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;触摸手势行为定义为以ACTION_DOWN为开始，以ACTION_UP为结束&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;触摸事件开始于Activity中的dispatchTouchEvent()方法&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;触摸事件是从上到下依次传输到View中&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;父级组件（ViewGroups）将事件分发到所有的Views中&lt;/li&gt;
+      &lt;li&gt;在事件分发过程中可以随时拦截该事件&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;触摸事件会在Views链中依次向下传递（然后反向传递）直到被消费掉为止&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Views必须在ACTION_DOWN中确定是否对事件处理，否则后续事件不会再分派到该View中&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;所有未被消费掉的事件最后都会传递的Activity中onTouchEvent()中&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;onTouchListener&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Tue, 17 Feb 2015 02:02:33 +0800</pubDate>
+        <link>http://qwe3243002.github.io/android/2015/02/17/Android%E4%BA%8B%E4%BB%B6%E4%BC%A0%E6%92%AD%E6%9C%BA%E5%88%B6(%E8%AF%91%E6%96%87).html</link>
+        <guid isPermaLink="true">http://qwe3243002.github.io/android/2015/02/17/Android%E4%BA%8B%E4%BB%B6%E4%BC%A0%E6%92%AD%E6%9C%BA%E5%88%B6(%E8%AF%91%E6%96%87).html</guid>
+        
+        <category>事件传播</category>
+        
+        
+        <category>android</category>
+        
+      </item>
     
       <item>
         <title>设计模式系列(五)</title>
@@ -2578,56 +2643,6 @@ MIME类型格式：&lt;/p&gt;
         <pubDate>Fri, 16 Jan 2015 01:00:30 +0800</pubDate>
         <link>http://qwe3243002.github.io/android/2015/01/16/Content%20Provider(%E4%BA%8C).html</link>
         <guid isPermaLink="true">http://qwe3243002.github.io/android/2015/01/16/Content%20Provider(%E4%BA%8C).html</guid>
-        
-        <category>ContentProvider</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>Content Provider(一)</title>
-        <description>&lt;h1 id=&quot;content-provider&quot;&gt;Content Provider(一)&lt;/h1&gt;
-
-&lt;p&gt;ContentProvider用于访问结构化数据，他们在压缩数据的同时提供了保护数据安全的机制，并且提供了标准化接口用于在一个进程在另一个进程中进行数据访问。&lt;/p&gt;
-
-&lt;p&gt;在访问contentProvider提供的数据时，需要使用ContentResolver对象作为客户端来访问创建了ContentProvider对象的应用程序，由contentProvider执行访问要求并返回结果。&lt;/p&gt;
-
-&lt;p&gt;Android提供音频，视频，图象，联系人等的ContentProvider，在android.provider文档中看到有关介绍。&lt;/p&gt;
-
-&lt;p&gt;接下来主要介绍这几个方面：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://qwe3243002.github.io/jekyll/update/2015/01/15/Content%20Provider(%E4%BA%8C).html&quot;&gt;ContentProvider基础&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;pre&gt;&lt;code&gt; 如何访问表格中的数据
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;创建CotentProvider&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;pre&gt;&lt;code&gt; 如何创建自己应用的ContentProvider
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;日历ContentProvider&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;pre&gt;&lt;code&gt; 访问日历提供数据
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;联系人ContentProvider&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;pre&gt;&lt;code&gt; 访问联系人提供数据
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Thu, 15 Jan 2015 20:34:30 +0800</pubDate>
-        <link>http://qwe3243002.github.io/android/2015/01/15/Content%20Provider(%E4%B8%80).html</link>
-        <guid isPermaLink="true">http://qwe3243002.github.io/android/2015/01/15/Content%20Provider(%E4%B8%80).html</guid>
         
         <category>ContentProvider</category>
         
